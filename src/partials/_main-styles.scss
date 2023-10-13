@@ -25,7 +25,8 @@ h4 {
 }
 
 p {
-  margin-top: 0;
+  // changed here
+  // margin-top: 0;
   @include m.regular;
   font-size: f.rem(v.$font-size-p); // Convert to rems
   line-height: 32px;
@@ -72,7 +73,8 @@ img {
 
 button:hover,
 button:focus {
-  background-color: v.$hover-color;
+  background-color: v.$color-gray-5;
+  // background-color: v.$hover-color;
   color: v.$color-gray-1;
 }
 
@@ -97,7 +99,6 @@ button:focus {
   margin: 0 auto;
   padding: 20px;
 }
-
 input,
 label {
   margin: 0;
@@ -160,7 +161,6 @@ li {
 .block {
   display: block;
 }
-
 .center {
   text-align: center !important;
 }
@@ -168,5 +168,77 @@ li {
   .flex-col {
     flex-direction: column;
     justify-content: flex-start;
+  }
+  .swirl-arrow {
+    display: none;
+  }
+}
+
+.col-one {
+  margin-left: 10%;
+  max-width: 45%;
+}
+.col-two {
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 50%;
+  position: relative;
+  top: 0px;
+  right: 0px;
+}
+
+.swirl-arrow {
+  position: absolute;
+  left: 0px;
+  bottom: 80px;
+}
+
+.main-heading {
+  margin: 0px;
+  font-size: 3.5em;
+  color: v.$primary-black;
+  @include m.breakpoint('large') {
+    font-size: 3em;
+  }
+}
+.header-card {
+  height: 50%;
+}
+.blur-image {
+  max-width: 120%;
+  position: absolute;
+  top: -112px;
+  height: 124%;
+  right: 0px;
+  z-index: -1;
+}
+.search-button svg {
+  fill: white;
+}
+
+@media screen and (max-width: 940px) {
+  .col-one {
+    margin-left: 5%;
+  }
+  .main-heading {
+    font-size: 2.5em;
+  }
+  .blur-image {
+    height: 125%;
+  }
+  .header-card {
+    left: 75px !important;
+  }
+}
+@include m.breakpoint('small') {
+  .col-one {
+    max-width: 90%;
+    margin-left: 0px;
+  }
+  .col-two {
+    display: none;
+  }
+  .search-form {
+    width: 80%;
   }
 }

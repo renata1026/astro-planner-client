@@ -27,7 +27,8 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
-  padding: 30px 50px;
+  max-width: 272px;
+  height: 250px;
   border-radius: 12px;
   position: relative;
   width: 100%;
@@ -98,20 +99,9 @@
   flex-grow: 1;
 }
 
-@include m.breakpoint('small') {
-  .trip-planning-card-container {
-    flex-direction: column;
-    align-items: center;
-
-    .trip-card {
-      max-width: 272px;
-      height: 250px;
-    }
-  }
-}
 @include m.breakpoint('medium') {
   .trip-planning-card-container {
-    // flex-wrap: wrap;
+    flex-wrap: wrap;
     gap: 24px;
     .trip-card {
       width: 100%;
@@ -127,6 +117,21 @@
   .trip-card .light-icon,
   .trip-card .website-icon,
   .trip-card .ebook-icon {
-    margin-right: 10px;
+    margin-right: 0px;
+  }
+}
+
+@include m.breakpoint('small') {
+  .trip-planning-container {
+    padding: 70px 0px;
+  }
+  .trip-planning-card-container {
+    flex-direction: column;
+    align-items: center;
+
+    .trip-card {
+      width: 60%;
+      padding: 50px;
+    }
   }
 }

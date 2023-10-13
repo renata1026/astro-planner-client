@@ -2,9 +2,11 @@ import { FaArrowRight } from 'react-icons/fa';
 
 import heroImage from '@/assets/hero-image.png';
 import backgroundImage from '@/assets/background-image.png';
+import backgroundDotImage from '@/assets/Ornament-82.png';
 import reviewImage from '@/assets/review.png';
 import swirlArrow from '@/assets/swirl-arrow.png';
 import card from '@/assets/card.png';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
@@ -29,9 +31,12 @@ const Header = () => {
                   placeholder="Plan a Trip"
                   className="search-input"
                 />
-                <button type="submit" className="search-button">
-                  <FaArrowRight />
-                </button>
+
+                <Link to="/create-trip">
+                  <button type="submit" className="search-button">
+                    <FaArrowRight />
+                  </button>
+                </Link>
               </div>
             </form>
           </div>
@@ -42,13 +47,9 @@ const Header = () => {
             <img src={reviewImage} alt="review" className="review-image" />
           </div>
         </div>
-        <div
-          className="col-two"
-          style={{
-            backgroundImage: `url(${backgroundImage})`,
-            backgroundPosition: 'top left',
-          }}
-        >
+        <div className="col-two">
+          <img src={backgroundImage} className="blur-image" />
+          <img src={backgroundDotImage} className="dot-image" />
           <div className="hero-image">
             <img src={heroImage} alt="hero image" />
             <img className="header-card" src={card} alt="card" />

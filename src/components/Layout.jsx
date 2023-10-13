@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import Navigation from '@/components/Navigation';
+import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 const Layout = () => {
@@ -16,13 +16,13 @@ const Layout = () => {
     <>
       <div>
         {window.innerWidth < 768 ? (
-          <Navigation
+          <Navbar
             handleShowNavbar={handleShowNavbar}
             user={user}
             setUser={setUser}
           />
         ) : (
-          <Navigation
+          <Navbar
             handleShowNavbar={handleShowNavbar}
             user={user}
             setUser={setUser}
