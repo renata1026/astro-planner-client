@@ -55,7 +55,7 @@ const CreateTrip = () => {
   }
 
   return (
-    <div className="container">
+    <div className="create-trip-container">
       <form onSubmit={handleSubmit} className="create-trip-form">
         <div className="col-one">
           <h2>Create Trip</h2>
