@@ -277,7 +277,12 @@ li.notifications {
   }
 
   /* adding overlay when menu opens */
-  .navbar-open main::after {
+  nav.desktop-navigation + * {
+    margin-top: 130px;
+  }
+
+  /* giving content space from the top to account for the menu */
+  .navbar-open nav.desktop-navigation + *::after {
     content: '';
     position: fixed;
     width: 100%;
@@ -286,11 +291,6 @@ li.notifications {
     left: 0;
     background: #000;
     opacity: 0.7;
-  }
-
-  /* giving content space from the top to account for the menu */
-  main {
-    margin-top: 130px !important;
   }
 }
 
