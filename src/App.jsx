@@ -25,6 +25,7 @@ const App = () => {
       },
     });
     const info = await res.json();
+    console.log(info);
     if (info.success) {
       setUser(info.user);
     }
@@ -41,6 +42,7 @@ const App = () => {
   async function fetchReservations() {
     const res = await fetch(`${API}/reservations`);
     const info = await res.json();
+    //console.log(info);
     if (info.success) {
       setReservations(info.reservations);
     }
