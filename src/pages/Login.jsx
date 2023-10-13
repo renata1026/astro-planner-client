@@ -3,42 +3,36 @@ import {
   BiLogoGooglePlusCircle,
   BiLogoTwitter,
 } from 'react-icons/bi';
-import axios from 'axios';
-import { Link, useOutletContext, useNavigate } from 'react-router-dom';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useOutletContext, useNavigate, Link } from 'react-router-dom';
+import { API } from '../lib/api-index';
 
 const Login = () => {
-  const queryClient = useQueryClient();
-  const { setUser } = useOutletContext();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const { setToken } = useOutletContext();
   const navigate = useNavigate();
 
-  const mutation = useMutation({
-    mutationFn: (formData) => {
-      console.log('formData', formData);
-      console.log('vite', import.meta.env.VITE_BASE_API_URL);
-      return axios.post(
-        `${import.meta.env.VITE_BASE_API_URL}/users/login`,
-        formData
-      );
-    },
-    onSuccess: (res) => {
-      console.log('res', res);
-      console.log('res', res.data);
-      setUser(res.data.user);
-      queryClient.invalidateQueries({ queryKey: ['user'] });
-      navigate('/');
-    },
-  });
-
-  const handleSubmit = (e) => {
+  async function handleLogin(e) {
     e.preventDefault();
-    const form = e.target;
-    const formData = new FormData(form);
-    console.log('formData', formData);
-    const formJson = Object.fromEntries(formData);
-    console.log('formJson', formJson);
-    mutation.mutate(formJson);
-  };
+    const res = await fetch(`${API}/users/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+    const info = await res.json();
+    if (!info.success) {
+      return setError(info.error);
+    }
+    setToken(info.token);
+    localStorage.setItem('token', info.token);
+    navigate('/');
+  }
 
   return (
     <div className="form-wrapper">
@@ -70,9 +64,11 @@ const Login = () => {
           </ul>
         </div>
         <p>or login with email</p>
-        <form className="login-form flex-col" onSubmit={handleSubmit}>
+        <form className="login-form flex-col" onSubmit={handleLogin}>
           <label htmlFor="email">Email</label>
           <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             type="text"
             name="email"
             id="email"
@@ -80,6 +76,8 @@ const Login = () => {
           />
           <label htmlFor="password">Password</label>
           <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             type="password"
             name="password"
             id="password"
@@ -100,6 +98,7 @@ const Login = () => {
           <button className="signin-button" type="submit">
             Sign in
           </button>
+          {error && <p className="error-message">{error}</p>}
         </form>
       </div>
     </div>
