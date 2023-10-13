@@ -37,6 +37,7 @@ const Register = () => {
     });
 
     const info = await res.json();
+    console.log(info);
     if (!info.success) {
       return setError(info.error);
     }
