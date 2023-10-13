@@ -1,0 +1,55 @@
+@use './variables' as v;
+@use './mixins' as m;
+/* Dark Mode Styles */
+
+.dark {
+  background-color: v.$primary-black;
+  color: #fff;
+  .text-gray {
+    color: #fff;
+  }
+  a,
+  label,
+  h2,
+  h3,
+  li,
+  span {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .button {
+    background-color: #444;
+    color: #fff;
+  }
+  //navbar
+  .navbar-li a,
+  .toggle-switch a,
+  .text,
+  .logo-type {
+    color: #fff !important;
+
+    .icon {
+      display: none;
+      margin-right: 8px;
+    }
+  }
+  .signup-container {
+    border-radius: 20px;
+    border: 0.5px solid v.$color-gray-2;
+    background: v.$color-gray-1;
+    box-shadow: 0px 20px 60px -6px rgba(40, 40, 40, 0.08);
+  }
+  footer,
+  section {
+    background-color: v.$primary-black;
+  }
+
+  .create-trip-form,
+  .reservation-wrapper {
+    border-radius: 20px;
+    border: 0.5px solid v.$color-gray-2;
+    background: v.$color-gray-1;
+    box-shadow: 0px 20px 60px -6px rgba(40, 40, 40, 0.08);
+  }
+}

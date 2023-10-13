@@ -1,0 +1,132 @@
+@use './variables' as v;
+@use './mixins' as m;
+
+.trip-planning-container {
+  margin: 50px;
+  max-width: 1110px;
+  margin: 0 auto;
+  padding: 70px;
+  text-align: center;
+}
+
+.trip-planning-content {
+  margin-bottom: v.$spacing-medium;
+}
+
+.trip-planning-card-container {
+  display: flex;
+  justify-content: center;
+  gap: v.$spacing-medium;
+  align-items: stretch;
+}
+
+.trip-card {
+  display: flex;
+  padding: 21px 36px 21px 35px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 30px 50px;
+  border-radius: 12px;
+  position: relative;
+  width: 100%;
+}
+
+.trip-card:nth-child(1) {
+  background-color: v.$secondary-green;
+}
+
+.trip-card:nth-child(2) {
+  background-color: #fff4ee;
+}
+
+.trip-card:nth-child(3) {
+  background-color: #ebf1ff;
+}
+
+.light-icon,
+.website-icon,
+.ebook-icon {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  padding: 10px;
+  text-align: center;
+}
+
+.light-icon {
+  background-color: v.$success-color;
+  img {
+    flex: 1 0 auto;
+    margin: 10px;
+  }
+}
+
+.website-icon {
+  background-color: v.$secondary-orange;
+  img {
+    flex: 1 0 auto;
+    margin: 10px;
+  }
+}
+
+.ebook-icon {
+  img {
+    flex: 1 0 auto;
+    margin: 10px;
+  }
+  background-color: v.$primary-blue;
+}
+
+.learn-more {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.learn-more-text {
+  margin: 0;
+}
+
+.card-description {
+  text-align: center;
+  line-height: 1.5;
+  word-wrap: break-word;
+  flex-grow: 1;
+}
+
+@include m.breakpoint('small') {
+  .trip-planning-card-container {
+    flex-direction: column;
+    align-items: center;
+
+    .trip-card {
+      max-width: 272px;
+      height: 250px;
+    }
+  }
+}
+@include m.breakpoint('medium') {
+  .trip-planning-card-container {
+    // flex-wrap: wrap;
+    gap: 24px;
+    .trip-card {
+      width: 100%;
+    }
+  }
+}
+@include m.breakpoint('large') {
+  .trip-card {
+    margin-right: 0;
+    padding: 30px 50px;
+  }
+
+  .trip-card .light-icon,
+  .trip-card .website-icon,
+  .trip-card .ebook-icon {
+    margin-right: 10px;
+  }
+}

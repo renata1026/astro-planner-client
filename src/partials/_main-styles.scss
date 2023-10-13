@@ -1,0 +1,172 @@
+@use './variables' as v;
+@use './mixins' as m;
+@use './functions' as f;
+
+// Usage of mixins and variables
+h1 {
+  @include m.bold;
+  font-size: f.rem(v.$font-size-h1); // Convert to rems
+}
+
+h2 {
+  @include m.medium;
+  font-size: f.rem(v.$font-size-h2); // Convert to rems
+}
+
+h3 {
+  @include m.medium;
+  font-size: f.rem(v.$font-size-h3);
+  margin: 0;
+}
+
+h4 {
+  @include m.medium;
+  font-size: f.rem(v.$font-size-h4); // Convert to rems
+}
+
+p {
+  margin-top: 0;
+  @include m.regular;
+  font-size: f.rem(v.$font-size-p); // Convert to rems
+  line-height: 32px;
+  color: v.$color-gray-3;
+}
+
+li,
+.text {
+  margin-top: 0;
+  @include m.regular;
+  font-size: f.rem(v.$font-size-li); // Convert to rems
+}
+
+a,
+a:visited,
+a:active,
+.text {
+  @include m.regular;
+  font-size: f.rem(v.$font-size-p);
+  color: v.$color-dark;
+  text-decoration: none;
+  &:hover,
+  &:focus {
+    color: v.$hover-color;
+    text-decoration: none;
+    // transform: scale(1.1);
+    transition:
+      color 0.3s,
+      transform 0.3s ease-in-out;
+  }
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  background-color: v.$color-light;
+}
+
+img {
+  object-fit: cover;
+}
+
+button:hover,
+button:focus {
+  background-color: v.$hover-color;
+  color: v.$color-gray-1;
+}
+
+.blue {
+  background-color: v.$primary-blue;
+}
+.green {
+  background-color: v.$success-color;
+}
+.orange {
+  background-color: v.$secondary-orange;
+}
+.yellow {
+  background-color: v.$secondary-yellow;
+}
+.light {
+  color: v.$color-light;
+  margin-bottom: v.$spacing-medium;
+}
+.wrapper {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+input,
+label {
+  margin: 0;
+}
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.flex {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  align-items: center;
+  padding-left: 0;
+}
+
+.flex-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.flex-col-start {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+li {
+  list-style-type: none;
+}
+.text-gray {
+  color: v.$color-dark;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.block {
+  display: block;
+}
+
+.center {
+  text-align: center !important;
+}
+@include m.breakpoint('small') {
+  .flex-col {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+}

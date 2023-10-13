@@ -1,0 +1,197 @@
+@use './variables' as v;
+@use './mixins' as m;
+
+.two-week-trip-section {
+  background-color: #f7f3cd;
+  padding-inline: 24px;
+  padding-top: 20px;
+  @media (min-width: 768px) {
+    padding-top: 100px;
+  }
+}
+
+.trip-plan-container {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+  max-width: 1170px;
+  margin: 0 auto;
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.trip-plan-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  @media (min-width: 768px) {
+    flex: 1;
+  }
+  @media (min-width: 1024px) {
+    margin-top: 48px;
+    gap: 24px;
+  }
+}
+
+.trip-plan-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: v.$color-gray-1;
+  margin: 0;
+  line-height: 1.5;
+  @media (min-width: 1024px) {
+    font-size: 40px;
+  }
+}
+
+.trip-plan-description {
+  font-size: 10px;
+  line-height: 1.77;
+  margin: 0;
+  @media (min-width: 1024px) {
+    font-size: 18px;
+  }
+  span {
+    display: block;
+  }
+}
+
+.trip-plan-button {
+  background-color: v.$primary-blue;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  border: none;
+  line-height: normal;
+  padding: 8px 20px;
+  align-self: flex-start;
+  @media (min-width: 1024px) {
+    font-size: 0.875rem;
+    padding: 8px 28px;
+    line-height: 1.5;
+  }
+}
+
+.card {
+  padding: 10px 14px;
+  border-radius: 7px;
+  border: 0.372px solid #d3d3d3;
+  box-shadow: 0px 2.97273px 7.43182px 0px rgba(15, 15, 15, 0.12);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.illustration-container {
+  display: flex;
+  background-image: url('assets/illustration.svg');
+  background-repeat: no-repeat;
+  width: 100%;
+  @media (min-width: 768px) {
+    width: 50%;
+    max-width: 475px;
+  }
+}
+
+.card-container {
+  background-color: white;
+  padding: 24px;
+  border-radius: 18px 18px 0px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 115px;
+  margin-left: auto;
+  width: 100%;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 12px;
+  @media (min-width: 1024px) {
+    grid-column: 1 / 3;
+  }
+}
+
+.card-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.icon-container {
+  height: 32px;
+  aspect-ratio: 1/1;
+  border-radius: 9px;
+  background-color: #d8e3ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-content-container {
+  display: flex;
+  width: 100%;
+}
+
+.card-person-name {
+  font-size: 8px;
+  color: v.$color-gray-3;
+  margin: 0;
+  line-height: 0;
+}
+
+.card-info-chip {
+  font-size: 6px;
+  color: #ff6370;
+  background-color: #f4f5f9;
+  padding: 2px 5px;
+  border-radius: 3px;
+  width: fit-content;
+}
+
+.card-description {
+  margin: 0;
+}
+
+.card-button {
+  background-color: #fee9dd;
+  color: #fa8f54;
+  border-radius: v.$border-radius;
+  padding: 6px 8px;
+  font-size: 7px;
+  margin-left: auto;
+  align-self: flex-start;
+  margin-top: 6px;
+  border: none;
+}
+
+.card-avatar {
+  height: 10px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+}
+.avatar-container {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.card-info-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.user-content-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+}

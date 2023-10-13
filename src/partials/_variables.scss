@@ -1,0 +1,44 @@
+// Color Palette
+$primary-blue: #3b71fe;
+$primary-black: #141416;
+$secondary-orange: #fa8f54;
+$secondary-yellow: #ffd166;
+$secondary-aqua: #7ed4cf;
+$secondary-green: #eef9f2;
+$success-color: #58c27d;
+$error-color: #ff6370;
+
+//hover color
+$hover-color: lighten($primary-blue, 10%);
+// Spacing
+$spacing-small: 30px;
+$spacing-medium: 50px;
+$spacing-large: 70px;
+
+// Typography
+$font-size-h1: 40;
+$font-size-h2: 30;
+$font-size-h3: 24;
+$font-size-h4: 20;
+$font-size-p: 18;
+$font-size-li: 16;
+$line-height: 1.5;
+
+// Border
+$border-width: 1px;
+$border-radius: 4px;
+
+// Box Shadow
+$box-shadow-small: 0px 20px 60px -6px rgba(40, 40, 40, 0.08);
+$box-shadow-large: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+// Background & Text Color
+$color-light: #fff;
+$color-dark: #353945;
+
+// Grayscale
+$color-gray-1: #23262f;
+$color-gray-2: #353945;
+$color-gray-3: #777e90;
+$color-gray-4: #b1b5c3;
+$color-gray-5: #e6e8ec;

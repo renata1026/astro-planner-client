@@ -1,0 +1,78 @@
+@use './variables' as v;
+@use './mixins' as m;
+
+.outside-container {
+  max-width: 1110px;
+  margin: 0 auto;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 70px 100px;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.how-it-works-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 433px;
+  gap: 40px;
+}
+
+.how-it-works-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.userIcon, .mapIcon, .navigateIcon, .flightIcon {
+  background-color: #FFFFFF;
+  border-radius: 30px;
+  padding: 15px;
+  box-shadow: 0px 20px 80px 0px rgba(0, 0, 0, 0.12);
+}
+
+.it-works-card-image {
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.how-it-works-description {
+  display: flex;
+  flex-direction: column;
+}
+
+.how-it-works-card {
+  align-items: flex-start;
+}
+
+.how-it-works-header {
+  margin: 0;
+}
+
+.how-it-works-text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.works-text{
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; 
+    color: v.$color-gray-3;
+}
+
+@include m.breakpoint('small') {
+  .outside-container {
+    flex-direction: unset;
+  }
+
+  .enlarged-image {
+    max-width: 95%;
+  }
+}
