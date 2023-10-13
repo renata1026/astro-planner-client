@@ -1,4 +1,6 @@
-const hotels = [
+export const Location = ['NEW_YORK_CITY', 'LOS_ANGELES', 'CHICAGO', 'TORONTO'];
+
+export const hotels = [
   {
     name: 'Waldorf-Astoria New York',
     phone: '(212) 872-7000',
@@ -19,7 +21,7 @@ const hotels = [
   },
 ];
 
-const flights = [
+export const flights = [
   {
     airline: 'United',
     flightNumber: 'UA1497',

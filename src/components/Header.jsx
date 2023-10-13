@@ -6,6 +6,7 @@ import backgroundDotImage from '@/assets/Ornament-82.png';
 import reviewImage from '@/assets/review.png';
 import swirlArrow from '@/assets/swirl-arrow.png';
 import card from '@/assets/card.png';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
@@ -30,9 +31,12 @@ const Header = () => {
                   placeholder="Plan a Trip"
                   className="search-input"
                 />
-                <button type="submit" className="search-button">
-                  <FaArrowRight />
-                </button>
+
+                <Link to="/create-trip">
+                  <button type="submit" className="search-button">
+                    <FaArrowRight />
+                  </button>
+                </Link>
               </div>
             </form>
           </div>
