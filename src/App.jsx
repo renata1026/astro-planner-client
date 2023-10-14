@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import { API } from './lib/api-index';
+import React, { useState, useEffect } from "react";
+import { Outlet, useParams } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import { API } from "./lib/api-index";
 
-import Footer from './components/Footer';
+import Footer from "./components/Footer";
 
 const App = () => {
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState("");
   const [user, setUser] = useState({});
   const [trips, setTrips] = useState([]);
   const [reservations, setReservations] = useState([]);
 
   async function fetchUser() {
-    const localToken = localStorage.getItem('token');
+    const localToken = localStorage.getItem("token");
     if (localToken) {
       setToken(localToken);
     }
@@ -38,7 +38,7 @@ const App = () => {
       setTrips(info.trips);
     }
   }
-  console.log(info);
+
   async function fetchReservations() {
     const res = await fetch(`${API}/reservations`);
     const info = await res.json();

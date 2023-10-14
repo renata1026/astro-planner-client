@@ -2,53 +2,54 @@ import {
   AiOutlineFacebook,
   AiOutlineLinkedin,
   AiOutlineInstagram,
-} from 'react-icons/ai';
-import { FiTwitter } from 'react-icons/fi';
+} from "react-icons/ai";
+import { FiTwitter } from "react-icons/fi";
 
-import logoIcon from '@/assets/moon-logo-v2.svg';
+import logoIcon from "@/assets/moon-logo-v2.svg";
+import { Link } from "react-router-dom";
 
 const navigation = {
   services: [
-    { name: 'Trip Planner', href: '#' },
-    { name: 'Tour Planning', href: '#' },
-    { name: 'Tour Guide', href: '#' },
-    { name: 'Tour Package', href: '#' },
-    { name: 'Tour Advice', href: '#' },
+    { name: "Trip Planner", href: "#" },
+    { name: "Tour Planning", href: "#" },
+    { name: "Tour Guide", href: "#" },
+    { name: "Tour Package", href: "#" },
+    { name: "Tour Advice", href: "#" },
   ],
   support: [
-    { name: 'Account', href: '#' },
-    { name: 'Legal', href: '#' },
-    { name: 'Contact', href: '#' },
-    { name: 'Terms & Condition', href: '#' },
-    { name: 'Privacy Policy', href: '#' },
+    { name: "Account", href: "#" },
+    { name: "Legal", href: "#" },
+    { name: "Contact", href: "#" },
+    { name: "Terms & Condition", href: "#" },
+    { name: "Privacy Policy", href: "#" },
   ],
   business: [
-    { name: 'Success', href: '#' },
-    { name: 'About', href: '#' },
-    { name: 'Location', href: '#' },
-    { name: 'Blog', href: '#' },
-    { name: 'Information', href: '#' },
+    { name: "Success", href: "#" },
+    { name: "About", href: "#" },
+    { name: "Location", href: "#" },
+    { name: "Blog", href: "#" },
+    { name: "Information", href: "#" },
   ],
   social: [
     {
-      name: 'Facebook',
-      href: '#',
+      name: "Facebook",
+      href: "#",
       Icon: <AiOutlineFacebook className="social-icon" />,
     },
     ,
     {
-      name: 'Linkedin',
-      href: '#',
+      name: "Linkedin",
+      href: "#",
       Icon: <AiOutlineLinkedin className="social-icon" />,
     },
     {
-      name: 'Twitter',
-      href: '#',
+      name: "Twitter",
+      href: "#",
       Icon: <FiTwitter className="social-icon" />,
     },
     {
-      name: 'Instagram',
-      href: '#',
+      name: "Instagram",
+      href: "#",
       Icon: <AiOutlineInstagram className="social-icon" />,
     },
   ],
@@ -72,10 +73,15 @@ const Footer = () => {
             </p>
             <div className="social-links social-links-mobile">
               {navigation.social.map((item) => (
-                <a key={item.name} href={item.href} className="social-link">
+                <Link
+                  to
+                  key={item.name}
+                  href={item.href}
+                  className="social-link"
+                >
                   <span className="visually-hidden">{item.name}</span>
                   {item.Icon}
-                </a>
+                </Link>
               ))}
             </div>
           </div>
@@ -85,9 +91,9 @@ const Footer = () => {
               <ul className="link-list">
                 {navigation.services.map((item) => (
                   <li key={item.name} className="link-item">
-                    <a href={item.href} className="link">
+                    <Link to={item.href} className="link">
                       {item.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -97,9 +103,9 @@ const Footer = () => {
               <ul className="link-list">
                 {navigation.support.map((item) => (
                   <li key={item.name} className="link-item">
-                    <a href={item.href} className="link">
+                    <Link to={item.href} className="link">
                       {item.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -109,9 +115,9 @@ const Footer = () => {
               <ul className="link-list">
                 {navigation.business.map((item) => (
                   <li key={item.name} className="link-item">
-                    <a href={item.href} className="link">
+                    <Link to={item.href} className="link">
                       {item.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -124,10 +130,10 @@ const Footer = () => {
           </p>
           <div className="social-links social-links-desktop">
             {navigation.social.map((item) => (
-              <a key={item.name} href={item.href} className="social-link">
+              <Link to key={item.name} href={item.href} className="social-link">
                 <span className="visually-hidden">{item.name}</span>
                 {item.Icon}
-              </a>
+              </Link>
             ))}
           </div>
         </div>

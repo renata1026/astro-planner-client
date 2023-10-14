@@ -1,25 +1,25 @@
-import tripImage from '@/assets/trip-image.png';
-import { useState } from 'react';
-import { API } from '../lib/api-index';
-import { useOutletContext, useNavigate } from 'react-router-dom';
-import { Location } from '../lib/data';
+import tripImage from "@/assets/trip-image.png";
+import { useState } from "react";
+import { API } from "../lib/api-index";
+import { useOutletContext, useNavigate } from "react-router-dom";
+import { Location } from "../lib/data";
 
 const CreateTrip = () => {
   const navigate = useNavigate();
-  const [destination, setDestination] = useState('');
-  const [checkIn, setCheckIn] = useState('');
-  const [checkOut, setCheckOut] = useState('');
-  const [error, setError] = useState('');
+  const [destination, setDestination] = useState("");
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [error, setError] = useState("");
   const [passengers, setPassengers] = useState(1);
 
   const { token, fetchTrips } = useOutletContext();
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setError(''); // Clear any previous errors
+    setError(""); // Clear any previous errors
 
     if (!destination) {
-      setError('Please select a destination.'); // Display an error if no destination is selected
+      setError("Please select a destination."); // Display an error if no destination is selected
       return;
     }
     // Convert checkIn and checkOut dates to ISO-8601 format
@@ -29,10 +29,10 @@ const CreateTrip = () => {
     const passengersInt = parseInt(passengers, 10);
 
     const res = await fetch(`${API}/trips`, {
-      method: 'POST',
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         location: destination,
@@ -44,13 +44,15 @@ const CreateTrip = () => {
 
     const info = await res.json();
     console.log(info);
+    //console.log(info.trip.id);
 
     if (!info.success) {
       setError(info.error);
     } else {
       fetchTrips();
+      const tripId = info.trip.id;
       // Navigate to the home page
-      navigate('/flight/:tripId');
+      navigate(`/flight/${tripId}`);
     }
   }
 
