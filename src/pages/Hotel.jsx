@@ -1,19 +1,75 @@
-import React from 'react';
-import ReservationIcon from '@/assets/hotelTwo.svg';
-import Map from '@/assets/travel-pic.jpg';
+import React, { useState } from "react";
+import ReservationIcon from "@/assets/hotelTwo.svg";
+import Map from "@/assets/travel-pic.jpg";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
+import { hotels } from "../lib/data";
+import { API } from "../lib/api-index";
 
 const Hotel = () => {
+  const navigate = useNavigate();
+  const [hotelName, setHotelName] = useState("");
+  const [hotelPhone, setHotelPhone] = useState("");
+  const [hotelLocation, setHotelLocation] = useState("");
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [confirmationNum, setConfirmationNum] = useState("");
+  const [error, setError] = useState("");
+
+  const { token, fetchReservations } = useOutletContext();
+  const { tripId } = useParams();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError(""); // Clear any previous errors
+
+    // if (!confirmationNum || !hotelName || !hotelLocation) {
+    //   setError("Please select hotel, dates, and location.");
+    //   return;
+    // }
+    // Convert checkIn and checkOut dates to ISO-8601 format
+    const isoCheckIn = new Date(checkIn).toISOString();
+    const isoCheckOut = new Date(checkOut).toISOString();
+
+    const res = await fetch(`${API}/reservations`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        hotelName,
+        hotelPhone,
+        hotelLocation,
+        departureDate: isoCheckIn,
+        arrivalDate: isoCheckOut,
+        bookingConfirmation: confirmationNum,
+        tripId,
+      }),
+    });
+
+    const info = await res.json();
+    console.log(info);
+
+    if (!info.success) {
+      setError(info.error);
+    } else {
+      fetchReservations();
+      // Navigate to the home page
+      navigate(`/car/${tripId}`);
+    }
+  }
+
   return (
     <section
       className="reservation-container"
       style={{
-        display: 'flex',
+        display: "flex",
         backgroundImage: `url(${Map})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
       }}
     >
-      <form className="reservation-wrapper flex-col">
+      <form onSubmit={handleSubmit} className="reservation-wrapper flex-col">
         <div className="reservation-text">
           <img src={ReservationIcon} alt="reservation icon" />
           <h2>Enter Hotel / Apartment Reservation</h2>
@@ -26,17 +82,30 @@ const Hotel = () => {
             name="bookingConfirmation"
             className="input-field"
             placeholder="Optional"
+            value={confirmationNum}
+            onChange={(e) => setConfirmationNum(e.target.value)}
           />
           <div className="field-container">
             <div className="flex-col-start">
               <label htmlFor="hotelName">Hotel Name</label>
-              <input
+              <select
                 type="text"
                 id="hotelName"
                 name="hotelName"
                 placeholder="Enter the hotel name"
                 className="input-field"
-              />
+                value={hotelName}
+                onChange={(e) => setHotelName(e.target.value)}
+              >
+                <option value="">Select a hotel</option>
+                {hotels.map((hotel, index) => {
+                  return (
+                    <option key={index} value={hotel.name}>
+                      {hotel.name}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
             <div className="flex-col-start">
               <label htmlFor="hotelPhone">Hotel Phone</label>
@@ -46,17 +115,30 @@ const Hotel = () => {
                 name="hotelPhone"
                 placeholder="Optional"
                 className="input-field"
+                value={hotelPhone}
+                onChange={(e) => setHotelPhone(e.target.value)}
               />
             </div>
           </div>
           <label htmlFor="location">Location</label>
-          <input
+          <select
             type="text"
             id="location"
             name="location"
             placeholder="Enter the location"
             className="input-field"
-          />
+            value={hotelLocation}
+            onChange={(e) => setHotelLocation(e.target.value)}
+          >
+            <option value="">Select an hotel location</option>
+            {hotels.map((hotel, index) => {
+              return (
+                <option key={index} value={hotel.location}>
+                  {hotel.location}
+                </option>
+              );
+            })}
+          </select>
           <div className="date-range">
             <div className="checkinDate-container flex-col-start">
               <label htmlFor="checkInDate">Check-in Date</label>
@@ -66,6 +148,8 @@ const Hotel = () => {
                   id="checkInDate"
                   name="checkInDate"
                   className="date-time-field"
+                  value={checkIn}
+                  onChange={(e) => setCheckIn(e.target.value)}
                 />
                 <input
                   type="time"
@@ -83,6 +167,8 @@ const Hotel = () => {
                   id="checkOutDate"
                   name="checkOutDate"
                   className="date-time-field"
+                  value={checkOut}
+                  onChange={(e) => setCheckOut(e.target.value)}
                 />
                 <input
                   type="time"
@@ -96,13 +182,14 @@ const Hotel = () => {
           <div className="center">
             <button
               className="save-button"
-              type="button"
-              style={{ filter: 'none' }}
+              type="submit"
+              style={{ filter: "none" }}
             >
               Save
             </button>
           </div>
         </div>
+        {error && <p className="error-message flex">{error}</p>}
       </form>
     </section>
   );
