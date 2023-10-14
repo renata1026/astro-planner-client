@@ -4,8 +4,8 @@ import {
   FaHome,
   FaBriefcase,
   FaDollarSign,
-  FaQuestion,
   FaRegBell,
+  FaQuestion,
 } from 'react-icons/fa';
 import { RiAccountCircleFill } from 'react-icons/ri';
 import { AiOutlineLogin } from 'react-icons/ai';
@@ -34,50 +34,50 @@ const Navbar = ({ user, setUser, setToken }) => {
     <nav className="desktop-navigation">
       <div className="navbar-container">
         <ul className="navbar-list">
-          <li className="navbar-list-fullwidth">
-            <Link className="flex" to={'/'}>
-              <img
-                className="logo-icon"
-                src={logoIcon}
-                size={24}
-                alt="Astroplanner Logo"
-              />
-            </Link>
-          </li>
-          <li style={{ fontWeight: 'bold' }} className="logo-type hide">
-            Astro Planner
-          </li>
+          <div className="navbar-list-fullwidth">
+            <NavLink to="/" className="flex">
+              <li className="navbar-list-fullwidth">
+                <img
+                  className="logo-icon"
+                  src={logoIcon}
+                  size={24}
+                  alt="Astroplanner Logo"
+                />
+              </li>
+              <li style={{ fontWeight: 'bold' }} className="logo-type hide">
+                Astro Planner
+              </li>
+            </NavLink>
+          </div>
           <div
             className={`navbar-list-fullwidth navbar-none ${
               showNavbar ? 'active' : 'hide'
             }`}
           >
             <li className="navbar-li">
-              <Link className="flex" to={'/create-trip'}>
+              <NavLink className="flex" to={'/create-trip'}>
                 <FaBriefcase className="icon" />
                 <span className="nav-text">Create Trip</span>
-              </Link>
+              </NavLink>
             </li>
             {user.id ? (
               <>
                 <span>Welcome {user.firstName}</span>
-                <NavLink onClick={handleLogout} to={'/'}>
-                  Logout
-                </NavLink>
+                <div onClick={handleLogout}>Logout</div>
               </>
             ) : (
               <>
                 <li className="navbar-li">
-                  <Link className="flex" to="/login">
+                  <NavLink className="flex" to="/login">
                     <AiOutlineLogin className="icon" />
                     <span className="nav-text">Login</span>
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="navbar-li">
-                  <Link className="flex" to="/register">
+                  <NavLink className="flex" to="/register">
                     <RiAccountCircleFill className="icon" />
                     <span className="nav-text">Register</span>
-                  </Link>
+                  </NavLink>
                 </li>
               </>
             )}
@@ -89,13 +89,13 @@ const Navbar = ({ user, setUser, setToken }) => {
             }`}
           >
             <li className="navbar-li">
-              <Link className="flex" to={'/faqs'}>
+              <Link to={'#faqs'} className="flex">
                 <FaQuestion className="icon" />
                 <span className="nav-text">FAQ</span>
               </Link>
             </li>
             <li className="navbar-li notifications">
-              <Link className="flex" to={'/notifications'}>
+              <Link to={'#notifications'} className="flex">
                 <FaRegBell className="icon" />
                 <span className="nav-text">Notifications</span>
               </Link>
