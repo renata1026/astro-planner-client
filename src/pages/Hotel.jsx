@@ -1,40 +1,40 @@
-import React, { useState } from "react";
-import ReservationIcon from "@/assets/hotelTwo.svg";
-import Map from "@/assets/travel-pic.jpg";
-import { useNavigate, useOutletContext, useParams } from "react-router-dom";
-import { hotels } from "../lib/data";
-import { API } from "../lib/api-index";
+import React, { useState } from 'react';
+import ReservationIcon from '@/assets/hotelTwo.svg';
+import Map from '@/assets/travel-pic.jpg';
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
+import { hotels } from '../lib/data';
+import { API } from '../lib/api-index';
 
 const Hotel = () => {
   const navigate = useNavigate();
-  const [hotelName, setHotelName] = useState("");
-  const [hotelPhone, setHotelPhone] = useState("");
-  const [hotelLocation, setHotelLocation] = useState("");
-  const [checkIn, setCheckIn] = useState("");
-  const [checkOut, setCheckOut] = useState("");
-  const [confirmationNum, setConfirmationNum] = useState("");
-  const [error, setError] = useState("");
+  const [hotelName, setHotelName] = useState('');
+  const [hotelPhone, setHotelPhone] = useState('');
+  const [hotelLocation, setHotelLocation] = useState('');
+  const [checkIn, setCheckIn] = useState('');
+  const [checkOut, setCheckOut] = useState('');
+  const [confirmationNum, setConfirmationNum] = useState('');
+  const [error, setError] = useState('');
 
   const { token, fetchReservations } = useOutletContext();
   const { tripId } = useParams();
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setError(""); // Clear any previous errors
+    setError(''); // Clear any previous errors
 
-    // if (!confirmationNum || !hotelName || !hotelLocation) {
-    //   setError("Please select hotel, dates, and location.");
-    //   return;
-    // }
+    if (!checkIn || !checkOut || !hotelName || !hotelLocation) {
+      setError('Please select hotel, dates, and location.');
+      return;
+    }
     // Convert checkIn and checkOut dates to ISO-8601 format
     const isoCheckIn = new Date(checkIn).toISOString();
     const isoCheckOut = new Date(checkOut).toISOString();
 
     const res = await fetch(`${API}/reservations`, {
-      method: "POST",
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         hotelName,
@@ -63,10 +63,10 @@ const Hotel = () => {
     <section
       className="reservation-container"
       style={{
-        display: "flex",
+        display: 'flex',
         backgroundImage: `url(${Map})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
       }}
     >
       <form onSubmit={handleSubmit} className="reservation-wrapper flex-col">
@@ -183,7 +183,7 @@ const Hotel = () => {
             <button
               className="save-button"
               type="submit"
-              style={{ filter: "none" }}
+              style={{ filter: 'none' }}
             >
               Save
             </button>
