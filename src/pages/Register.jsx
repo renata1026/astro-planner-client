@@ -48,34 +48,35 @@ const Register = () => {
 
   return (
     <div className="form-wrapper">
-      {isRegister ? (
+      {isRegister && (
         <div>
           <p className="successful">You are now registered!</p>
-          <div className="signup-container flex-col">
-            <h2>Get started</h2>
-            <div className="flex">
-              <ul className="social-icons flex">
-                <li>
-                  <button className="social-button">
-                    <BiLogoFacebookCircle size={24} color="#4776D0" />
-                  </button>
-                </li>
-                <li>
-                  <button className="social-button">
-                    <BiLogoGooglePlusCircle size={24} />
-                  </button>
-                </li>
-                <li>
-                  <button className="social-button">
-                    <BiLogoTwitter size={24} color="#01AEEF" />
-                  </button>
-                </li>
-              </ul>
-            </div>
-            <p>or register with email</p>
-          </div>
         </div>
-      ) : (
+      )}
+
+      <div className="signup-container flex-col">
+        <h2>Get started</h2>
+        <div className="flex">
+          <ul className="social-icons flex">
+            <li>
+              <button className="social-button">
+                <BiLogoFacebookCircle size={24} color="#4776D0" />
+              </button>
+            </li>
+            <li>
+              <button className="social-button">
+                <BiLogoGooglePlusCircle size={24} />
+              </button>
+            </li>
+            <li>
+              <button className="social-button">
+                <BiLogoTwitter size={24} color="#01AEEF" />
+              </button>
+            </li>
+          </ul>
+        </div>
+        <p>or register with email</p>
+
         <div>
           <form className="register-form flex-col" onSubmit={handleRegister}>
             <label htmlFor="firstName">First Name</label>
@@ -128,7 +129,8 @@ const Register = () => {
             </button>
           </form>
         </div>
-      )}
+      </div>
+
       {error && <p className="error-message">{error}</p>}
     </div>
   );

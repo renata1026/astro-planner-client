@@ -5,6 +5,7 @@ import Map from '@/assets/travel-pic.jpg';
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { cars } from '../lib/data';
 import { API } from '../lib/api-index';
+import { FaCaretDown } from 'react-icons/fa';
 
 const Car = () => {
   const navigate = useNavigate();
