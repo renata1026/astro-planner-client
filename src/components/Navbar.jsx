@@ -34,33 +34,29 @@ const Navbar = ({ user, setUser, setToken }) => {
     <nav className="desktop-navigation">
       <div className="navbar-container">
         <ul className="navbar-list">
-          <div className="navbar-list-fullwidth">
-            <NavLink to="/" className="flex">
-              <li className="navbar-list-fullwidth">
-                <Link className="flex" to={'/'}>
-                  <img
-                    className="logo-icon"
-                    src={logoIcon}
-                    size={24}
-                    alt="Astroplanner Logo"
-                  />
-                </Link>
-              </li>
-              <li style={{ fontWeight: 'bold' }} className="logo-type hide">
-                Astro Planner
-              </li>
-            </NavLink>
-          </div>
+          <li className="navbar-list-fullwidth">
+            <Link className="flex" to={'/'}>
+              <img
+                className="logo-icon"
+                src={logoIcon}
+                size={24}
+                alt="Astroplanner Logo"
+              />
+            </Link>
+          </li>
+          <li style={{ fontWeight: 'bold' }} className="logo-type hide">
+            Astro Planner
+          </li>
           <div
             className={`navbar-list-fullwidth navbar-none ${
               showNavbar ? 'active' : 'hide'
             }`}
           >
             <li className="navbar-li">
-              <NavLink className="flex" to={'/create-trip'}>
+              <Link className="flex" to={'/create-trip'}>
                 <FaBriefcase className="icon" />
                 <span className="nav-text">Create Trip</span>
-              </NavLink>
+              </Link>
             </li>
             {user.id ? (
               <>
@@ -72,16 +68,16 @@ const Navbar = ({ user, setUser, setToken }) => {
             ) : (
               <>
                 <li className="navbar-li">
-                  <NavLink className="flex" to="/login">
+                  <Link className="flex" to="/login">
                     <AiOutlineLogin className="icon" />
                     <span className="nav-text">Login</span>
-                  </NavLink>
+                  </Link>
                 </li>
                 <li className="navbar-li">
-                  <NavLink className="flex" to="/register">
+                  <Link className="flex" to="/register">
                     <RiAccountCircleFill className="icon" />
                     <span className="nav-text">Register</span>
-                  </NavLink>
+                  </Link>
                 </li>
               </>
             )}
