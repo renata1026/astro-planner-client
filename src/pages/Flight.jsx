@@ -62,8 +62,9 @@ const Flight = () => {
       setError(info.error);
     } else {
       fetchReservations();
+
       // Navigate to the home page
-      navigate("/hotel");
+      navigate(`/hotel/${tripId}`);
     }
   }
 
