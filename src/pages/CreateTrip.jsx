@@ -44,13 +44,15 @@ const CreateTrip = () => {
 
     const info = await res.json();
     console.log(info);
+    //console.log(info.trip.id);
 
     if (!info.success) {
       setError(info.error);
     } else {
       fetchTrips();
+      const tripId = info.trip.id;
       // Navigate to the home page
-      navigate("/flight");
+      navigate(`/flight/${tripId}`);
     }
   }
 
