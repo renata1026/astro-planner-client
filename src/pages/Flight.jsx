@@ -1,50 +1,55 @@
-import React from "react";
-import ReservationIcon from "@/assets/hotelTwo.svg";
-import Map from "@/assets/travel-pic.jpg";
-import { useState } from "react";
-import { API } from "../lib/api-index";
-import { useOutletContext, useNavigate } from "react-router-dom";
-import { flights } from "../lib/data";
+import React from 'react';
+import ReservationIcon from '@/assets/hotelTwo.svg';
+import Map from '@/assets/travel-pic.jpg';
+import { useState } from 'react';
+import { API } from '../lib/api-index';
+import { useOutletContext, useNavigate } from 'react-router-dom';
+import { flights } from '../lib/data';
 
 const Flight = () => {
   const navigate = useNavigate();
-  const [airlineConNum, setAirlineConNum] = useState("");
-  const [airline, setAirline] = useState("");
-  const [flightNumber, setFlightNumber] = useState("");
-  const [departureAirport, setDepartureAirport] = useState("");
-  const [arrivalAirport, setArrivalAirport] = useState("");
-  const [departureDate, setDepartureDate] = useState("");
-  const [arrivalDate, setArrivalDate] = useState("");
-  const [error, setError] = useState("");
+  const [airlineConNum, setAirlineConNum] = useState('');
+  const [airline, setAirline] = useState('');
+  const [flightNumber, setFlightNumber] = useState('');
+  const [departureAirport, setDepartureAirport] = useState('');
+  const [arrivalAirport, setArrivalAirport] = useState('');
+  const [departureDate, setDepartureDate] = useState('');
+  const [arrivalDate, setArrivalDate] = useState('');
+  const [error, setError] = useState('');
 
   const { token, fetchReservations } = useOutletContext();
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setError(""); // Clear any previous errors
+    setError(''); // Clear any previous errors
 
-    if (!departure || !arrival || !departureDate || !arrivalDate) {
-      setError("Please select a destination."); // Display an error if no destination is selected
+    if (
+      !departureAirport ||
+      !arrivalAirport ||
+      !departureDate ||
+      !arrivalDate
+    ) {
+      setError('Please select airline, dates, departure and arrival airports.');
       return;
     }
     // Convert checkIn and checkOut dates to ISO-8601 format
-    const isoCheckIn = new Date(checkIn).toISOString();
-    const isoCheckOut = new Date(checkOut).toISOString();
+    const isoCheckIn = new Date(arrivalDate).toISOString();
+    const isoCheckOut = new Date(departureDate).toISOString();
 
     const res = await fetch(`${API}/reservations`, {
-      method: "POST",
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        departure: departureAirport,
-        arrival: arrivalAirport,
+        departureAirport,
+        arrivalAirport,
         departureDate: isoCheckIn,
         arrivalDate: isoCheckOut,
-        airline: airlineName,
+        airlineName: airline,
         flightNumber,
-        airlineConNum: bookingConfirmation,
+        bookingConfirmation: airlineConNum,
       }),
     });
 
@@ -56,7 +61,7 @@ const Flight = () => {
     } else {
       fetchReservations();
       // Navigate to the home page
-      navigate("/hotel");
+      navigate('/hotel');
     }
   }
 
@@ -64,13 +69,13 @@ const Flight = () => {
     <section
       className="reservation-container"
       style={{
-        display: "flex",
+        display: 'flex',
         backgroundImage: `url(${Map})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
       }}
     >
-      <form className="reservation-wrapper flex-col">
+      <form onSubmit={handleSubmit} className="reservation-wrapper flex-col">
         <div className="reservation-text">
           <img src={ReservationIcon} alt="reservation icon" />
           <h2>Enter Flight Reservation</h2>
@@ -83,6 +88,8 @@ const Flight = () => {
             name="bookingConfirmation"
             className="input-field"
             placeholder="Optional"
+            value={airlineConNum}
+            onChange={(e) => setAirlineConNum(e.target.value)}
           />
           <div className="field-container">
             <div className="flex-col-start">
@@ -97,9 +104,9 @@ const Flight = () => {
                 onChange={(e) => setAirline(e.target.value)}
               >
                 <option value="">Select a flight</option>
-                {flights.map((flight) => {
+                {flights.map((flight, index) => {
                   return (
-                    <option key={flight} value={flight}>
+                    <option key={index} value={flight.airline}>
                       {flight.airline}
                     </option>
                   );
@@ -114,6 +121,8 @@ const Flight = () => {
                 name="flightNum"
                 placeholder="Optional"
                 className="input-field"
+                value={flightNumber}
+                onChange={(e) => setFlightNumber(e.target.value)}
               />
             </div>
           </div>
@@ -128,9 +137,9 @@ const Flight = () => {
             onChange={(e) => setDepartureAirport(e.target.value)}
           >
             <option value="">Select a Departure Airport</option>
-            {flights.map((flight) => {
+            {flights.map((flight, index) => {
               return (
-                <option key={flight} value={flight}>
+                <option key={index} value={flight.departureAirport}>
                   {flight.departureAirport}
                 </option>
               );
@@ -147,9 +156,9 @@ const Flight = () => {
             onChange={(e) => setArrivalAirport(e.target.value)}
           >
             <option value="">Select a Arrival Airport</option>
-            {flights.map((flight) => {
+            {flights.map((flight, index) => {
               return (
-                <option key={flight} value={flight}>
+                <option key={index} value={flight.arrivalAirport}>
                   {flight.arrivalAirport}
                 </option>
               );
@@ -164,6 +173,8 @@ const Flight = () => {
                   id="departureDate"
                   name="departureDate"
                   className="date-time-field"
+                  value={departureDate}
+                  onChange={(e) => setDepartureDate(e.target.value)}
                 />
                 <input
                   type="time"
@@ -181,6 +192,8 @@ const Flight = () => {
                   id="arrivalDate"
                   name="arrivalDate"
                   className="date-time-field"
+                  value={arrivalDate}
+                  onChange={(e) => setArrivalDate(e.target.value)}
                 />
                 <input
                   type="time"
@@ -195,7 +208,7 @@ const Flight = () => {
             <button
               className="save-button"
               type="submit"
-              style={{ filter: "none" }}
+              style={{ filter: 'none' }}
             >
               Save
             </button>

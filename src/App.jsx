@@ -38,7 +38,7 @@ const App = () => {
       setTrips(info.trips);
     }
   }
-
+  console.log(info);
   async function fetchReservations() {
     const res = await fetch(`${API}/reservations`);
     const info = await res.json();

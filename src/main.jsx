@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       { path: 'register', element: <Register /> },
       { path: 'create-trip', element: <CreateTrip /> },
       { path: 'hotel', element: <Hotel /> },
-      { path: 'flight', element: <Flight /> },
+      { path: 'flight/:tripId', element: <Flight /> },
       { path: 'car', element: <Car /> },
     ],
   },

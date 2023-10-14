@@ -50,7 +50,7 @@ const CreateTrip = () => {
     } else {
       fetchTrips();
       // Navigate to the home page
-      navigate('/flight');
+      navigate('/flight/:tripId');
     }
   }
 
