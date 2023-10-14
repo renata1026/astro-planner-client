@@ -1,28 +1,28 @@
-import React from "react";
-import ReservationIcon from "@/assets/hotelTwo.svg";
-import Map from "@/assets/travel-pic.jpg";
-import { useState } from "react";
-import { API } from "../lib/api-index";
-import { useOutletContext, useNavigate, useParams } from "react-router-dom";
-import { flights } from "../lib/data";
+import React from 'react';
+import ReservationIcon from '@/assets/hotelTwo.svg';
+import Map from '@/assets/travel-pic.jpg';
+import { useState } from 'react';
+import { API } from '../lib/api-index';
+import { useOutletContext, useNavigate, useParams } from 'react-router-dom';
+import { flights } from '../lib/data';
 
 const Flight = () => {
   const navigate = useNavigate();
-  const [airlineConNum, setAirlineConNum] = useState("");
-  const [airline, setAirline] = useState("");
-  const [flightNumber, setFlightNumber] = useState("");
-  const [departureAirport, setDepartureAirport] = useState("");
-  const [arrivalAirport, setArrivalAirport] = useState("");
-  const [departureDate, setDepartureDate] = useState("");
-  const [arrivalDate, setArrivalDate] = useState("");
-  const [error, setError] = useState("");
+  const [airlineConNum, setAirlineConNum] = useState('');
+  const [airline, setAirline] = useState('');
+  const [flightNumber, setFlightNumber] = useState('');
+  const [departureAirport, setDepartureAirport] = useState('');
+  const [arrivalAirport, setArrivalAirport] = useState('');
+  const [departureDate, setDepartureDate] = useState('');
+  const [arrivalDate, setArrivalDate] = useState('');
+  const [error, setError] = useState('');
 
   const { token, fetchReservations } = useOutletContext();
   const { tripId } = useParams();
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setError(""); // Clear any previous errors
+    setError(''); // Clear any previous errors
 
     if (
       !departureAirport ||
@@ -30,7 +30,7 @@ const Flight = () => {
       !departureDate ||
       !arrivalDate
     ) {
-      setError("Please select airline, dates, departure and arrival airports.");
+      setError('Please select airline, dates, departure and arrival airports.');
       return;
     }
     // Convert checkIn and checkOut dates to ISO-8601 format
@@ -38,10 +38,10 @@ const Flight = () => {
     const isoCheckOut = new Date(departureDate).toISOString();
 
     const res = await fetch(`${API}/reservations`, {
-      method: "POST",
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         departureAirport,
@@ -72,10 +72,10 @@ const Flight = () => {
     <section
       className="reservation-container"
       style={{
-        display: "flex",
+        display: 'flex',
         backgroundImage: `url(${Map})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
       }}
     >
       <form onSubmit={handleSubmit} className="reservation-wrapper flex-col">
@@ -97,24 +97,26 @@ const Flight = () => {
           <div className="field-container">
             <div className="flex-col-start">
               <label htmlFor="airlineName">Airline</label>
-              <select
-                type="text"
-                id="airline"
-                name="airline"
-                placeholder="Enter an airline"
-                className="input-field"
-                value={airline}
-                onChange={(e) => setAirline(e.target.value)}
-              >
-                <option value="">Select a flight</option>
-                {flights.map((flight, index) => {
-                  return (
-                    <option key={index} value={flight.airline}>
-                      {flight.airline}
-                    </option>
-                  );
-                })}
-              </select>
+              <div className="select-container">
+                <select
+                  type="text"
+                  id="airline"
+                  name="airline"
+                  placeholder="Enter an airline"
+                  className="select-box"
+                  value={airline}
+                  onChange={(e) => setAirline(e.target.value)}
+                >
+                  <option value="">Select a flight</option>
+                  {flights.map((flight, index) => {
+                    return (
+                      <option key={index} value={flight.airline}>
+                        {flight.airline}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
             </div>
             <div className="flex-col-start">
               <label htmlFor="flightNum">Flight Number</label>
@@ -130,43 +132,47 @@ const Flight = () => {
             </div>
           </div>
           <label htmlFor="departureAirport">Departure Airport</label>
-          <select
-            type="text"
-            id="departureAirport"
-            name="departureAirport"
-            placeholder="Entering Depart Airport"
-            className="input-field"
-            value={departureAirport}
-            onChange={(e) => setDepartureAirport(e.target.value)}
-          >
-            <option value="">Select a Departure Airport</option>
-            {flights.map((flight, index) => {
-              return (
-                <option key={index} value={flight.departureAirport}>
-                  {flight.departureAirport}
-                </option>
-              );
-            })}
-          </select>
+          <div className="select-container">
+            <select
+              type="text"
+              id="departureAirport"
+              name="departureAirport"
+              placeholder="Entering Depart Airport"
+              className="select-box"
+              value={departureAirport}
+              onChange={(e) => setDepartureAirport(e.target.value)}
+            >
+              <option value="">Select a Departure Airport</option>
+              {flights.map((flight, index) => {
+                return (
+                  <option key={index} value={flight.departureAirport}>
+                    {flight.departureAirport}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
           <label htmlFor="arrivalAirport">Arrival Airport</label>
-          <select
-            type="text"
-            id="arrivalAirport"
-            name="arrivalAirport"
-            placeholder="Entering Arrival Airport"
-            className="input-field"
-            value={arrivalAirport}
-            onChange={(e) => setArrivalAirport(e.target.value)}
-          >
-            <option value="">Select a Arrival Airport</option>
-            {flights.map((flight, index) => {
-              return (
-                <option key={index} value={flight.arrivalAirport}>
-                  {flight.arrivalAirport}
-                </option>
-              );
-            })}
-          </select>
+          <div className="select-container">
+            <select
+              type="text"
+              id="arrivalAirport"
+              name="arrivalAirport"
+              placeholder="Entering Arrival Airport"
+              className="select-box"
+              value={arrivalAirport}
+              onChange={(e) => setArrivalAirport(e.target.value)}
+            >
+              <option value="">Select a Arrival Airport</option>
+              {flights.map((flight, index) => {
+                return (
+                  <option key={index} value={flight.arrivalAirport}>
+                    {flight.arrivalAirport}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
           <div className="date-range">
             <div className="checkinDate-container flex-col-start">
               <label htmlFor="departureDate">Departure Date</label>
@@ -211,7 +217,7 @@ const Flight = () => {
             <button
               className="save-button"
               type="submit"
-              style={{ filter: "none" }}
+              style={{ filter: 'none' }}
             >
               Save
             </button>

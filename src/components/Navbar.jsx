@@ -63,7 +63,7 @@ const Navbar = ({ user, setUser, setToken }) => {
             {user.id ? (
               <>
                 <span>Welcome {user.firstName}</span>
-                <div onClick={handleLogout}>Logout</div>
+                <span onClick={handleLogout}>Logout</span>
               </>
             ) : (
               <>

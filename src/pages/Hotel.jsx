@@ -4,6 +4,8 @@ import Map from '@/assets/travel-pic.jpg';
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import { hotels } from '../lib/data';
 import { API } from '../lib/api-index';
+import { FaCaretDown } from 'react-icons/fa';
+FaCaretDown;
 
 const Hotel = () => {
   const navigate = useNavigate();
@@ -88,45 +90,52 @@ const Hotel = () => {
           <div className="field-container">
             <div className="flex-col-start">
               <label htmlFor="hotelName">Hotel Name</label>
-              <select
-                type="text"
-                id="hotelName"
-                name="hotelName"
-                placeholder="Enter the hotel name"
-                className="input-field"
-                value={hotelName}
-                onChange={(e) => setHotelName(e.target.value)}
-              >
-                <option value="">Select a hotel</option>
-                {hotels.map((hotel, index) => {
-                  return (
-                    <option key={index} value={hotel.name}>
-                      {hotel.name}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div className="flex-col-start">
-              <label htmlFor="hotelPhone">Hotel Phone</label>
-              <input
-                type="text"
-                id="hotelPhone"
-                name="hotelPhone"
-                placeholder="Optional"
-                className="input-field"
-                value={hotelPhone}
-                onChange={(e) => setHotelPhone(e.target.value)}
-              />
+              <div className="select-container">
+                <select
+                  type="text"
+                  id="hotelName"
+                  name="hotelName"
+                  placeholder="Enter the hotel name"
+                  className="select-box"
+                  value={hotelName}
+                  onChange={(e) => setHotelName(e.target.value)}
+                >
+                  <option value="">Select a hotel</option>
+                  {hotels.map((hotel, index) => {
+                    return (
+                      <option key={index} value={hotel.name}>
+                        {hotel.name}
+                      </option>
+                    );
+                  })}
+                </select>
+                <div className="icon-container">
+                  <FaCaretDown />
+                </div>
+              </div>
             </div>
           </div>
-          <label htmlFor="location">Location</label>
+          <div className="flex-col-start">
+            <label htmlFor="hotelPhone">Hotel Phone</label>
+            <input
+              type="text"
+              id="hotelPhone"
+              name="hotelPhone"
+              placeholder="Optional"
+              className="input-field"
+              value={hotelPhone}
+              onChange={(e) => setHotelPhone(e.target.value)}
+            />
+          </div>
+        </div>
+        <label htmlFor="location">Location</label>
+        <div className="select-container">
           <select
             type="text"
             id="location"
             name="location"
             placeholder="Enter the location"
-            className="input-field"
+            className="select-box"
             value={hotelLocation}
             onChange={(e) => setHotelLocation(e.target.value)}
           >
@@ -139,55 +148,58 @@ const Hotel = () => {
               );
             })}
           </select>
-          <div className="date-range">
-            <div className="checkinDate-container flex-col-start">
-              <label htmlFor="checkInDate">Check-in Date</label>
-              <div className="reservation-flex">
-                <input
-                  type="date"
-                  id="checkInDate"
-                  name="checkInDate"
-                  className="date-time-field"
-                  value={checkIn}
-                  onChange={(e) => setCheckIn(e.target.value)}
-                />
-                <input
-                  type="time"
-                  id="checkInTime"
-                  name="checkInTime"
-                  className="date-time-field"
-                />
-              </div>
-            </div>
-            <div className="checkOutDate-container flex-col-start">
-              <label htmlFor="checkOutDate">Check-out Date</label>
-              <div className="reservation-flex">
-                <input
-                  type="date"
-                  id="checkOutDate"
-                  name="checkOutDate"
-                  className="date-time-field"
-                  value={checkOut}
-                  onChange={(e) => setCheckOut(e.target.value)}
-                />
-                <input
-                  type="time"
-                  id="checkOutTime"
-                  name="checkOutTime"
-                  className="date-time-field"
-                />
-              </div>
+          <div className="icon-container">
+            <FaCaretDown />
+          </div>
+        </div>
+        <div className="date-range">
+          <div className="checkinDate-container flex-col-start">
+            <label htmlFor="checkInDate">Check-in Date</label>
+            <div className="reservation-flex">
+              <input
+                type="date"
+                id="checkInDate"
+                name="checkInDate"
+                className="date-time-field"
+                value={checkIn}
+                onChange={(e) => setCheckIn(e.target.value)}
+              />
+              <input
+                type="time"
+                id="checkInTime"
+                name="checkInTime"
+                className="date-time-field"
+              />
             </div>
           </div>
-          <div className="center">
-            <button
-              className="save-button"
-              type="submit"
-              style={{ filter: 'none' }}
-            >
-              Save
-            </button>
+          <div className="checkOutDate-container flex-col-start">
+            <label htmlFor="checkOutDate">Check-out Date</label>
+            <div className="reservation-flex">
+              <input
+                type="date"
+                id="checkOutDate"
+                name="checkOutDate"
+                className="date-time-field"
+                value={checkOut}
+                onChange={(e) => setCheckOut(e.target.value)}
+              />
+              <input
+                type="time"
+                id="checkOutTime"
+                name="checkOutTime"
+                className="date-time-field"
+              />
+            </div>
           </div>
+        </div>
+        <div className="center">
+          <button
+            className="save-button"
+            type="submit"
+            style={{ filter: 'none' }}
+          >
+            Save
+          </button>
         </div>
         {error && <p className="error-message flex">{error}</p>}
       </form>

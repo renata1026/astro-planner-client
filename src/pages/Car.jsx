@@ -96,7 +96,7 @@ const Car = () => {
                 id="agencyName"
                 name="agencyName"
                 placeholder="Enter the agency name"
-                className="input-field"
+                className="select-box"
                 value={agencyName}
                 onChange={(e) => setAgencyName(e.target.value)}
               >
@@ -109,27 +109,35 @@ const Car = () => {
                   );
                 })}
               </select>
+              <div className="icon-container">
+                <FaCaretDown />
+              </div>
             </div>
             <div className="flex-col-start">
               <label htmlFor="carType">Car Type</label>
-              <select
-                type="text"
-                id="carType"
-                name="carType"
-                placeholder="Optional"
-                className="input-field"
-                value={carType}
-                onChange={(e) => setCarType(e.target.value)}
-              >
-                <option value="">Select car type</option>
-                {cars.map((car, index) => {
-                  return (
-                    <option key={index} value={car.carType}>
-                      {car.carType}
-                    </option>
-                  );
-                })}
-              </select>
+              <div className="select-container">
+                <select
+                  type="text"
+                  id="carType"
+                  name="carType"
+                  placeholder="Optional"
+                  className="select-box"
+                  value={carType}
+                  onChange={(e) => setCarType(e.target.value)}
+                >
+                  <option value="">Select car type</option>
+                  {cars.map((car, index) => {
+                    return (
+                      <option key={index} value={car.carType}>
+                        {car.carType}
+                      </option>
+                    );
+                  })}
+                </select>
+                <div className="icon-container">
+                  <FaCaretDown />
+                </div>
+              </div>
             </div>
           </div>
           <label htmlFor="pickupLocation">Pick-up Location</label>

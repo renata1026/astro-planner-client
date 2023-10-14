@@ -1,25 +1,26 @@
-import tripImage from "@/assets/trip-image.png";
-import { useState } from "react";
-import { API } from "../lib/api-index";
-import { useOutletContext, useNavigate } from "react-router-dom";
-import { Location } from "../lib/data";
+import tripImage from '@/assets/trip-image.png';
+import { useState } from 'react';
+import { API } from '../lib/api-index';
+import { useOutletContext, useNavigate } from 'react-router-dom';
+import { Location } from '../lib/data';
+import { FaCaretDown } from 'react-icons/fa';
 
 const CreateTrip = () => {
   const navigate = useNavigate();
-  const [destination, setDestination] = useState("");
-  const [checkIn, setCheckIn] = useState("");
-  const [checkOut, setCheckOut] = useState("");
-  const [error, setError] = useState("");
+  const [destination, setDestination] = useState('');
+  const [checkIn, setCheckIn] = useState('');
+  const [checkOut, setCheckOut] = useState('');
+  const [error, setError] = useState('');
   const [passengers, setPassengers] = useState(1);
 
   const { token, fetchTrips } = useOutletContext();
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setError(""); // Clear any previous errors
+    setError(''); // Clear any previous errors
 
     if (!destination) {
-      setError("Please select a destination."); // Display an error if no destination is selected
+      setError('Please select a destination.'); // Display an error if no destination is selected
       return;
     }
     // Convert checkIn and checkOut dates to ISO-8601 format
@@ -29,10 +30,10 @@ const CreateTrip = () => {
     const passengersInt = parseInt(passengers, 10);
 
     const res = await fetch(`${API}/trips`, {
-      method: "POST",
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         location: destination,
@@ -62,23 +63,29 @@ const CreateTrip = () => {
         <div className="col-one">
           <h2>Create Trip</h2>
           <label htmlFor="location">Destination</label>
-          <select
-            type="text"
-            name="location"
-            id="location"
-            placeholder="City name"
-            value={destination}
-            onChange={(e) => setDestination(e.target.value)}
-          >
-            <option value="">Select a Destination</option>
-            {Location.map((city) => {
-              return (
-                <option key={city} value={city}>
-                  {city}
-                </option>
-              );
-            })}
-          </select>
+          <div className="select-container">
+            <select
+              type="text"
+              name="location"
+              id="location"
+              placeholder="City name"
+              className="select-box"
+              value={destination}
+              onChange={(e) => setDestination(e.target.value)}
+            >
+              <option value="">Select a Destination</option>
+              {Location.map((city) => {
+                return (
+                  <option key={city} value={city}>
+                    {city}
+                  </option>
+                );
+              })}
+            </select>
+            <div className="icon-container">
+              <FaCaretDown />
+            </div>
+          </div>
           <label htmlFor="check-in">Check-in</label>
           <div className="flex">
             <input

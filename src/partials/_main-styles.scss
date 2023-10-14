@@ -43,11 +43,15 @@ li,
 a,
 a:visited,
 a:active,
-.text {
+.text,
+span {
   @include m.regular;
   font-size: f.rem(v.$font-size-p);
   color: v.$color-dark;
   text-decoration: none;
+  transition: color 0.3s;
+  cursor: pointer;
+
   &:hover,
   &:focus {
     color: v.$hover-color;
@@ -102,6 +106,44 @@ button:focus {
 input,
 label {
   margin: 0;
+}
+
+.select-container {
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+  //   display: flex;
+  padding: 12px 20px;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  border-radius: 6px;
+  border: 1px solid #b1b5c3;
+}
+
+.select-box {
+  border: none;
+  appearance: none;
+  width: 100%;
+  color: v.$primary-black;
+  background-color: #fff;
+}
+
+.select-container .icon-container {
+  width: 50px;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff !important;
+}
+
+.icon-container svg {
+  font-size: 30px;
+  fill: v.$primary-black;
+  margin-right: 30px;
 }
 .container {
   max-width: 1100px;
