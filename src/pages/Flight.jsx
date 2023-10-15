@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { API } from '../lib/api-index';
 import { useOutletContext, useNavigate, useParams } from 'react-router-dom';
 import { flights } from '../lib/data';
+import { FaCaretDown } from 'react-icons/fa';
 
 const Flight = () => {
   const navigate = useNavigate();
@@ -116,6 +117,9 @@ const Flight = () => {
                     );
                   })}
                 </select>
+                <div className="icon-container">
+                  <FaCaretDown />
+                </div>
               </div>
             </div>
             <div className="flex-col-start">
@@ -151,6 +155,9 @@ const Flight = () => {
                 );
               })}
             </select>
+            <div className="icon-container">
+              <FaCaretDown />
+            </div>
           </div>
           <label htmlFor="arrivalAirport">Arrival Airport</label>
           <div className="select-container">
@@ -172,6 +179,9 @@ const Flight = () => {
                 );
               })}
             </select>
+            <div className="icon-container">
+              <FaCaretDown />
+            </div>
           </div>
           <div className="date-range">
             <div className="checkinDate-container flex-col-start">
@@ -184,12 +194,6 @@ const Flight = () => {
                   className="date-time-field"
                   value={departureDate}
                   onChange={(e) => setDepartureDate(e.target.value)}
-                />
-                <input
-                  type="time"
-                  id="checkInTime"
-                  name="checkInTime"
-                  className="date-time-field"
                 />
               </div>
             </div>
@@ -204,24 +208,18 @@ const Flight = () => {
                   value={arrivalDate}
                   onChange={(e) => setArrivalDate(e.target.value)}
                 />
-                <input
-                  type="time"
-                  id="checkOutTime"
-                  name="checkOutTime"
-                  className="date-time-field"
-                />
               </div>
             </div>
           </div>
-          <div className="center">
-            <button
-              className="save-button"
-              type="submit"
-              style={{ filter: 'none' }}
-            >
-              Save
-            </button>
-          </div>
+        </div>
+        <div className="center">
+          <button
+            className="save-button"
+            type="submit"
+            style={{ filter: 'none' }}
+          >
+            Save
+          </button>
         </div>
         {error && <p className="error-message flex">{error}</p>}
       </form>

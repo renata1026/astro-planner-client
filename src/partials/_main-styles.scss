@@ -56,7 +56,6 @@ span {
   &:focus {
     color: v.$hover-color;
     text-decoration: none;
-    // transform: scale(1.1);
     transition:
       color 0.3s,
       transform 0.3s ease-in-out;
@@ -77,8 +76,7 @@ img {
 
 button:hover,
 button:focus {
-  background-color: v.$color-gray-5;
-  // background-color: v.$hover-color;
+  background-color: v.$hover-color;
   color: v.$color-gray-1;
 }
 
@@ -107,18 +105,43 @@ input,
 label {
   margin: 0;
 }
-
-.select-container {
+label {
+  color: #353945;
+  font-family: inter;
+  text-align: left;
+  text-align: left;
+  width: 100%;
   display: flex;
-  justify-content: flex-start;
-  position: relative;
-  //   display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+input {
+  display: flex;
   padding: 12px 20px;
   align-items: center;
   gap: 10px;
   align-self: stretch;
   border-radius: 6px;
   border: 1px solid #b1b5c3;
+}
+
+.error-message {
+  color: red;
+}
+
+.select-container {
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+  padding: 12px 20px;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  border-radius: 6px;
+  border: 1px solid #b1b5c3;
+  min-width: 200px;
 }
 
 .select-box {
@@ -142,7 +165,7 @@ label {
 
 .icon-container svg {
   font-size: 30px;
-  fill: v.$primary-black;
+  fill: v.$primary-blue;
   margin-right: 30px;
 }
 .container {

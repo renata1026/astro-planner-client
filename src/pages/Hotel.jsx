@@ -114,81 +114,69 @@ const Hotel = () => {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="flex-col-start">
-            <label htmlFor="hotelPhone">Hotel Phone</label>
-            <input
-              type="text"
-              id="hotelPhone"
-              name="hotelPhone"
-              placeholder="Optional"
-              className="input-field"
-              value={hotelPhone}
-              onChange={(e) => setHotelPhone(e.target.value)}
-            />
-          </div>
-        </div>
-        <label htmlFor="location">Location</label>
-        <div className="select-container">
-          <select
-            type="text"
-            id="location"
-            name="location"
-            placeholder="Enter the location"
-            className="select-box"
-            value={hotelLocation}
-            onChange={(e) => setHotelLocation(e.target.value)}
-          >
-            <option value="">Select an hotel location</option>
-            {hotels.map((hotel, index) => {
-              return (
-                <option key={index} value={hotel.location}>
-                  {hotel.location}
-                </option>
-              );
-            })}
-          </select>
-          <div className="icon-container">
-            <FaCaretDown />
-          </div>
-        </div>
-        <div className="date-range">
-          <div className="checkinDate-container flex-col-start">
-            <label htmlFor="checkInDate">Check-in Date</label>
-            <div className="reservation-flex">
+            <div className="flex-col-start">
+              <label htmlFor="hotelPhone">Hotel Phone</label>
               <input
-                type="date"
-                id="checkInDate"
-                name="checkInDate"
-                className="date-time-field"
-                value={checkIn}
-                onChange={(e) => setCheckIn(e.target.value)}
-              />
-              <input
-                type="time"
-                id="checkInTime"
-                name="checkInTime"
-                className="date-time-field"
+                type="text"
+                id="hotelPhone"
+                name="hotelPhone"
+                placeholder="Optional"
+                className="input-field"
+                value={hotelPhone}
+                onChange={(e) => setHotelPhone(e.target.value)}
               />
             </div>
           </div>
-          <div className="checkOutDate-container flex-col-start">
-            <label htmlFor="checkOutDate">Check-out Date</label>
-            <div className="reservation-flex">
-              <input
-                type="date"
-                id="checkOutDate"
-                name="checkOutDate"
-                className="date-time-field"
-                value={checkOut}
-                onChange={(e) => setCheckOut(e.target.value)}
-              />
-              <input
-                type="time"
-                id="checkOutTime"
-                name="checkOutTime"
-                className="date-time-field"
-              />
+          <label htmlFor="location">Location</label>
+          <div className="select-container">
+            <select
+              type="text"
+              id="location"
+              name="location"
+              placeholder="Enter the location"
+              className="select-box"
+              value={hotelLocation}
+              onChange={(e) => setHotelLocation(e.target.value)}
+            >
+              <option value="">Select an hotel location</option>
+              {hotels.map((hotel, index) => {
+                return (
+                  <option key={index} value={hotel.location}>
+                    {hotel.location}
+                  </option>
+                );
+              })}
+            </select>
+            <div className="icon-container">
+              <FaCaretDown />
+            </div>
+          </div>
+          <div className="date-range">
+            <div className="checkinDate-container flex-col-start">
+              <label htmlFor="checkInDate">Check-in Date</label>
+              <div className="reservation-flex">
+                <input
+                  type="date"
+                  id="checkInDate"
+                  name="checkInDate"
+                  className="date-time-field"
+                  value={checkIn}
+                  onChange={(e) => setCheckIn(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="checkOutDate-container flex-col-start">
+              <label htmlFor="checkOutDate">Check-out Date</label>
+              <div className="reservation-flex">
+                <input
+                  type="date"
+                  id="checkOutDate"
+                  name="checkOutDate"
+                  className="date-time-field"
+                  value={checkOut}
+                  onChange={(e) => setCheckOut(e.target.value)}
+                />
+              </div>
             </div>
           </div>
         </div>

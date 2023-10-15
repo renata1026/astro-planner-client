@@ -12,12 +12,20 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.social-icons {
+  width: 90%;
+  margin: 0 auto;
 }
 .signup-container {
   border-radius: 20px;
   box-shadow: v.$box-shadow-small;
-  max-width: 500px;
   padding: 48px 30px;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .dark signup-container {
@@ -30,26 +38,4 @@
 .signin-button,
 .register-button {
   @include m.form-button;
-}
-
-label {
-  color: #353945;
-  font-family: inter;
-  text-align: left;
-  text-align: left;
-  width: 100%;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  margin-top: 10px;
-}
-
-input {
-  display: flex;
-  padding: 12px 20px;
-  align-items: center;
-  gap: 10px;
-  align-self: stretch;
-  border-radius: 6px;
-  border: 1px solid #b1b5c3;
 }

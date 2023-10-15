@@ -19,7 +19,7 @@
 
 @mixin social-button {
   display: flex;
-  width: 110px;
+  max-width: 110px;
   padding: 10px 30px;
   justify-content: center;
   align-items: center;
@@ -28,6 +28,7 @@
   background-color: v.$color-light;
   border-radius: 10px;
   border: 1px solid #e6e8ec;
+  cursor: pointer;
 }
 
 @mixin form-button {
@@ -40,6 +41,7 @@
   border-radius: 10px;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 @mixin save-button {
@@ -52,6 +54,7 @@
   border: none;
   gap: 10px;
   margin: v.$spacing-small;
+  cursor: pointer;
 }
 // Mixin to handle breakpoints
 @mixin breakpoint($breakpoint) {

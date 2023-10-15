@@ -25,8 +25,10 @@ const Car = () => {
     e.preventDefault();
     setError(''); // Clear any previous errors
 
-    if (!pickupDate || !dropoffDate) {
-      setError('Please select a pick-up and drop-off date.');
+    if (!agencyName || !carType || !pickupDate || !dropoffDate) {
+      setError(
+        'Please select an agency name, car type, pick-up and drop-off date.'
+      );
       return;
     }
     // Convert checkIn and checkOut dates to ISO-8601 format
@@ -92,26 +94,28 @@ const Car = () => {
           <div className="field-container">
             <div className="flex-col-start">
               <label htmlFor="agencyName">Agency Name</label>
-              <select
-                type="text"
-                id="agencyName"
-                name="agencyName"
-                placeholder="Enter the agency name"
-                className="select-box"
-                value={agencyName}
-                onChange={(e) => setAgencyName(e.target.value)}
-              >
-                <option value="">Select a car agency</option>
-                {cars.map((car, index) => {
-                  return (
-                    <option key={index} value={car.carRentalAgency}>
-                      {car.carRentalAgency}
-                    </option>
-                  );
-                })}
-              </select>
-              <div className="icon-container">
-                <FaCaretDown />
+              <div className="select-container">
+                <select
+                  type="text"
+                  id="agencyName"
+                  name="agencyName"
+                  placeholder="Enter the agency name"
+                  className="select-box"
+                  value={agencyName}
+                  onChange={(e) => setAgencyName(e.target.value)}
+                >
+                  <option value="">Select a car agency</option>
+                  {cars.map((car, index) => {
+                    return (
+                      <option key={index} value={car.carRentalAgency}>
+                        {car.carRentalAgency}
+                      </option>
+                    );
+                  })}
+                </select>
+                <div className="icon-container">
+                  <FaCaretDown />
+                </div>
               </div>
             </div>
             <div className="flex-col-start">
@@ -173,12 +177,6 @@ const Car = () => {
                   value={pickupDate}
                   onChange={(e) => setPickupDate(e.target.value)}
                 />
-                <input
-                  type="time"
-                  id="pickupTime"
-                  name="pickupTime"
-                  className="date-time-field"
-                />
               </div>
             </div>
             <div className="checkOutDate-container flex-col-start">
@@ -192,25 +190,20 @@ const Car = () => {
                   value={dropoffDate}
                   onChange={(e) => setDropoffDate(e.target.value)}
                 />
-                <input
-                  type="time"
-                  id="dropoffTime"
-                  name="dropoffTime"
-                  className="date-time-field"
-                />
               </div>
             </div>
           </div>
-          <div className="center">
-            <button
-              className="save-button"
-              type="submit"
-              style={{ filter: 'none' }}
-            >
-              Save
-            </button>
-          </div>
         </div>
+        <div className="center">
+          <button
+            className="save-button"
+            type="submit"
+            style={{ filter: 'none' }}
+          >
+            Save
+          </button>
+        </div>
+        {error && <p className="error-message flex">{error}</p>}
       </form>
     </section>
   );
