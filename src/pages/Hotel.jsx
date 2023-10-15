@@ -28,6 +28,12 @@ const Hotel = () => {
       setError('Please select hotel, dates, and location.');
       return;
     }
+
+    //condition to check if checkin date is before checkout date
+    if (checkIn > checkOut) {
+      setError('Check-in date must be before check-out date.');
+      return;
+    }
     // Convert checkIn and checkOut dates to ISO-8601 format
     const isoCheckIn = new Date(checkIn).toISOString();
     const isoCheckOut = new Date(checkOut).toISOString();

@@ -31,6 +31,12 @@ const Car = () => {
       );
       return;
     }
+
+    //condition to check if checkin date is before checkout date
+    if (pickupDate > dropoffDate) {
+      setError('Pickup date must be before drop-off date.');
+      return;
+    }
     // Convert checkIn and checkOut dates to ISO-8601 format
     const isoPickUp = new Date(pickupDate).toISOString();
     const isoDropOff = new Date(dropoffDate).toISOString();

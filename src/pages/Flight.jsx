@@ -34,6 +34,12 @@ const Flight = () => {
       setError('Please select airline, dates, departure and arrival airports.');
       return;
     }
+
+    //condition to check if departure date is before arrival date
+    if (departureDate > arrivalDate) {
+      setError('Departure date must be before arrival date.');
+      return;
+    }
     // Convert checkIn and checkOut dates to ISO-8601 format
     const isoCheckIn = new Date(arrivalDate).toISOString();
     const isoCheckOut = new Date(departureDate).toISOString();
