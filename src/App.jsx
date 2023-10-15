@@ -25,7 +25,7 @@ const App = () => {
       },
     });
     const info = await res.json();
-    console.log(info);
+    //console.log(info);
     if (info.success) {
       setUser(info.user);
     }
@@ -34,8 +34,11 @@ const App = () => {
   async function fetchTrips() {
     const res = await fetch(`${API}/trips`);
     const info = await res.json();
-    if (info.success) {
-      setTrips(info.trips);
+    //console.log(info);
+
+    if (info.data.success) {
+      setTrips(info.data.trip);
+      //console.log(info.data.trip);
     }
   }
 
@@ -43,8 +46,9 @@ const App = () => {
     const res = await fetch(`${API}/reservations`);
     const info = await res.json();
     //console.log(info);
-    if (info.success) {
-      setReservations(info.reservations);
+    if (info.data.success) {
+      setReservations(info.data.reservation);
+      //console.log(info.data.reservation);
     }
   }
 
