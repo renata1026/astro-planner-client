@@ -1,0 +1,25 @@
+@use './variables' as v;
+@use './mixins' as m;
+
+.not-found-container {
+  background-color: v.$primary-black;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.not-found-heading {
+  font-size: 6rem;
+  color: v.$color-light;
+}
+
+.not-found-message {
+  font-size: 1.5rem;
+  color: v.$primary-blue;
+}
