@@ -16,9 +16,27 @@ const Hotel = () => {
   const [checkOut, setCheckOut] = useState("");
   const [confirmationNum, setConfirmationNum] = useState("");
   const [error, setError] = useState("");
-
-  const { token, fetchReservations, setReservations } = useOutletContext();
+  const { token, fetchReservations, setReservations, trips } = useOutletContext();
   const { tripId } = useParams();
+
+  console.log(trips);
+
+  const selectedTrip = trips.find((trip) => trip.id === tripId);
+
+  if (!selectedTrip) {
+    return;
+  }
+
+  const selectedDestination = selectedTrip.location
+    .replace(/_/g, " ") ///_/g stands for global, replaces all occurences of underscore
+    .toLowerCase();
+  //console.log(selectedDestination);
+
+  const filteredHotels = hotels.filter(
+    (hotel) => hotel.destination.toLowerCase() === selectedDestination
+  );
+
+  //console.log(filteredHotels);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -111,7 +129,7 @@ const Hotel = () => {
                   onChange={(e) => setHotelName(e.target.value)}
                 >
                   <option value="">Select a hotel</option>
-                  {hotels.map((hotel, index) => {
+                  {filteredHotels.map((hotel, index) => {
                     return (
                       <option key={index} value={hotel.name}>
                         {hotel.name}
@@ -149,7 +167,7 @@ const Hotel = () => {
               onChange={(e) => setHotelLocation(e.target.value)}
             >
               <option value="">Select an hotel location</option>
-              {hotels.map((hotel, index) => {
+              {filteredHotels.map((hotel, index) => {
                 return (
                   <option key={index} value={hotel.location}>
                     {hotel.location}

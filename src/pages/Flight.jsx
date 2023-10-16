@@ -17,9 +17,30 @@ const Flight = () => {
   const [departureDate, setDepartureDate] = useState("");
   const [arrivalDate, setArrivalDate] = useState("");
   const [error, setError] = useState("");
-
-  const { token, fetchReservations, setReservations } = useOutletContext();
+  const [selectedAirline, setSelectedAirline] = useState("");
+  const { token, fetchReservations, setReservations, trips } = useOutletContext();
   const { tripId } = useParams();
+
+  // console.log(trips);
+  const selectedTrip = trips.find((trip) => trip.id === tripId);
+
+  if (!selectedTrip) {
+    return;
+  }
+
+  const selectedDestination = selectedTrip.location
+    .replace(/_/g, " ") ///_/g stands for global, replaces all occurences of underscore
+    .toLowerCase();
+  //console.log(selectedDestination);
+
+  const filteredFlights = flights.filter(
+    (flight) => flight.destination.toLowerCase() === selectedDestination
+  );
+
+  //new Set used to store unique values, with no duplicates
+  const uniqueArrivalAirports = [
+    ...new Set(filteredFlights.map((flight) => flight.arrivalAirport)),
+  ];
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -115,11 +136,12 @@ const Flight = () => {
                   name="airline"
                   placeholder="Enter an airline"
                   className="select-box"
-                  value={airline}
+                  value={selectedAirline}
                   onChange={(e) => setAirline(e.target.value)}
                 >
                   <option value="">Select a flight</option>
-                  {flights.map((flight, index) => {
+
+                  {filteredFlights.map((flight, index) => {
                     return (
                       <option key={index} value={flight.airline}>
                         {flight.airline}
@@ -157,7 +179,7 @@ const Flight = () => {
               onChange={(e) => setDepartureAirport(e.target.value)}
             >
               <option value="">Select a Departure Airport</option>
-              {flights.map((flight, index) => {
+              {filteredFlights.map((flight, index) => {
                 return (
                   <option key={index} value={flight.departureAirport}>
                     {flight.departureAirport}
@@ -181,10 +203,10 @@ const Flight = () => {
               onChange={(e) => setArrivalAirport(e.target.value)}
             >
               <option value="">Select a Arrival Airport</option>
-              {flights.map((flight, index) => {
+              {uniqueArrivalAirports.map((airport, index) => {
                 return (
-                  <option key={index} value={flight.arrivalAirport}>
-                    {flight.arrivalAirport}
+                  <option key={index} value={airport}>
+                    {airport}
                   </option>
                 );
               })}

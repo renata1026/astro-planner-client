@@ -17,9 +17,32 @@ const Car = () => {
   const [pickupDate, setPickupDate] = useState("");
   const [dropoffDate, setDropoffDate] = useState("");
   const [error, setError] = useState("");
-
-  const { token, fetchReservations, setReservations } = useOutletContext();
+  const { token, fetchReservations, setReservations, trips } = useOutletContext();
   const { tripId } = useParams();
+
+  const selectedTrip = trips.find((trip) => trip.id === tripId);
+
+  if (!selectedTrip) {
+    return;
+  }
+
+  const selectedDestination = selectedTrip.location
+    .replace(/_/g, " ") ///_/g for global, replaces all occurences of underscore
+    .toLowerCase();
+  const filteredCars = cars.filter(
+    (car) => car.city.toLowerCase() === selectedDestination
+  );
+
+  //creates array that contains pick-up/drop-off locations based on filtered cars
+  //Set: built-in JS data structure, stores unique vlaues and automatically removes duplicates
+  //... spreaed operator
+  const uniquePickupLocation = [
+    ...new Set(filteredCars.map((car) => car.pickupLocation)),
+  ];
+
+  const uniqueDropoffLocation = [
+    ...new Set(filteredCars.map((car) => car.dropoffLocation)),
+  ];
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -27,7 +50,7 @@ const Car = () => {
 
     if (!agencyName || !carType || !pickupDate || !dropoffDate) {
       setError(
-        "Please select an agency name, car type, pick-up and drop-off date.",
+        "Please select an agency name, car type, pick-up and drop-off date."
       );
       return;
     }
@@ -115,7 +138,7 @@ const Car = () => {
                   onChange={(e) => setAgencyName(e.target.value)}
                 >
                   <option value="">Select a car agency</option>
-                  {cars.map((car, index) => {
+                  {filteredCars.map((car, index) => {
                     return (
                       <option key={index} value={car.carRentalAgency}>
                         {car.carRentalAgency}
@@ -141,7 +164,7 @@ const Car = () => {
                   onChange={(e) => setCarType(e.target.value)}
                 >
                   <option value="">Select car type</option>
-                  {cars.map((car, index) => {
+                  {filteredCars.map((car, index) => {
                     return (
                       <option key={index} value={car.carType}>
                         {car.carType}
@@ -156,7 +179,7 @@ const Car = () => {
             </div>
           </div>
           <label htmlFor="pickupLocation">Pick-up Location</label>
-          <input
+          <select
             type="text"
             id="pickupLocation"
             name="pickupLocation"
@@ -164,9 +187,18 @@ const Car = () => {
             placeholder="Enter the pick-up location"
             value={pickupLocation}
             onChange={(e) => setPickUpLocation(e.target.value)}
-          />
+          >
+            <option value="">Select a Pick-up Location</option>
+            {uniquePickupLocation.map((car, index) => {
+              return (
+                <option key={index} value={car}>
+                  {car}
+                </option>
+              );
+            })}
+          </select>
           <label htmlFor="dropoffLocation">Drop-off Location</label>
-          <input
+          <select
             type="text"
             id="dropoffLocation"
             name="dropoffLocation"
@@ -174,7 +206,16 @@ const Car = () => {
             className="input-field"
             value={dropoffLocation}
             onChange={(e) => setDropOffLocation(e.target.value)}
-          />
+          >
+            <option value="">Select a drop-off Location</option>
+            {uniqueDropoffLocation.map((car, index) => {
+              return (
+                <option key={index} value={car}>
+                  {car}
+                </option>
+              );
+            })}
+          </select>
           <div className="date-range">
             <div className="checkinDate-container flex-col-start">
               <label htmlFor="pickupDate">Pick-up Date</label>
