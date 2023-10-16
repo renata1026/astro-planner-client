@@ -1,29 +1,29 @@
-import React from 'react';
-import ReservationIcon from '@/assets/hotelTwo.svg';
-import Map from '@/assets/travel-pic.jpg';
-import { useState } from 'react';
-import { API } from '../lib/api-index';
-import { useOutletContext, useNavigate, useParams } from 'react-router-dom';
-import { flights } from '../lib/data';
-import { FaCaretDown } from 'react-icons/fa';
+import React from "react";
+import ReservationIcon from "@/assets/hotelTwo.svg";
+import Map from "@/assets/travel-pic.jpg";
+import { useState } from "react";
+import { API } from "../lib/api-index";
+import { useOutletContext, useNavigate, useParams } from "react-router-dom";
+import { flights } from "../lib/data";
+import { FaCaretDown } from "react-icons/fa";
 
 const Flight = () => {
   const navigate = useNavigate();
-  const [airlineConNum, setAirlineConNum] = useState('');
-  const [airline, setAirline] = useState('');
-  const [flightNumber, setFlightNumber] = useState('');
-  const [departureAirport, setDepartureAirport] = useState('');
-  const [arrivalAirport, setArrivalAirport] = useState('');
-  const [departureDate, setDepartureDate] = useState('');
-  const [arrivalDate, setArrivalDate] = useState('');
-  const [error, setError] = useState('');
+  const [airlineConNum, setAirlineConNum] = useState("");
+  const [airline, setAirline] = useState("");
+  const [flightNumber, setFlightNumber] = useState("");
+  const [departureAirport, setDepartureAirport] = useState("");
+  const [arrivalAirport, setArrivalAirport] = useState("");
+  const [departureDate, setDepartureDate] = useState("");
+  const [arrivalDate, setArrivalDate] = useState("");
+  const [error, setError] = useState("");
 
-  const { token, fetchReservations } = useOutletContext();
+  const { token, fetchReservations, setReservations } = useOutletContext();
   const { tripId } = useParams();
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setError(''); // Clear any previous errors
+    setError(""); // Clear any previous errors
 
     if (
       !departureAirport ||
@@ -31,13 +31,13 @@ const Flight = () => {
       !departureDate ||
       !arrivalDate
     ) {
-      setError('Please select airline, dates, departure and arrival airports.');
+      setError("Please select airline, dates, departure and arrival airports.");
       return;
     }
 
     //condition to check if departure date is before arrival date
     if (departureDate > arrivalDate) {
-      setError('Departure date must be before arrival date.');
+      setError("Departure date must be before arrival date.");
       return;
     }
     // Convert checkIn and checkOut dates to ISO-8601 format
@@ -45,10 +45,10 @@ const Flight = () => {
     const isoCheckOut = new Date(departureDate).toISOString();
 
     const res = await fetch(`${API}/reservations`, {
-      method: 'POST',
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         departureAirport,
@@ -68,6 +68,10 @@ const Flight = () => {
     if (!info.success) {
       setError(info.error);
     } else {
+      setReservations((prevReservations) => [
+        ...prevReservations,
+        info.reservation,
+      ]);
       fetchReservations();
 
       // Navigate to the home page
@@ -79,10 +83,10 @@ const Flight = () => {
     <section
       className="reservation-container"
       style={{
-        display: 'flex',
+        display: "flex",
         backgroundImage: `url(${Map})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
       }}
     >
       <form onSubmit={handleSubmit} className="reservation-wrapper flex-col">
@@ -222,7 +226,7 @@ const Flight = () => {
           <button
             className="save-button"
             type="submit"
-            style={{ filter: 'none' }}
+            style={{ filter: "none" }}
           >
             Save
           </button>

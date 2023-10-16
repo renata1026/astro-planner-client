@@ -1,40 +1,40 @@
-import React from 'react';
-import { useState } from 'react';
-import ReservationIcon from '@/assets/hotelTwo.svg';
-import Map from '@/assets/travel-pic.jpg';
-import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
-import { cars } from '../lib/data';
-import { API } from '../lib/api-index';
-import { FaCaretDown } from 'react-icons/fa';
+import React from "react";
+import { useState } from "react";
+import ReservationIcon from "@/assets/hotelTwo.svg";
+import Map from "@/assets/travel-pic.jpg";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
+import { cars } from "../lib/data";
+import { API } from "../lib/api-index";
+import { FaCaretDown } from "react-icons/fa";
 
 const Car = () => {
   const navigate = useNavigate();
-  const [confirmationNum, setConfirmationNum] = useState('');
-  const [agencyName, setAgencyName] = useState('');
-  const [carType, setCarType] = useState('');
-  const [pickupLocation, setPickUpLocation] = useState('');
-  const [dropoffLocation, setDropOffLocation] = useState('');
-  const [pickupDate, setPickupDate] = useState('');
-  const [dropoffDate, setDropoffDate] = useState('');
-  const [error, setError] = useState('');
+  const [confirmationNum, setConfirmationNum] = useState("");
+  const [agencyName, setAgencyName] = useState("");
+  const [carType, setCarType] = useState("");
+  const [pickupLocation, setPickUpLocation] = useState("");
+  const [dropoffLocation, setDropOffLocation] = useState("");
+  const [pickupDate, setPickupDate] = useState("");
+  const [dropoffDate, setDropoffDate] = useState("");
+  const [error, setError] = useState("");
 
-  const { token, fetchReservations } = useOutletContext();
+  const { token, fetchReservations, setReservations } = useOutletContext();
   const { tripId } = useParams();
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setError(''); // Clear any previous errors
+    setError(""); // Clear any previous errors
 
     if (!agencyName || !carType || !pickupDate || !dropoffDate) {
       setError(
-        'Please select an agency name, car type, pick-up and drop-off date.'
+        "Please select an agency name, car type, pick-up and drop-off date.",
       );
       return;
     }
 
     //condition to check if checkin date is before checkout date
     if (pickupDate > dropoffDate) {
-      setError('Pickup date must be before drop-off date.');
+      setError("Pickup date must be before drop-off date.");
       return;
     }
     // Convert checkIn and checkOut dates to ISO-8601 format
@@ -42,10 +42,10 @@ const Car = () => {
     const isoDropOff = new Date(dropoffDate).toISOString();
 
     const res = await fetch(`${API}/reservations`, {
-      method: 'POST',
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         bookingConfirmation: confirmationNum,
@@ -65,9 +65,13 @@ const Car = () => {
     if (!info.success) {
       setError(info.error);
     } else {
+      setReservations((prevReservations) => [
+        ...prevReservations,
+        info.reservation,
+      ]);
       fetchReservations();
-      // Navigate to the home page
-      navigate('/');
+      // Navigate to the confirmation page
+      navigate(`/confirmation/${tripId}`);
     }
   }
 
@@ -75,10 +79,10 @@ const Car = () => {
     <section
       className="reservation-container"
       style={{
-        display: 'flex',
+        display: "flex",
         backgroundImage: `url(${Map})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
       }}
     >
       <form onSubmit={handleSubmit} className="reservation-wrapper flex-col">
@@ -204,7 +208,7 @@ const Car = () => {
           <button
             className="save-button"
             type="submit"
-            style={{ filter: 'none' }}
+            style={{ filter: "none" }}
           >
             Save
           </button>

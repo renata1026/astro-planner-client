@@ -77,6 +77,7 @@ const App = () => {
           user,
           setUser,
           reservations,
+          setReservations,
           fetchReservations,
         }}
       />
