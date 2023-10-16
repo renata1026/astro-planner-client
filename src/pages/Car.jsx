@@ -22,6 +22,7 @@ const Car = () => {
   const { tripId } = useParams();
 
   const selectedTrip = trips.find((trip) => trip.id === tripId);
+  console.log(selectedTrip);
 
   if (!selectedTrip) {
     return;
@@ -30,9 +31,14 @@ const Car = () => {
   const selectedDestination = selectedTrip.location
     .replace(/_/g, " ") ///_/g for global, replaces all occurences of underscore
     .toLowerCase();
+
+  console.log(selectedDestination);
+
   const filteredCars = cars.filter(
     (car) => car.city.toLowerCase() === selectedDestination
   );
+
+  console.log(filteredCars);
 
   //creates array that contains pick-up/drop-off locations based on filtered cars
   //Set: built-in JS data structure, stores unique vlaues and automatically removes duplicates
