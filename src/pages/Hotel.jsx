@@ -16,8 +16,7 @@ const Hotel = () => {
   const [checkOut, setCheckOut] = useState("");
   const [confirmationNum, setConfirmationNum] = useState("");
   const [error, setError] = useState("");
-
-  const { token, fetchReservations, trips } = useOutletContext();
+  const { token, fetchReservations, setReservations, trips } = useOutletContext();
   const { tripId } = useParams();
 
   console.log(trips);
@@ -80,6 +79,10 @@ const Hotel = () => {
     if (!info.success) {
       setError(info.error);
     } else {
+      setReservations((prevReservations) => [
+        ...prevReservations,
+        info.reservation,
+      ]);
       fetchReservations();
       // Navigate to the home page
       navigate(`/car/${tripId}`);

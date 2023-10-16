@@ -12,6 +12,7 @@ import Hotel from '@/pages/Hotel';
 import Flight from '@/pages/Flight';
 import Car from '@/pages/Car';
 import NotFound from '@/pages/NotFound';
+import Confirmation from '@/pages/Confirmation';
 
 // Create a router configuration
 const router = createBrowserRouter([
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       { path: 'hotel/:tripId', element: <Hotel /> },
       { path: 'flight/:tripId', element: <Flight /> },
       { path: 'car/:tripId', element: <Car /> },
+      { path: 'confirmation/:tripId', element: <Confirmation /> },
       { path: '*', element: <NotFound /> },
     ],
   },

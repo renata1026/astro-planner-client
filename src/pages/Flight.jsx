@@ -18,8 +18,7 @@ const Flight = () => {
   const [arrivalDate, setArrivalDate] = useState("");
   const [error, setError] = useState("");
   const [selectedAirline, setSelectedAirline] = useState("");
-
-  const { token, fetchReservations, trips } = useOutletContext();
+  const { token, fetchReservations, setReservations, trips } = useOutletContext();
   const { tripId } = useParams();
 
   // console.log(trips);
@@ -90,6 +89,10 @@ const Flight = () => {
     if (!info.success) {
       setError(info.error);
     } else {
+      setReservations((prevReservations) => [
+        ...prevReservations,
+        info.reservation,
+      ]);
       fetchReservations();
 
       // Navigate to the home page

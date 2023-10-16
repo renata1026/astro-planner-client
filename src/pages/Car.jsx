@@ -17,8 +17,7 @@ const Car = () => {
   const [pickupDate, setPickupDate] = useState("");
   const [dropoffDate, setDropoffDate] = useState("");
   const [error, setError] = useState("");
-
-  const { token, fetchReservations, trips } = useOutletContext();
+  const { token, fetchReservations, setReservations, trips } = useOutletContext();
   const { tripId } = useParams();
 
   const selectedTrip = trips.find((trip) => trip.id === tripId);
@@ -89,9 +88,13 @@ const Car = () => {
     if (!info.success) {
       setError(info.error);
     } else {
+      setReservations((prevReservations) => [
+        ...prevReservations,
+        info.reservation,
+      ]);
       fetchReservations();
-      // Navigate to the home page
-      navigate("/");
+      // Navigate to the confirmation page
+      navigate(`/confirmation/${tripId}`);
     }
   }
 
