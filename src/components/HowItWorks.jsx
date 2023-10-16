@@ -8,7 +8,7 @@ export default function HowItWorks() {
   return (
     <div className="outside-container">
       <div className="content-container flex">
-        <div>
+        <div className="image-container">
           <img class="enlarged-image" src={howItWorks} alt="How it works" />
         </div>
 
@@ -27,7 +27,7 @@ export default function HowItWorks() {
                 <img className="userIcon" src={userIcon} alt="user icon" />
               </div>
               <div className="how-it-works-text">
-                <h2 className="how-it-works-header">Account</h2>
+                <h3 className="how-it-works-header">Account</h3>
                 <p className="works-text">
                   All the necessary information to create your account are below
                   this.
@@ -40,7 +40,7 @@ export default function HowItWorks() {
                 <img className="mapIcon" src={userIcon} alt="map icon" />
               </div>
               <div className="how-it-works-text">
-                <h2 className="how-it-works-header">Select Destination</h2>
+                <h3 className="how-it-works-header">Select Destination</h3>
                 <p className="works-text">
                   At first choose the place you to go to.
                 </p>
@@ -56,7 +56,7 @@ export default function HowItWorks() {
                 />
               </div>
               <div className="how-it-works-text">
-                <h2 className="how-it-works-header">Book a Trip</h2>
+                <h3 className="how-it-works-header">Book a Trip</h3>
                 <p className="works-text">
                   Book your trip from our exclusive offers.
                 </p>
@@ -72,7 +72,7 @@ export default function HowItWorks() {
                 />
               </div>
               <div className="how-it-works-text">
-                <h2 className="how-it-works-header">Take your flight</h2>
+                <h3 className="how-it-works-header">Take your flight</h3>
                 <p className="works-text">
                   Take your flight on selected date and enjoy!
                 </p>

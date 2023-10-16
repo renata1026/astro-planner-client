@@ -12,8 +12,8 @@ const Home = () => {
       <Header />
       <TripPlanning />
       <EasyTripBooking />
+      <HowItWorks />
       <AirtravBestServices />
-      {/* <HowItWorks /> */}
       <DiscoverFeatures />
       <TwoWeekTripPlan />
     </>
