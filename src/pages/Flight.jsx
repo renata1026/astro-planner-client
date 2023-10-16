@@ -1,29 +1,51 @@
-import React from 'react';
-import ReservationIcon from '@/assets/hotelTwo.svg';
-import Map from '@/assets/travel-pic.jpg';
-import { useState } from 'react';
-import { API } from '../lib/api-index';
-import { useOutletContext, useNavigate, useParams } from 'react-router-dom';
-import { flights } from '../lib/data';
-import { FaCaretDown } from 'react-icons/fa';
+import React from "react";
+import ReservationIcon from "@/assets/hotelTwo.svg";
+import Map from "@/assets/travel-pic.jpg";
+import { useState } from "react";
+import { API } from "../lib/api-index";
+import { useOutletContext, useNavigate, useParams } from "react-router-dom";
+import { flights } from "../lib/data";
+import { FaCaretDown } from "react-icons/fa";
 
 const Flight = () => {
   const navigate = useNavigate();
-  const [airlineConNum, setAirlineConNum] = useState('');
-  const [airline, setAirline] = useState('');
-  const [flightNumber, setFlightNumber] = useState('');
-  const [departureAirport, setDepartureAirport] = useState('');
-  const [arrivalAirport, setArrivalAirport] = useState('');
-  const [departureDate, setDepartureDate] = useState('');
-  const [arrivalDate, setArrivalDate] = useState('');
-  const [error, setError] = useState('');
+  const [airlineConNum, setAirlineConNum] = useState("");
+  const [airline, setAirline] = useState("");
+  const [flightNumber, setFlightNumber] = useState("");
+  const [departureAirport, setDepartureAirport] = useState("");
+  const [arrivalAirport, setArrivalAirport] = useState("");
+  const [departureDate, setDepartureDate] = useState("");
+  const [arrivalDate, setArrivalDate] = useState("");
+  const [error, setError] = useState("");
+  const [selectedAirline, setSelectedAirline] = useState("");
 
-  const { token, fetchReservations } = useOutletContext();
+  const { token, fetchReservations, trips } = useOutletContext();
   const { tripId } = useParams();
+
+  // console.log(trips);
+  const selectedTrip = trips.find((trip) => trip.id === tripId);
+
+  if (!selectedTrip) {
+    return;
+  }
+
+  const selectedDestination = selectedTrip.location
+    .replace(/_/g, " ") ///_/g stands for global, replaces all occurences of underscore
+    .toLowerCase();
+  //console.log(selectedDestination);
+
+  const filteredFlights = flights.filter(
+    (flight) => flight.destination.toLowerCase() === selectedDestination
+  );
+
+  //new Set used to store unique values, with no duplicates
+  const uniqueArrivalAirports = [
+    ...new Set(filteredFlights.map((flight) => flight.arrivalAirport)),
+  ];
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setError(''); // Clear any previous errors
+    setError(""); // Clear any previous errors
 
     if (
       !departureAirport ||
@@ -31,13 +53,13 @@ const Flight = () => {
       !departureDate ||
       !arrivalDate
     ) {
-      setError('Please select airline, dates, departure and arrival airports.');
+      setError("Please select airline, dates, departure and arrival airports.");
       return;
     }
 
     //condition to check if departure date is before arrival date
     if (departureDate > arrivalDate) {
-      setError('Departure date must be before arrival date.');
+      setError("Departure date must be before arrival date.");
       return;
     }
     // Convert checkIn and checkOut dates to ISO-8601 format
@@ -45,10 +67,10 @@ const Flight = () => {
     const isoCheckOut = new Date(departureDate).toISOString();
 
     const res = await fetch(`${API}/reservations`, {
-      method: 'POST',
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         departureAirport,
@@ -79,10 +101,10 @@ const Flight = () => {
     <section
       className="reservation-container"
       style={{
-        display: 'flex',
+        display: "flex",
         backgroundImage: `url(${Map})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
       }}
     >
       <form onSubmit={handleSubmit} className="reservation-wrapper flex-col">
@@ -111,11 +133,12 @@ const Flight = () => {
                   name="airline"
                   placeholder="Enter an airline"
                   className="select-box"
-                  value={airline}
+                  value={selectedAirline}
                   onChange={(e) => setAirline(e.target.value)}
                 >
                   <option value="">Select a flight</option>
-                  {flights.map((flight, index) => {
+
+                  {filteredFlights.map((flight, index) => {
                     return (
                       <option key={index} value={flight.airline}>
                         {flight.airline}
@@ -153,7 +176,7 @@ const Flight = () => {
               onChange={(e) => setDepartureAirport(e.target.value)}
             >
               <option value="">Select a Departure Airport</option>
-              {flights.map((flight, index) => {
+              {filteredFlights.map((flight, index) => {
                 return (
                   <option key={index} value={flight.departureAirport}>
                     {flight.departureAirport}
@@ -177,10 +200,10 @@ const Flight = () => {
               onChange={(e) => setArrivalAirport(e.target.value)}
             >
               <option value="">Select a Arrival Airport</option>
-              {flights.map((flight, index) => {
+              {uniqueArrivalAirports.map((airport, index) => {
                 return (
-                  <option key={index} value={flight.arrivalAirport}>
-                    {flight.arrivalAirport}
+                  <option key={index} value={airport}>
+                    {airport}
                   </option>
                 );
               })}
@@ -222,7 +245,7 @@ const Flight = () => {
           <button
             className="save-button"
             type="submit"
-            style={{ filter: 'none' }}
+            style={{ filter: "none" }}
           >
             Save
           </button>
