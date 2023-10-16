@@ -26,7 +26,7 @@ const Flight = () => {
   const selectedTrip = trips.find((trip) => trip.id === tripId);
 
   if (!selectedTrip) {
-    return <p>Trip not found</p>;
+    return;
   }
 
   const selectedDestination = selectedTrip.location
@@ -38,9 +38,10 @@ const Flight = () => {
     (flight) => flight.destination.toLowerCase() === selectedDestination
   );
 
-  console.log(filteredFlights);
-
-  //console.log(destination);
+  //new Set used to store unique values, with no duplicates
+  const uniqueArrivalAirports = [
+    ...new Set(filteredFlights.map((flight) => flight.arrivalAirport)),
+  ];
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -161,15 +162,6 @@ const Flight = () => {
                 value={flightNumber}
                 onChange={(e) => setFlightNumber(e.target.value)}
               />
-              {/* <option value="">Select a Flight Number</option>
-                {filteredFlights.map((flight, index) => {
-                  return (
-                    <option key={index} value={flight.flightNumber}>
-                      {flight.flightNumber}
-                    </option>
-                  );
-                })} */}
-              {/* </select> */}
             </div>
           </div>
           <label htmlFor="departureAirport">Departure Airport</label>
@@ -208,10 +200,10 @@ const Flight = () => {
               onChange={(e) => setArrivalAirport(e.target.value)}
             >
               <option value="">Select a Arrival Airport</option>
-              {filteredFlights.map((flight, index) => {
+              {uniqueArrivalAirports.map((airport, index) => {
                 return (
-                  <option key={index} value={flight.arrivalAirport}>
-                    {flight.arrivalAirport}
+                  <option key={index} value={airport}>
+                    {airport}
                   </option>
                 );
               })}
