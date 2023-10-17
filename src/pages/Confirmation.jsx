@@ -11,6 +11,7 @@ const Confirmation = () => {
   // console.log("reservations", reservations);
   // fetchTrips();
   const trip = trips.find((trip) => trip.id === tripId);
+  console.log("trips", trips);
   console.log("filteredTrip", trip);
   console.log("reservations", reservations);
   const filteredReservations = reservations.filter(
