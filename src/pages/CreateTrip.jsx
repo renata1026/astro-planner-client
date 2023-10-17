@@ -50,8 +50,6 @@ const CreateTrip = () => {
     });
 
     const info = await res.json();
-    console.log(info);
-    //console.log(destination);
 
     if (!info.success) {
       setError(info.error);

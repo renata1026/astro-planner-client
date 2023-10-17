@@ -21,7 +21,6 @@ const Flight = () => {
   const { token, fetchReservations, setReservations, trips } = useOutletContext();
   const { tripId } = useParams();
 
-  // console.log(trips);
   const selectedTrip = trips.find((trip) => trip.id === tripId);
 
   if (!selectedTrip) {
@@ -31,7 +30,6 @@ const Flight = () => {
   const selectedDestination = selectedTrip.location
     .replace(/_/g, " ") ///_/g stands for global, replaces all occurences of underscore
     .toLowerCase();
-  //console.log(selectedDestination);
 
   const filteredFlights = flights.filter(
     (flight) => flight.destination.toLowerCase() === selectedDestination
@@ -84,7 +82,6 @@ const Flight = () => {
     });
 
     const info = await res.json();
-    console.log(info);
 
     if (!info.success) {
       setError(info.error);

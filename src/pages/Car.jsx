@@ -29,6 +29,7 @@ const Car = () => {
   const selectedDestination = selectedTrip.location
     .replace(/_/g, " ") ///_/g for global, replaces all occurences of underscore
     .toLowerCase();
+
   const filteredCars = cars.filter(
     (car) => car.city.toLowerCase() === selectedDestination
   );
@@ -83,7 +84,6 @@ const Car = () => {
     });
 
     const info = await res.json();
-    console.log(info);
 
     if (!info.success) {
       setError(info.error);

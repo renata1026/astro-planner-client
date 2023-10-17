@@ -19,8 +19,6 @@ const Hotel = () => {
   const { token, fetchReservations, setReservations, trips } = useOutletContext();
   const { tripId } = useParams();
 
-  console.log(trips);
-
   const selectedTrip = trips.find((trip) => trip.id === tripId);
 
   if (!selectedTrip) {
@@ -30,13 +28,10 @@ const Hotel = () => {
   const selectedDestination = selectedTrip.location
     .replace(/_/g, " ") ///_/g stands for global, replaces all occurences of underscore
     .toLowerCase();
-  //console.log(selectedDestination);
 
   const filteredHotels = hotels.filter(
     (hotel) => hotel.destination.toLowerCase() === selectedDestination
   );
-
-  //console.log(filteredHotels);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -74,7 +69,6 @@ const Hotel = () => {
     });
 
     const info = await res.json();
-    console.log(info);
 
     if (!info.success) {
       setError(info.error);
