@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { API } from '../lib/api-index';
-import { useOutletContext, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { API } from "../lib/api-index";
+import { useOutletContext, useNavigate } from "react-router-dom";
 import {
   BiLogoFacebookCircle,
   BiLogoGooglePlusCircle,
   BiLogoTwitter,
-} from 'react-icons/bi';
+} from "react-icons/bi";
 
 const Register = () => {
   const { user, setUser, setToken } = useOutletContext();
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [isRegister, setIsRegister] = useState(false);
   const navigate = useNavigate();
 
@@ -22,9 +22,9 @@ const Register = () => {
     setUser(`You are now registered ${user}`);
 
     const res = await fetch(`${API}/users/register`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         firstName,
@@ -35,14 +35,13 @@ const Register = () => {
     });
 
     const info = await res.json();
-    console.log(info);
     if (!info.success) {
       return setError(info.error);
     }
     setToken(info.token);
-    localStorage.setItem('token', info.token);
+    localStorage.setItem("token", info.token);
     // Redirect the user to the home page
-    navigate('/');
+    navigate("/");
     setIsRegister(true);
   };
 
@@ -119,7 +118,7 @@ const Register = () => {
               <label htmlFor="checkbox flex">
                 <input type="checkbox" />
                 Remember me
-                <span style={{ fontSize: '14px' }} className="forgot-password">
+                <span style={{ fontSize: "14px" }} className="forgot-password">
                   Forgot Password?
                 </span>
               </label>
