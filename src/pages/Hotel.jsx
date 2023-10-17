@@ -16,7 +16,8 @@ const Hotel = () => {
   const [checkOut, setCheckOut] = useState("");
   const [confirmationNum, setConfirmationNum] = useState("");
   const [error, setError] = useState("");
-  const { token, fetchReservations, setReservations, trips } = useOutletContext();
+  const { token, fetchReservations, setReservations, trips } =
+    useOutletContext();
   const { tripId } = useParams();
 
   const selectedTrip = trips.find((trip) => trip.id === tripId);
@@ -30,7 +31,7 @@ const Hotel = () => {
     .toLowerCase();
 
   const filteredHotels = hotels.filter(
-    (hotel) => hotel.destination.toLowerCase() === selectedDestination
+    (hotel) => hotel.destination.toLowerCase() === selectedDestination,
   );
 
   async function handleSubmit(e) {
@@ -73,10 +74,10 @@ const Hotel = () => {
     if (!info.success) {
       setError(info.error);
     } else {
-      setReservations((prevReservations) => [
-        ...prevReservations,
-        info.reservation,
-      ]);
+      // setReservations((prevReservations) => ({
+      //   ...prevReservations,
+      //   hotels: [...prevReservations.hotels, info.data.reservation],
+      // }));
       fetchReservations();
       // Navigate to the home page
       navigate(`/car/${tripId}`);

@@ -18,7 +18,8 @@ const Flight = () => {
   const [arrivalDate, setArrivalDate] = useState("");
   const [error, setError] = useState("");
   const [selectedAirline, setSelectedAirline] = useState("");
-  const { token, fetchReservations, setReservations, trips } = useOutletContext();
+  const { token, fetchReservations, setReservations, trips } =
+    useOutletContext();
   const { tripId } = useParams();
 
   const selectedTrip = trips.find((trip) => trip.id === tripId);
@@ -32,7 +33,7 @@ const Flight = () => {
     .toLowerCase();
 
   const filteredFlights = flights.filter(
-    (flight) => flight.destination.toLowerCase() === selectedDestination
+    (flight) => flight.destination.toLowerCase() === selectedDestination,
   );
 
   //new Set used to store unique values, with no duplicates
@@ -86,10 +87,10 @@ const Flight = () => {
     if (!info.success) {
       setError(info.error);
     } else {
-      setReservations((prevReservations) => [
-        ...prevReservations,
-        info.reservation,
-      ]);
+      // setReservations((prevReservations) => ({
+      //   ...prevReservations,
+      //   flights: [...prevReservations.flights, info.data.reservation],
+      // }));
       fetchReservations();
 
       // Navigate to the home page

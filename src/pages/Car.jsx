@@ -17,7 +17,8 @@ const Car = () => {
   const [pickupDate, setPickupDate] = useState("");
   const [dropoffDate, setDropoffDate] = useState("");
   const [error, setError] = useState("");
-  const { token, fetchReservations, setReservations, trips } = useOutletContext();
+  const { token, fetchReservations, setReservations, trips } =
+    useOutletContext();
   const { tripId } = useParams();
 
   const selectedTrip = trips.find((trip) => trip.id === tripId);
@@ -31,7 +32,7 @@ const Car = () => {
     .toLowerCase();
 
   const filteredCars = cars.filter(
-    (car) => car.city.toLowerCase() === selectedDestination
+    (car) => car.city.toLowerCase() === selectedDestination,
   );
 
   //creates array that contains pick-up/drop-off locations based on filtered cars
@@ -51,7 +52,7 @@ const Car = () => {
 
     if (!agencyName || !carType || !pickupDate || !dropoffDate) {
       setError(
-        "Please select an agency name, car type, pick-up and drop-off date."
+        "Please select an agency name, car type, pick-up and drop-off date.",
       );
       return;
     }
@@ -88,10 +89,10 @@ const Car = () => {
     if (!info.success) {
       setError(info.error);
     } else {
-      setReservations((prevReservations) => [
-        ...prevReservations,
-        info.reservation,
-      ]);
+      // setReservations((prevReservations) => ({
+      //   ...prevReservations,
+      //   cars: [...prevReservations.cars, info.data.reservation],
+      // }));
       fetchReservations();
       // Navigate to the confirmation page
       navigate(`/confirmation/${tripId}`);
