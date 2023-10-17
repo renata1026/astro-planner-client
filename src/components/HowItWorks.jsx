@@ -1,15 +1,15 @@
-import howItWorks from '@/assets/howItWorks.png';
-import userIcon from '@/assets/userIcon.svg';
-import mapIcon from '@/assets/mapIcon.svg';
-import navigateIcon from '@/assets/navigateIcon-v2.svg';
-import flightIcon from '@/assets/flightIcon-v2.svg';
+import howItWorks from "@/assets/howItWorks.png";
+import userIcon from "@/assets/userIcon.svg";
+import mapIcon from "@/assets/mapIcon.svg";
+import navigateIcon from "@/assets/navigateIcon-v2.svg";
+import flightIcon from "@/assets/flightIcon-v2.svg";
 
 export default function HowItWorks() {
   return (
     <div className="outside-container">
       <div className="content-container flex">
         <div className="image-container">
-          <img class="enlarged-image" src={howItWorks} alt="How it works" />
+          <img className="enlarged-image" src={howItWorks} alt="How it works" />
         </div>
 
         <div className="how-it-works-container ">
