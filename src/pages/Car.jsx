@@ -37,7 +37,7 @@ const Car = () => {
 
   //creates array that contains pick-up/drop-off locations based on filtered cars
   //Set: built-in JS data structure, stores unique vlaues and automatically removes duplicates
-  //... spreaed operator
+  //... spread operator
   const uniquePickupLocation = [
     ...new Set(filteredCars.map((car) => car.pickupLocation)),
   ];
