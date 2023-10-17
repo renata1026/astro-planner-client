@@ -1,15 +1,121 @@
-import React from "react";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useOutletContext, useParams, useNavigate } from "react-router-dom";
+import { FaCaretDown } from "react-icons/fa";
 
-const EditReservation = () => {
-  const { reservations } = useOutletContext();
+import ReservationIcon from "@/assets/hotelTwo.svg";
+import Map from "@/assets/travel-pic.jpg";
+import { API } from "@/lib/api-index";
+import { flights } from "@/lib/data";
+
+const FlightReservation = () => {
   const { reservationId } = useParams();
+  const { reservations, trips } = useOutletContext();
+  const navigate = useNavigate();
+  const [airlineConNum, setAirlineConNum] = useState("");
+  const [airline, setAirline] = useState();
+  const [flightNumber, setFlightNumber] = useState("");
+  const [departureAirport, setDepartureAirport] = useState("");
+  const [arrivalAirport, setArrivalAirport] = useState("");
+  const [departureDate, setDepartureDate] = useState("");
+  const [arrivalDate, setArrivalDate] = useState("");
+  const [error, setError] = useState("");
+  // const [selectedAirline, setSelectedAirline] = useState("");
 
   const reservation = reservations.find(
     (reservation) => reservation.id === reservationId,
   );
 
+  console.log({ trips });
+  const tripId = reservation?.tripId;
+  const trip = trips.find((trip) => trip.id === tripId);
+
   console.log("reservation", reservation);
+  console.log("trip", trip);
+  console.log({ airline });
+
+  useEffect(() => {
+    // Find the reservation with the specified ID
+    const initialAirline = reservations.find(
+      (reservation) => reservation.id === reservationId,
+    )?.airlineName;
+
+    const initialDepartureAirport = reservations.find(
+      (reservation) => reservation.id === reservationId,
+    )?.departureAirport;
+
+    const initialArrivalAirport = reservations.find(
+      (reservation) => reservation.id === reservationId,
+    )?.arrivalAirport;
+
+    // Set the initial value of 'airline' once the data is available
+    if (initialAirline) {
+      setAirline(initialAirline);
+    }
+
+    if (initialDepartureAirport) {
+      setDepartureAirport(initialDepartureAirport);
+    }
+
+    if (initialArrivalAirport) {
+      setArrivalAirport(initialArrivalAirport);
+    }
+    
+  }, [reservations, reservationId]);
+
+  const selectedDestination = trip?.location
+    .replace(/_/g, " ") ///_/g stands for global, replaces all occurences of underscore
+    .toLowerCase();
+
+  const filteredFlights = flights.filter(
+    (flight) => flight.destination.toLowerCase() === selectedDestination,
+  );
+
+  //new Set used to store unique values, with no duplicates
+  const uniqueArrivalAirports = [
+    ...new Set(filteredFlights.map((flight) => flight.arrivalAirport)),
+  ];
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError(""); // Clear any previous errors
+
+    if (
+      !departureAirport ||
+      !arrivalAirport ||
+      !departureDate ||
+      !arrivalDate
+    ) {
+      setError("Please select airline, dates, departure and arrival airports.");
+      return;
+    }
+
+    //condition to check if departure date is before arrival date
+    if (departureDate > arrivalDate) {
+      setError("Departure date must be before arrival date.");
+      return;
+    }
+    // Convert checkIn and checkOut dates to ISO-8601 format
+    const isoCheckIn = new Date(arrivalDate).toISOString();
+    const isoCheckOut = new Date(departureDate).toISOString();
+
+    const res = await fetch(`${API}/reservations`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        departureAirport,
+        arrivalAirport,
+        departureDate: isoCheckIn,
+        arrivalDate: isoCheckOut,
+        airlineName: airline,
+        flightNumber,
+        bookingConfirmation: airlineConNum,
+        tripId,
+      }),
+    });
+  }
 
   return (
     <section
@@ -21,7 +127,7 @@ const EditReservation = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {/* <form onSubmit={handleSubmit} className="reservation-wrapper flex-col">
+      <form onSubmit={handleSubmit} className="reservation-wrapper flex-col">
         <div className="reservation-text">
           <img src={ReservationIcon} alt="reservation icon" />
           <h2>Enter Flight Reservation</h2>
@@ -47,10 +153,12 @@ const EditReservation = () => {
                   name="airline"
                   placeholder="Enter an airline"
                   className="select-box"
-                  value={selectedAirline}
+                  value={airline}
                   onChange={(e) => setAirline(e.target.value)}
                 >
-                  <option value="">Select a flight</option>
+                  <option value="" disabled>
+                    Select a flight
+                  </option>
 
                   {filteredFlights.map((flight, index) => {
                     return (
@@ -89,7 +197,9 @@ const EditReservation = () => {
               value={departureAirport}
               onChange={(e) => setDepartureAirport(e.target.value)}
             >
-              <option value="">Select a Departure Airport</option>
+              <option value="" disabled>
+                Select a Departure Airport
+              </option>
               {filteredFlights.map((flight, index) => {
                 return (
                   <option key={index} value={flight.departureAirport}>
@@ -165,9 +275,9 @@ const EditReservation = () => {
           </button>
         </div>
         {error && <p className="error-message flex">{error}</p>}
-      </form> */}
+      </form>
     </section>
   );
 };
 
-export default EditReservation;
+export default FlightReservation;
