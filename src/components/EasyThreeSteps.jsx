@@ -22,21 +22,36 @@ const EasyThreeSteps = () => {
               <div className="radio-group-container">
                 <div className="radio-group">
                   <div className="radio-label-container">
-                    <input type="radio" className="radio-input" checked />
+                    <input
+                      type="radio"
+                      className="radio-input"
+                      checked
+                      readOnly
+                    />
                     <label className="radio-label">Set Up your Account</label>
                   </div>
                   <p className="radio-description">Book your best experience</p>
                 </div>
                 <div className="radio-group">
                   <div className="radio-label-container">
-                    <input type="radio" className="radio-input" checked />
+                    <input
+                      type="radio"
+                      className="radio-input"
+                      checked
+                      readOnly
+                    />
                     <label className="radio-label">Day by day Plan</label>
                   </div>
                   <p className="radio-description">Book your best experience</p>
                 </div>
                 <div className="radio-group">
                   <div className="radio-label-container">
-                    <input type="radio" className="radio-input" checked />
+                    <input
+                      type="radio"
+                      className="radio-input"
+                      checked
+                      readOnly
+                    />
                     <label className="radio-label">Booking System</label>
                   </div>
                   <p className="radio-description">Book your best experience</p>
@@ -60,17 +75,32 @@ const EasyThreeSteps = () => {
             </p>
             <div className="radio-group-bottom-container">
               <div className="radio-group-two">
-                <input type="radio" className="radio-input-two" />
+                <input
+                  type="radio"
+                  className="radio-input-two"
+                  checked
+                  readOnly
+                />
                 <label className="radio-label-two">Set Up your Account</label>
               </div>
               <div className="radio-group-two">
-                <input type="radio" className="radio-input-two" />
+                <input
+                  type="radio"
+                  className="radio-input-two"
+                  checked
+                  readOnly
+                />
                 <label className="radio-label-two">
                   Response to Private requests
                 </label>
               </div>
               <div className="radio-group-two">
-                <input type="radio" className="radio-input-two" />
+                <input
+                  type="radio"
+                  className="radio-input-two"
+                  checked
+                  readOnly
+                />
                 <label className="radio-label-two">Book your Trip</label>
               </div>
             </div>
