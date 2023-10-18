@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 import React from "react";
 import ReservationIcon from "@/assets/hotelTwo.svg";
 import Map from "@/assets/travel-pic.jpg";
@@ -7,17 +6,7 @@ import { API } from "../lib/api-index";
 import { useOutletContext, useNavigate, useParams } from "react-router-dom";
 import { flights } from "../lib/data";
 import { FaCaretDown } from "react-icons/fa";
-=======
-import React from 'react';
-import ReservationIcon from '@/assets/hotelTwo.svg';
-import Map from '@/assets/travel-pic.jpg';
-import { useState } from 'react';
-import { API } from '../lib/api-index';
-import { useOutletContext, useNavigate, useParams } from 'react-router-dom';
-import { flights } from '../lib/data';
-import { FaCaretDown } from 'react-icons/fa';
-import CreateTrip from './CreateTrip';
->>>>>>> Stashed changes
+import CreateTrip from "./CreateTrip";
 
 const Flight = ({ destination }) => {
   const navigate = useNavigate();
@@ -33,30 +22,7 @@ const Flight = ({ destination }) => {
   const { token, fetchReservations, setReservations, trips } =
     useOutletContext();
   const { tripId } = useParams();
-<<<<<<< Updated upstream
-
-  const selectedTrip = trips.find((trip) => trip.id === tripId);
-
-  if (!selectedTrip) {
-    return;
-  }
-
-  const selectedDestination = selectedTrip.location
-    .replace(/_/g, " ") ///_/g stands for global, replaces all occurrences of underscore
-    .toLowerCase();
-
-  const filteredFlights = flights.filter(
-    (flight) => flight.destination.toLowerCase() === selectedDestination,
-  );
-
-  //new Set used to store unique values, with no duplicates
-  const uniqueArrivalAirports = [
-    ...new Set(filteredFlights.map((flight) => flight.arrivalAirport)),
-  ];
-
-=======
   console.log(destination);
->>>>>>> Stashed changes
   async function handleSubmit(e) {
     e.preventDefault();
     setError(""); // Clear any previous errors
