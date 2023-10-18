@@ -1,13 +1,16 @@
-import React from 'react';
+import error from "@/assets/404.svg";
 
 const NotFound = () => {
   return (
-    <div className="not-found-container">
-      <h1 className="not-found-heading">404</h1>
-      <p className="not-found-message">
-        Oops! The page you are looking for doesn't exist.
-      </p>
-    </div>
+    <section class="error-section">
+      <div class="error-container">
+        <div class="error-message">
+          <h1 class="error-title">404</h1>
+          <p class="error-heading">Whoops! That page doesn’t exist.</p>
+        </div>
+        <img class="error-image" src={error} alt="404" />
+      </div>
+    </section>
   );
 };
 
