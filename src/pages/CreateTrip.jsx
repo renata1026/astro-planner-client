@@ -4,12 +4,24 @@ import { API } from "../lib/api-index";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import { Location } from "../lib/data";
 import { FaCaretDown } from "react-icons/fa";
+import { toTitleCase } from "../lib/helper";
+import { format, addDays, isBefore, parseISO } from "date-fns";
+
+// Function to get today's date in the format YYYY-MM-DD
+function getTodayDate() {
+  return format(new Date(), "yyyy-MM-dd");
+}
+
+// Function to get tomorrow's date in the format YYYY-MM-DD
+function getTomorrowDate() {
+  return format(addDays(new Date(), 1), "yyyy-MM-dd");
+}
 
 const CreateTrip = () => {
   const navigate = useNavigate();
   const [destination, setDestination] = useState("");
-  const [checkIn, setCheckIn] = useState("");
-  const [checkOut, setCheckOut] = useState("");
+  const [checkIn, setCheckIn] = useState(getTodayDate());
+  const [checkOut, setCheckOut] = useState(getTomorrowDate());
   const [error, setError] = useState("");
   const [passengers, setPassengers] = useState(1);
 
@@ -25,15 +37,17 @@ const CreateTrip = () => {
     }
 
     console.log(destination);
-    //condition to check if checkin date is before checkout date
-    if (checkIn > checkOut) {
+
+    // condition to check if check-in date is before checkout date
+    if (isBefore(parseISO(checkOut), parseISO(checkIn))) {
       setError("Check-in date must be before check-out date.");
       return;
     }
 
-    // Convert checkIn and checkOut dates to ISO-8601 format
-    const isoCheckIn = new Date(checkIn).toISOString();
-    const isoCheckOut = new Date(checkOut).toISOString();
+    // Convert checkIn and checkOut dates to full ISO-8601 DateTime format
+    const fullISOCheckIn = `${checkIn}T00:00:00.000Z`;
+    const fullISOCheckOut = `${checkOut}T00:00:00.000Z`;
+
     // Convert passengers from a string to an integer
     const passengersInt = parseInt(passengers, 10);
 
@@ -45,8 +59,8 @@ const CreateTrip = () => {
       },
       body: JSON.stringify({
         location: destination,
-        checkIn: isoCheckIn,
-        checkOut: isoCheckOut,
+        checkIn: fullISOCheckIn,
+        checkOut: fullISOCheckOut,
         passengers: passengersInt,
       }),
     });
@@ -79,11 +93,13 @@ const CreateTrip = () => {
               value={destination}
               onChange={(e) => setDestination(e.target.value)}
             >
-              <option value="">Select a Destination</option>
+              <option value="" disabled>
+                Select a Destination
+              </option>
               {Location.map((city) => {
                 return (
                   <option key={city} value={city}>
-                    {city}
+                    {toTitleCase(city)}
                   </option>
                 );
               })}
@@ -100,7 +116,14 @@ const CreateTrip = () => {
               id="startDate"
               placeholder="Start Date"
               value={checkIn}
-              onChange={(e) => setCheckIn(e.target.value)}
+              onChange={(e) => {
+                setCheckIn(e.target.value);
+                // If checkOut is before checkIn, reset checkOut to checkIn
+                if (e.target.value > checkOut) {
+                  setCheckOut(e.target.value);
+                }
+              }}
+              min={getTodayDate()} // Disable past dates
             />
             <label htmlFor="check-out">Check-out</label>
             <input
@@ -110,6 +133,7 @@ const CreateTrip = () => {
               placeholder="End Date"
               value={checkOut}
               onChange={(e) => setCheckOut(e.target.value)}
+              min={checkIn} // Disable dates before the checkIn date
             />
           </div>
           <label htmlFor="travellers">Travellers</label>

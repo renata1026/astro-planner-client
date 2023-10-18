@@ -2,10 +2,17 @@ import React from "react";
 import { useState } from "react";
 import ReservationIcon from "@/assets/hotelTwo.svg";
 import Map from "@/assets/travel-pic.jpg";
-import { useNavigate, useOutletContext, useParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useOutletContext,
+  useParams,
+} from "react-router-dom";
 import { cars } from "../lib/data";
 import { API } from "../lib/api-index";
 import { FaCaretDown } from "react-icons/fa";
+import { GrCaretNext } from "react-icons/gr";
+import { format, addWeeks, isBefore } from "date-fns";
 
 const Car = () => {
   const navigate = useNavigate();
@@ -13,13 +20,22 @@ const Car = () => {
   const [agencyName, setAgencyName] = useState("");
   const [carType, setCarType] = useState("");
   const [pickupLocation, setPickUpLocation] = useState("");
-  const [dropoffLocation, setDropOffLocation] = useState("");
+  const [dropoffLocation, setDropoffLocation] = useState("");
   const [pickupDate, setPickupDate] = useState("");
   const [dropoffDate, setDropoffDate] = useState("");
   const [error, setError] = useState("");
   const { token, fetchReservations, setReservations, trips } =
     useOutletContext();
   const { tripId } = useParams();
+
+  const today = format(new Date(), "yyyy-MM-dd");
+  let twoWeeksFromPickup = today;
+  if (pickupDate) {
+    twoWeeksFromPickup = format(
+      addWeeks(new Date(pickupDate), 2),
+      "yyyy-MM-dd",
+    );
+  }
 
   const selectedTrip = trips.find((trip) => trip.id === tripId);
 
@@ -28,7 +44,7 @@ const Car = () => {
   }
 
   const selectedDestination = selectedTrip.location
-    .replace(/_/g, " ") ///_/g for global, replaces all occurences of underscore
+    .replace(/_/g, " ") ///_/g for global, replaces all occurrences of underscore
     .toLowerCase();
 
   const filteredCars = cars.filter(
@@ -36,7 +52,7 @@ const Car = () => {
   );
 
   //creates array that contains pick-up/drop-off locations based on filtered cars
-  //Set: built-in JS data structure, stores unique vlaues and automatically removes duplicates
+  //Set: built-in JS data structure, stores unique values and automatically removes duplicates
   //... spread operator
   const uniquePickupLocation = [
     ...new Set(filteredCars.map((car) => car.pickupLocation)),
@@ -50,21 +66,27 @@ const Car = () => {
     e.preventDefault();
     setError(""); // Clear any previous errors
 
-    if (!agencyName || !carType || !pickupDate || !dropoffDate) {
-      setError(
-        "Please select an agency name, car type, pick-up and drop-off date.",
-      );
+    // Update the condition to also check if the selected dates are not in the past
+    if (
+      isBefore(new Date(pickupDate), new Date(today)) ||
+      isBefore(new Date(dropoffDate), new Date(today))
+    ) {
+      setError("Selected date cannot be in the past.");
       return;
     }
 
-    //condition to check if checkin date is before checkout date
-    if (pickupDate > dropoffDate) {
-      setError("Pickup date must be before drop-off date.");
+    // Update the condition to also check if the selected dates are not in the past
+    if (
+      isBefore(new Date(pickupDate), new Date(today)) ||
+      isBefore(new Date(dropoffDate), new Date(today))
+    ) {
+      setError("Selected date cannot be in the past.");
       return;
     }
+
     // Convert checkIn and checkOut dates to ISO-8601 format
-    const isoPickUp = new Date(pickupDate).toISOString();
-    const isoDropOff = new Date(dropoffDate).toISOString();
+    const isoPickup = new Date(pickupDate).toISOString();
+    const isoDropoff = new Date(dropoffDate).toISOString();
 
     const res = await fetch(`${API}/reservations`, {
       method: "POST",
@@ -78,8 +100,8 @@ const Car = () => {
         carType,
         pickupLocation,
         dropoffLocation,
-        departureDate: isoPickUp,
-        arrivalDate: isoDropOff,
+        departureDate: isoPickup,
+        arrivalDate: isoDropoff,
         tripId,
       }),
     });
@@ -125,7 +147,7 @@ const Car = () => {
             value={confirmationNum}
             onChange={(e) => setConfirmationNum(e.target.value)}
           />
-          <div className="field-container">
+          <div className="field-container agency-car-container">
             <div className="flex-col-start">
               <label htmlFor="agencyName">Agency Name</label>
               <div className="select-container">
@@ -138,7 +160,9 @@ const Car = () => {
                   value={agencyName}
                   onChange={(e) => setAgencyName(e.target.value)}
                 >
-                  <option value="">Select a car agency</option>
+                  <option value="" disabled>
+                    Select a car agency
+                  </option>
                   {filteredCars.map((car, index) => {
                     return (
                       <option key={index} value={car.carRentalAgency}>
@@ -164,7 +188,9 @@ const Car = () => {
                   value={carType}
                   onChange={(e) => setCarType(e.target.value)}
                 >
-                  <option value="">Select car type</option>
+                  <option value="" disabled>
+                    Select car type
+                  </option>
                   {filteredCars.map((car, index) => {
                     return (
                       <option key={index} value={car.carType}>
@@ -190,7 +216,9 @@ const Car = () => {
               value={pickupLocation}
               onChange={(e) => setPickUpLocation(e.target.value)}
             >
-              <option value="">Select a Pick-up Location</option>
+              <option value="" disabled>
+                Select a Pick-up Location
+              </option>
               {uniquePickupLocation.map((car, index) => {
                 return (
                   <option key={index} value={car}>
@@ -212,9 +240,11 @@ const Car = () => {
               placeholder="Enter the drop-off location"
               className="input-field"
               value={dropoffLocation}
-              onChange={(e) => setDropOffLocation(e.target.value)}
+              onChange={(e) => setDropoffLocation(e.target.value)}
             >
-              <option value="">Select a drop-off Location</option>
+              <option value="" disabled>
+                Select a drop-off Location
+              </option>
               {uniqueDropoffLocation.map((car, index) => {
                 return (
                   <option key={index} value={car}>
@@ -237,6 +267,7 @@ const Car = () => {
                   name="pickupDate"
                   className="date-time-field"
                   value={pickupDate}
+                  min={today}
                   onChange={(e) => setPickupDate(e.target.value)}
                 />
               </div>
@@ -250,13 +281,15 @@ const Car = () => {
                   name="dropoffDate"
                   className="date-time-field"
                   value={dropoffDate}
+                  min={pickupDate}
+                  max={twoWeeksFromPickup}
                   onChange={(e) => setDropoffDate(e.target.value)}
                 />
               </div>
             </div>
           </div>
         </div>
-        <div className="center">
+        <div className="reservation-buttons-container">
           <button
             className="save-button"
             type="submit"
@@ -264,6 +297,12 @@ const Car = () => {
           >
             Save
           </button>
+          <Link to={`/confirmation/${tripId}`}>
+            <button className="next-button">
+              <GrCaretNext />
+              <span>Skip</span>
+            </button>
+          </Link>
         </div>
         {error && <p className="error-message flex">{error}</p>}
       </form>

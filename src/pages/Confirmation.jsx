@@ -1,17 +1,19 @@
+import { useState } from "react";
 import {
   useNavigate,
   useOutletContext,
   useParams,
   Link,
 } from "react-router-dom";
+import { GrEdit } from "react-icons/gr";
+import { FaTrash } from "react-icons/fa";
 
 import airplane from "@/assets/airplane-reservation.jpg";
 import car from "@/assets/car-reservation.jpg";
 import hotel from "@/assets/hotel-reservation.jpg";
 import { API } from "@/lib/api-index";
-import { GrEdit } from "react-icons/gr";
-import { FaTrash } from "react-icons/fa";
-import { useState } from "react";
+
+import StaggeredDropDown from "@/components/StaggeredDropDown";
 
 const Confirmation = () => {
   const [error, setError] = useState("");
@@ -64,15 +66,13 @@ const Confirmation = () => {
 
     fetchReservations();
 
-    console.log(filteredReservations);
-
     if (!info.success) {
       setError(info.error);
     }
 
     // Now you can handle the response as needed
   }
-
+  console.log(filteredReservations);
   return (
     <section className="confirmation-section">
       <div className="confirmation-container">
@@ -140,22 +140,26 @@ const Confirmation = () => {
                         return null;
                       }
                     })}
-
-                  <Link
-                    to={`/edit/${reservationType}/reservation/${reservationId}`}
-                  >
-                    <GrEdit />
-                  </Link>
-                  <button
-                    onClick={(e) => handleDeleteReservation(e, reservationId)}
-                  >
-                    <FaTrash />
-                  </button>
+                  <div className="buttons-container">
+                    <Link
+                      to={`/edit/${reservationType}/reservation/${reservationId}`}
+                      className="edit-button"
+                    >
+                      <GrEdit className="edit-icon" />
+                    </Link>
+                    <button
+                      onClick={(e) => handleDeleteReservation(e, reservationId)}
+                      className="delete-button"
+                    >
+                      <FaTrash className="delete-icon" />
+                    </button>
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
+        <StaggeredDropDown tripId={tripId} />
       </div>
     </section>
   );

@@ -1,11 +1,17 @@
 import React, { useState } from "react";
+import { format, addDays } from "date-fns";
 import ReservationIcon from "@/assets/hotelTwo.svg";
 import Map from "@/assets/travel-pic.jpg";
-import { useNavigate, useOutletContext, useParams } from "react-router-dom";
+import {
+  useNavigate,
+  useOutletContext,
+  useParams,
+  Link,
+} from "react-router-dom";
 import { hotels } from "../lib/data";
 import { API } from "../lib/api-index";
 import { FaCaretDown } from "react-icons/fa";
-FaCaretDown;
+import { GrCaretNext } from "react-icons/gr";
 
 const Hotel = () => {
   const navigate = useNavigate();
@@ -19,6 +25,13 @@ const Hotel = () => {
   const { token, fetchReservations, setReservations, trips } =
     useOutletContext();
   const { tripId } = useParams();
+
+  const today = format(new Date(), "yyyy-MM-dd");
+
+  // Calculate max check-out date based on selected check-in date
+  const maxCheckOutDate = checkIn
+    ? format(addDays(new Date(checkIn), 14), "yyyy-MM-dd")
+    : today;
 
   const selectedTrip = trips.find((trip) => trip.id === tripId);
 
@@ -123,7 +136,9 @@ const Hotel = () => {
                   value={hotelName}
                   onChange={(e) => setHotelName(e.target.value)}
                 >
-                  <option value="">Select a hotel</option>
+                  <option value="" disabled>
+                    Select a hotel
+                  </option>
                   {filteredHotels.map((hotel, index) => {
                     return (
                       <option key={index} value={hotel.name}>
@@ -161,7 +176,9 @@ const Hotel = () => {
               value={hotelLocation}
               onChange={(e) => setHotelLocation(e.target.value)}
             >
-              <option value="">Select an hotel location</option>
+              <option value="" disabled>
+                Select an hotel location
+              </option>
               {filteredHotels.map((hotel, index) => {
                 return (
                   <option key={index} value={hotel.location}>
@@ -183,6 +200,7 @@ const Hotel = () => {
                   id="checkInDate"
                   name="checkInDate"
                   className="date-time-field"
+                  min={today}
                   value={checkIn}
                   onChange={(e) => setCheckIn(e.target.value)}
                 />
@@ -196,6 +214,8 @@ const Hotel = () => {
                   id="checkOutDate"
                   name="checkOutDate"
                   className="date-time-field"
+                  min={checkIn || today}
+                  max={maxCheckOutDate}
                   value={checkOut}
                   onChange={(e) => setCheckOut(e.target.value)}
                 />
@@ -203,7 +223,7 @@ const Hotel = () => {
             </div>
           </div>
         </div>
-        <div className="center">
+        <div className="reservation-buttons-container">
           <button
             className="save-button"
             type="submit"
@@ -211,6 +231,12 @@ const Hotel = () => {
           >
             Save
           </button>
+          <Link to={`/car/${tripId}`}>
+            <button className="next-button">
+              <GrCaretNext />
+              <span>Skip</span>
+            </button>
+          </Link>
         </div>
         {error && <p className="error-message flex">{error}</p>}
       </form>

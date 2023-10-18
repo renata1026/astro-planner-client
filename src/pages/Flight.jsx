@@ -3,10 +3,16 @@ import ReservationIcon from "@/assets/hotelTwo.svg";
 import Map from "@/assets/travel-pic.jpg";
 import { useState } from "react";
 import { API } from "@/lib/api-index";
-import { useOutletContext, useNavigate, useParams } from "react-router-dom";
+import {
+  useOutletContext,
+  useNavigate,
+  useParams,
+  Link,
+} from "react-router-dom";
 import { flights } from "@/lib/data";
 import { FaCaretDown } from "react-icons/fa";
-import CreateTrip from "./CreateTrip";
+import { GrCaretNext } from "react-icons/gr";
+import { format, addDays, isAfter } from "date-fns";
 
 const Flight = ({ destination }) => {
   const navigate = useNavigate();
@@ -19,9 +25,13 @@ const Flight = ({ destination }) => {
   const [arrivalDate, setArrivalDate] = useState("");
   const [error, setError] = useState("");
   //const [selectedAirline, setSelectedAirline] = useState("");
+  const [minArrivalDate, setMinArrivalDate] = useState("");
+  const [maxArrivalDate, setMaxArrivalDate] = useState("");
   const { token, fetchReservations, setReservations, trips } =
     useOutletContext();
   const { tripId } = useParams();
+
+  const today = format(new Date(), "yyyy-MM-dd");
 
   const selectedTrip = trips.find((trip) => trip.id === tripId);
 
@@ -42,6 +52,16 @@ const Flight = ({ destination }) => {
     ...new Set(filteredFlights.map((flight) => flight.arrivalAirport)),
   ];
 
+  const handleDepartureDateChange = (e) => {
+    setDepartureDate(e.target.value);
+
+    const selectedDate = addDays(new Date(e.target.value), 1);
+    const nextDay = selectedDate.toISOString().split("T")[0];
+
+    setMinArrivalDate(e.target.value);
+    setMaxArrivalDate(nextDay);
+  };
+
   async function handleSubmit(e) {
     e.preventDefault();
     setError(""); // Clear any previous errors
@@ -57,7 +77,7 @@ const Flight = ({ destination }) => {
     }
 
     //condition to check if departure date is before arrival date
-    if (departureDate > arrivalDate) {
+    if (isAfter(new Date(departureDate), new Date(arrivalDate))) {
       setError("Departure date must be before arrival date.");
       return;
     }
@@ -142,7 +162,9 @@ const Flight = ({ destination }) => {
                   value={airlineName}
                   onChange={(e) => setAirlineName(e.target.value)}
                 >
-                  <option value="">Select a flight</option>
+                  <option value="" disabled>
+                    Select a flight
+                  </option>
 
                   {filteredFlights.map((flight, index) => {
                     return (
@@ -181,7 +203,9 @@ const Flight = ({ destination }) => {
               value={departureAirport}
               onChange={(e) => setDepartureAirport(e.target.value)}
             >
-              <option value="">Select a Departure Airport</option>
+              <option value="" disabled>
+                Select a Departure Airport
+              </option>
               {filteredFlights.map((flight, index) => {
                 return (
                   <option key={index} value={flight.departureAirport}>
@@ -205,7 +229,9 @@ const Flight = ({ destination }) => {
               value={arrivalAirport}
               onChange={(e) => setArrivalAirport(e.target.value)}
             >
-              <option value="">Select a Arrival Airport</option>
+              <option value="" disabled>
+                Select a Arrival Airport
+              </option>
               {uniqueArrivalAirports.map((airport, index) => {
                 return (
                   <option key={index} value={airport}>
@@ -228,7 +254,8 @@ const Flight = ({ destination }) => {
                   name="departureDate"
                   className="date-time-field"
                   value={departureDate}
-                  onChange={(e) => setDepartureDate(e.target.value)}
+                  min={today}
+                  onChange={handleDepartureDateChange}
                 />
               </div>
             </div>
@@ -241,13 +268,15 @@ const Flight = ({ destination }) => {
                   name="arrivalDate"
                   className="date-time-field"
                   value={arrivalDate}
+                  min={minArrivalDate}
+                  max={maxArrivalDate}
                   onChange={(e) => setArrivalDate(e.target.value)}
                 />
               </div>
             </div>
           </div>
         </div>
-        <div className="center">
+        <div className="reservation-buttons-container">
           <button
             className="save-button"
             type="submit"
@@ -255,6 +284,12 @@ const Flight = ({ destination }) => {
           >
             Save
           </button>
+          <Link to={`/hotel/${tripId}`}>
+            <button className="next-button">
+              <GrCaretNext />
+              <span>Skip</span>
+            </button>
+          </Link>
         </div>
         {error && <p className="error-message flex">{error}</p>}
       </form>
