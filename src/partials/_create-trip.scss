@@ -1,5 +1,5 @@
-@use './variables' as v;
-@use './mixins' as m;
+@use "./variables" as v;
+@use "./mixins" as m;
 
 .create-trip-container {
   padding: 200px 50px;
@@ -49,11 +49,12 @@
   height: auto;
 }
 
-@include m.breakpoint('small') {
+@include m.breakpoint("small") {
   .create-trip-form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 90%;
     .col-one {
       margin-right: 0;
     }

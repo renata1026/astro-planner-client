@@ -286,8 +286,8 @@ const Flight = ({ destination }) => {
           </button>
           <Link to={`/hotel/${tripId}`}>
             <button className="next-button">
-              <GrCaretNext />
-              <span>Skip</span>
+              <FaForward style={{ marginRight: "5px" }} />
+              Skip
             </button>
           </Link>
         </div>

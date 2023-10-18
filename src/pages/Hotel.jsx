@@ -233,8 +233,8 @@ const Hotel = () => {
           </button>
           <Link to={`/car/${tripId}`}>
             <button className="next-button">
-              <GrCaretNext />
-              <span>Skip</span>
+              <FaForward style={{ marginRight: "5px" }} />
+              Skip
             </button>
           </Link>
         </div>

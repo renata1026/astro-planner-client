@@ -11,7 +11,7 @@ import {
 import { cars } from "../lib/data";
 import { API } from "../lib/api-index";
 import { FaCaretDown } from "react-icons/fa";
-import { GrCaretNext } from "react-icons/gr";
+import { FaForward } from "react-icons/fa";
 import { format, addWeeks, isBefore } from "date-fns";
 
 const Car = () => {
@@ -299,8 +299,8 @@ const Car = () => {
           </button>
           <Link to={`/confirmation/${tripId}`}>
             <button className="next-button">
-              <GrCaretNext />
-              <span>Skip</span>
+              <FaForward style={{ marginRight: "5px" }} />
+              Skip
             </button>
           </Link>
         </div>
