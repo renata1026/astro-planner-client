@@ -9,13 +9,13 @@ import { flights } from "@/lib/data";
 
 const FlightReservation = () => {
   const { reservationId } = useParams();
-  const { reservations, trips } = useOutletContext();
+  const { reservations, trips, token, fetchReservations } = useOutletContext();
   const navigate = useNavigate();
   const [airlineConNum, setAirlineConNum] = useState("");
   const [airline, setAirline] = useState();
   const [flightNumber, setFlightNumber] = useState("");
-  const [departureAirport, setDepartureAirport] = useState("");
-  const [arrivalAirport, setArrivalAirport] = useState("");
+  const [departureAirport, setDepartureAirport] = useState();
+  const [arrivalAirport, setArrivalAirport] = useState();
   const [departureDate, setDepartureDate] = useState("");
   const [arrivalDate, setArrivalDate] = useState("");
   const [error, setError] = useState("");
@@ -25,16 +25,16 @@ const FlightReservation = () => {
     (reservation) => reservation.id === reservationId,
   );
 
-  console.log({ trips });
+  //console.log({ reservations });
   const tripId = reservation?.tripId;
   const trip = trips.find((trip) => trip.id === tripId);
 
-  console.log("reservation", reservation);
-  console.log("trip", trip);
-  console.log({ airline });
+  //console.log("reservation", reservation);
+  //console.log("trip", trip);
+  //console.log(airline);
 
   useEffect(() => {
-    // Find the reservation with the specified ID
+    //console.log("reservation", reservation);
     const initialAirline = reservations.find(
       (reservation) => reservation.id === reservationId,
     )?.airlineName;
@@ -59,7 +59,6 @@ const FlightReservation = () => {
     if (initialArrivalAirport) {
       setArrivalAirport(initialArrivalAirport);
     }
-    
   }, [reservations, reservationId]);
 
   const selectedDestination = trip?.location
@@ -75,7 +74,7 @@ const FlightReservation = () => {
     ...new Set(filteredFlights.map((flight) => flight.arrivalAirport)),
   ];
 
-  async function handleSubmit(e) {
+  async function handleEdit(e) {
     e.preventDefault();
     setError(""); // Clear any previous errors
 
@@ -98,8 +97,8 @@ const FlightReservation = () => {
     const isoCheckIn = new Date(arrivalDate).toISOString();
     const isoCheckOut = new Date(departureDate).toISOString();
 
-    const res = await fetch(`${API}/reservations`, {
-      method: "POST",
+    const res = await fetch(`${API}/reservations/${reservationId}`, {
+      method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -115,6 +114,22 @@ const FlightReservation = () => {
         tripId,
       }),
     });
+
+    const info = await res.json();
+    //console.log(info);
+
+    if (!info.success) {
+      setError(info.error);
+    } else {
+      // setReservations((prevReservations) => ({
+      //   ...prevReservations,
+      //   flights: [...prevReservations.flights, info.data.reservation],
+      // }));
+      fetchReservations();
+
+      // Navigate to the home page
+      navigate(`/confirmation/${tripId}`);
+    }
   }
 
   return (
@@ -127,7 +142,7 @@ const FlightReservation = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <form onSubmit={handleSubmit} className="reservation-wrapper flex-col">
+      <form onSubmit={handleEdit} className="reservation-wrapper flex-col">
         <div className="reservation-text">
           <img src={ReservationIcon} alt="reservation icon" />
           <h2>Enter Flight Reservation</h2>
@@ -223,7 +238,9 @@ const FlightReservation = () => {
               value={arrivalAirport}
               onChange={(e) => setArrivalAirport(e.target.value)}
             >
-              <option value="">Select a Arrival Airport</option>
+              <option value="" disabled>
+                Select a Arrival Airport
+              </option>
               {uniqueArrivalAirports.map((airport, index) => {
                 return (
                   <option key={index} value={airport}>

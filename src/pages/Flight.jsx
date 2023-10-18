@@ -17,7 +17,7 @@ const Flight = () => {
   const [departureDate, setDepartureDate] = useState("");
   const [arrivalDate, setArrivalDate] = useState("");
   const [error, setError] = useState("");
-  const [selectedAirline, setSelectedAirline] = useState("");
+  //const [selectedAirline, setSelectedAirline] = useState("");
   const { token, fetchReservations, setReservations, trips } =
     useOutletContext();
   const { tripId } = useParams();
@@ -83,6 +83,7 @@ const Flight = () => {
     });
 
     const info = await res.json();
+    // console.log(info);
 
     if (!info.success) {
       setError(info.error);
@@ -134,7 +135,7 @@ const Flight = () => {
                   name="airline"
                   placeholder="Enter an airline"
                   className="select-box"
-                  value={selectedAirline}
+                  value={airline}
                   onChange={(e) => setAirline(e.target.value)}
                 >
                   <option value="">Select a flight</option>
