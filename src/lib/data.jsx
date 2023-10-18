@@ -96,7 +96,7 @@ export const hotels = [
 
 export const flights = [
   {
-    airline: "Delta Air Lines",
+    airlineName: "Delta Air Lines",
     flightNumber: "DL1234",
     destination: "New York City",
     arrivalAirport: "John F. Kennedy International Airport (JFK)",
@@ -104,7 +104,7 @@ export const flights = [
     price: 300,
   },
   {
-    airline: "United Airlines",
+    airlineName: "United Airlines",
     flightNumber: "UA5678",
     destination: "Los Angeles",
     arrivalAirport: "Los Angeles International Airport (LAX)",
@@ -112,7 +112,7 @@ export const flights = [
     price: 350,
   },
   {
-    airline: "American Airlines",
+    airlineName: "American Airlines",
     flightNumber: "AA9876",
     destination: "Chicago",
     arrivalAirport: "O'Hare International Airport (ORD)",
@@ -120,7 +120,7 @@ export const flights = [
     price: 280,
   },
   {
-    airline: "Air Canada",
+    airlineName: "Air Canada",
     flightNumber: "AC3456",
     destination: "Toronto",
     arrivalAirport: "Toronto Pearson International Airport (YYZ)",
@@ -128,7 +128,7 @@ export const flights = [
     price: 320,
   },
   {
-    airline: "Southwest Airlines",
+    airlineName: "Southwest Airlines",
     flightNumber: "WN6543",
     destination: "New York",
     arrivalAirport: "LaGuardia Airport (LGA)",
@@ -136,7 +136,7 @@ export const flights = [
     price: 330,
   },
   {
-    airline: "JetBlue",
+    airlineName: "JetBlue",
     flightNumber: "B7890",
     destination: "Toronto",
     arrivalAirport: "Billy Bishop Toronto City Airport (YTZ)",
@@ -144,7 +144,7 @@ export const flights = [
     price: 310,
   },
   {
-    airline: "Alaska Airlines",
+    airlineName: "Alaska Airlines",
     flightNumber: "AS4321",
     destination: "Los Angeles",
     arrivalAirport: "Los Angeles International Airport (LAX)",
@@ -152,7 +152,7 @@ export const flights = [
     price: 290,
   },
   {
-    airline: "WestJet",
+    airlineName: "WestJet",
     flightNumber: "WS5678",
     destination: "New York",
     arrivalAirport: "John F. Kennedy International Airport (JFK)",
@@ -160,7 +160,7 @@ export const flights = [
     price: 280,
   },
   {
-    airline: "Frontier Airlines",
+    airlineName: "Frontier Airlines",
     flightNumber: "F1234",
     destination: "Chicago",
     arrivalAirport: "O'Hare International Airport (ORD)",
@@ -168,7 +168,7 @@ export const flights = [
     price: 340,
   },
   {
-    airline: "Spirit Airlines",
+    airlineName: "Spirit Airlines",
     flightNumber: "NK7890",
     destination: "Toronto",
     arrivalAirport: "Toronto Pearson International Airport (YYZ)",
