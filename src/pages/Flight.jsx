@@ -82,9 +82,12 @@ const Flight = ({ destination }) => {
         tripId,
       }),
     });
+    // console.log(airline);
+
+    //console.log(setAirline);
 
     const info = await res.json();
-    // console.log(info);
+    console.log(info);
 
     if (!info.success) {
       setError(info.error);
@@ -132,8 +135,8 @@ const Flight = ({ destination }) => {
               <div className="select-container">
                 <select
                   type="text"
-                  id="airline"
-                  name="airline"
+                  id="airlineName"
+                  name="airlineName"
                   placeholder="Enter an airline"
                   className="select-box"
                   value={airlineName}
