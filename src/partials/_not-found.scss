@@ -1,25 +1,58 @@
-@use './variables' as v;
-@use './mixins' as m;
+@use "./variables" as v;
+@use "./mixins" as m;
 
-.not-found-container {
-  background-color: v.$primary-black;
-  text-align: center;
+.error-section {
+  background-color: white;
   font-family: Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  padding-block: 24px;
+}
+
+.error-container {
+  padding-inline: 24px;
+  margin: 0 auto;
+}
+
+.error-message {
+  align-self: center;
+}
+
+.error-title {
   margin: 0;
-  padding: 0;
+  margin-bottom: 16px;
+  font-size: 48px;
+  font-weight: bold;
+  color: #4a90e2;
 }
 
-.not-found-heading {
-  font-size: 6rem;
-  color: v.$color-light;
+.error-heading {
+  margin-bottom: 64px;
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+  line-height: 1.5;
+  margin: 0;
 }
 
-.not-found-message {
-  font-size: 1.5rem;
-  color: v.$primary-blue;
+.error-image {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .error-section {
+    padding-block: 48px;
+  }
+
+  .error-container {
+    display: flex;
+    gap: 32px;
+    margin: 0 auto;
+  }
+  .error-image {
+    display: block;
+    width: 50%;
+  }
+
+  .error-heading {
+    margin-bottom: 40px;
+  }
 }

@@ -27,8 +27,8 @@ const Car = () => {
   const tripId = reservation?.tripId;
   const selectedTrip = trips.find((trip) => trip.id === tripId);
 
-  const selectedDestination = selectedTrip?.location
-    .replace(/_/g, " ") ///_/g for global, replaces all occurences of underscore
+  const selectedDestination = selectedTrip.location
+    .replace(/_/g, " ") ///_/g for global, replaces all occurrences of underscore
     .toLowerCase();
 
   const filteredCars = cars.filter(
@@ -44,6 +44,13 @@ const Car = () => {
 
     const formattedCheckIn = foundReservation?.pickupDate?.split("T")[0];
     const formattedCheckOut = foundReservation?.dropoffDate?.split("T")[0];
+
+    //creates array that contains pick-up/drop-off locations based on filtered cars
+    //Set: built-in JS data structure, stores unique values and automatically removes duplicates
+    //... spread operator
+    const uniquePickupLocation = [
+      ...new Set(filteredCars.map((car) => car.pickupLocation)),
+    ];
 
     setAgencyName(foundReservation?.agencyName || "");
     setPickUpLocation(foundReservation?.pickupLocation || "");
