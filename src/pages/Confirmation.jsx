@@ -8,11 +8,17 @@ import {
 import airplane from "@/assets/airplane-reservation.jpg";
 import car from "@/assets/car-reservation.jpg";
 import hotel from "@/assets/hotel-reservation.jpg";
+import { API } from "@/lib/api-index";
 import { GrEdit } from "react-icons/gr";
+import { FaTrash } from "react-icons/fa";
+import { useState } from "react";
 
 const Confirmation = () => {
+  const [error, setError] = useState("");
+
   const { tripId } = useParams();
-  const { reservations, user, trips } = useOutletContext();
+  const { reservations, user, trips, fetchReservations, token } =
+    useOutletContext();
 
   const navigate = useNavigate();
 
@@ -41,6 +47,31 @@ const Confirmation = () => {
   })} ${checkOutDate.getDate()}, ${checkOutDate.getFullYear()}`;
 
   // console.log("filteredList", filteredList);
+
+  async function handleDeleteReservation(e, reservationId) {
+    console.log(reservationId);
+    setError("");
+    e.preventDefault();
+
+    const res = await fetch(`${API}/reservations/${reservationId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const info = await res.json();
+    console.log(info);
+
+    fetchReservations();
+
+    console.log(filteredReservations);
+
+    if (!info.success) {
+      setError(info.error);
+    }
+
+    // Now you can handle the response as needed
+  }
 
   return (
     <section className="confirmation-section">
@@ -115,6 +146,11 @@ const Confirmation = () => {
                   >
                     <GrEdit />
                   </Link>
+                  <button
+                    onClick={(e) => handleDeleteReservation(e, reservationId)}
+                  >
+                    <FaTrash />
+                  </button>
                 </div>
               </div>
             );
