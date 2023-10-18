@@ -1,23 +1,27 @@
-import { useOutletContext, useParams } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 
 import airplane from "@/assets/airplane-reservation.jpg";
 import car from "@/assets/car-reservation.jpg";
 import hotel from "@/assets/hotel-reservation.jpg";
+import { GrEdit } from "react-icons/gr";
 
 const Confirmation = () => {
   const { tripId } = useParams();
   const { reservations, user, trips } = useOutletContext();
 
+  const navigate = useNavigate();
+
   // console.log("reservations", reservations);
   // fetchTrips();
   const trip = trips.find((trip) => trip.id === tripId);
-  console.log("trips", trips);
-  console.log("filteredTrip", trip);
-  console.log("reservations", reservations);
+
   const filteredReservations = reservations.filter(
     (reservation) => reservation.tripId === tripId,
   );
-  console.log("filteredReservations", filteredReservations);
+
+  const reservationId = filteredReservations[0].id;
+  console.log(filteredReservations[0].id);
+
   const checkInStr = trip?.checkIn;
   const checkInDate = new Date(checkInStr);
   const checkOutStr = trip?.checkOut;
@@ -58,8 +62,9 @@ const Confirmation = () => {
                 {reservation.carRentalAgency && <img src={car} alt="" />}
                 {reservation.hotelName && <img src={hotel} alt="" />}
               </div>
+
               <div className="reservation-body">
-                {console.log("reservation", reservation)}
+                {/* {console.log("reservation", reservation)} */}
                 {Object.keys(reservation)
                   .filter(
                     (key) =>
@@ -86,6 +91,12 @@ const Confirmation = () => {
                       return null;
                     }
                   })}
+
+                <GrEdit
+                  onClick={() =>
+                    navigate(`edit/flight/reservation/${reservationId}`)
+                  }
+                />
               </div>
             </div>
           ))}
