@@ -89,7 +89,7 @@ const Navbar = ({ user, setUser, setToken }) => {
             }`}
           >
             <li className="navbar-li">
-              <Link to={"#faqs"} className="flex">
+              <Link to="/faq" className="flex">
                 <FaQuestion className="icon" />
                 <span className="nav-text">FAQ</span>
               </Link>
