@@ -14,6 +14,7 @@ import Car from "@/pages/Car";
 import NotFound from "@/pages/NotFound";
 import Confirmation from "@/pages/Confirmation";
 import Profile from "@/pages/Profile";
+import EditReservation from "@/pages/EditReservation";
 
 // Create a router configuration
 const router = createBrowserRouter([
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       { path: "flight/:tripId", element: <Flight /> },
       { path: "car/:tripId", element: <Car /> },
       { path: "confirmation/:tripId", element: <Confirmation /> },
+      {
+        path: "edit/reservation/:reservationId",
+        element: <EditReservation />,
+      },
       { path: "profile", element: <Profile /> },
       { path: "*", element: <NotFound /> },
     ],
