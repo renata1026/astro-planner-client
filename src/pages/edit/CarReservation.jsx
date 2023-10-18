@@ -28,7 +28,7 @@ const Car = () => {
   }
 
   const selectedDestination = selectedTrip.location
-    .replace(/_/g, " ") ///_/g for global, replaces all occurences of underscore
+    .replace(/_/g, " ") ///_/g for global, replaces all occurrences of underscore
     .toLowerCase();
 
   const filteredCars = cars.filter(
@@ -36,8 +36,8 @@ const Car = () => {
   );
 
   //creates array that contains pick-up/drop-off locations based on filtered cars
-  //Set: built-in JS data structure, stores unique vlaues and automatically removes duplicates
-  //... spreaed operator
+  //Set: built-in JS data structure, stores unique values and automatically removes duplicates
+  //... spread operator
   const uniquePickupLocation = [
     ...new Set(filteredCars.map((car) => car.pickupLocation)),
   ];
@@ -57,7 +57,7 @@ const Car = () => {
       return;
     }
 
-    //condition to check if checkin date is before checkout date
+    //condition to check if checkIn date is before checkout date
     if (pickupDate > dropoffDate) {
       setError("Pickup date must be before drop-off date.");
       return;

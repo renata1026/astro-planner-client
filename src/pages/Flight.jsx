@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React from "react";
 import ReservationIcon from "@/assets/hotelTwo.svg";
 import Map from "@/assets/travel-pic.jpg";
@@ -6,11 +7,22 @@ import { API } from "../lib/api-index";
 import { useOutletContext, useNavigate, useParams } from "react-router-dom";
 import { flights } from "../lib/data";
 import { FaCaretDown } from "react-icons/fa";
+=======
+import React from 'react';
+import ReservationIcon from '@/assets/hotelTwo.svg';
+import Map from '@/assets/travel-pic.jpg';
+import { useState } from 'react';
+import { API } from '../lib/api-index';
+import { useOutletContext, useNavigate, useParams } from 'react-router-dom';
+import { flights } from '../lib/data';
+import { FaCaretDown } from 'react-icons/fa';
+import CreateTrip from './CreateTrip';
+>>>>>>> Stashed changes
 
-const Flight = () => {
+const Flight = ({ destination }) => {
   const navigate = useNavigate();
   const [airlineConNum, setAirlineConNum] = useState("");
-  const [airline, setAirline] = useState("");
+  const [airlineName, setAirlineName] = useState("");
   const [flightNumber, setFlightNumber] = useState("");
   const [departureAirport, setDepartureAirport] = useState("");
   const [arrivalAirport, setArrivalAirport] = useState("");
@@ -21,6 +33,7 @@ const Flight = () => {
   const { token, fetchReservations, setReservations, trips } =
     useOutletContext();
   const { tripId } = useParams();
+<<<<<<< Updated upstream
 
   const selectedTrip = trips.find((trip) => trip.id === tripId);
 
@@ -29,7 +42,7 @@ const Flight = () => {
   }
 
   const selectedDestination = selectedTrip.location
-    .replace(/_/g, " ") ///_/g stands for global, replaces all occurences of underscore
+    .replace(/_/g, " ") ///_/g stands for global, replaces all occurrences of underscore
     .toLowerCase();
 
   const filteredFlights = flights.filter(
@@ -41,6 +54,9 @@ const Flight = () => {
     ...new Set(filteredFlights.map((flight) => flight.arrivalAirport)),
   ];
 
+=======
+  console.log(destination);
+>>>>>>> Stashed changes
   async function handleSubmit(e) {
     e.preventDefault();
     setError(""); // Clear any previous errors
@@ -75,7 +91,7 @@ const Flight = () => {
         arrivalAirport,
         departureDate: isoCheckIn,
         arrivalDate: isoCheckOut,
-        airlineName: airline,
+        airlineName,
         flightNumber,
         bookingConfirmation: airlineConNum,
         tripId,
@@ -135,15 +151,15 @@ const Flight = () => {
                   name="airline"
                   placeholder="Enter an airline"
                   className="select-box"
-                  value={airline}
-                  onChange={(e) => setAirline(e.target.value)}
+                  value={airlineName}
+                  onChange={(e) => setAirlineName(e.target.value)}
                 >
                   <option value="">Select a flight</option>
 
                   {filteredFlights.map((flight, index) => {
                     return (
-                      <option key={index} value={flight.airline}>
-                        {flight.airline}
+                      <option key={index} value={flight.airlineName}>
+                        {flight.airlineName}
                       </option>
                     );
                   })}

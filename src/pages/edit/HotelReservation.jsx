@@ -77,7 +77,7 @@ const Hotel = () => {
       return;
     }
 
-    //condition to check if checkin date is before checkout date
+    //condition to check if checkIn date is before checkout date
     if (checkIn > checkOut) {
       setError("Check-in date must be before check-out date.");
       return;
