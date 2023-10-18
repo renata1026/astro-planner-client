@@ -114,6 +114,10 @@
   }
   .input-field {
     min-width: 600px;
+    // border: none;
+  }
+  #pickupLocation,
+  #dropoffLocation {
     border: none;
   }
 }
