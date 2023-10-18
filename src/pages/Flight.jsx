@@ -1,12 +1,12 @@
-import React from "react";
-import ReservationIcon from "@/assets/hotelTwo.svg";
-import Map from "@/assets/travel-pic.jpg";
-import { useState } from "react";
-import { API } from "../lib/api-index";
-import { useOutletContext, useNavigate, useParams } from "react-router-dom";
-import { flights } from "../lib/data";
-import { FaCaretDown } from "react-icons/fa";
-import CreateTrip from "./CreateTrip";
+import React from 'react';
+import ReservationIcon from '@/assets/hotelTwo.svg';
+import Map from '@/assets/travel-pic.jpg';
+import { useState } from 'react';
+import { API } from '../lib/api-index';
+import { useOutletContext, useNavigate, useParams } from 'react-router-dom';
+import { flights } from '../lib/data';
+import { FaCaretDown } from 'react-icons/fa';
+import CreateTrip from './CreateTrip';
 
 const Flight = ({ destination }) => {
   const navigate = useNavigate();
