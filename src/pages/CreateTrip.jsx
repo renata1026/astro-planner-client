@@ -23,6 +23,8 @@ const CreateTrip = () => {
       setError("Please select a destination."); // Display an error if no destination is selected
       return;
     }
+
+    console.log(destination);
     //condition to check if checkin date is before checkout date
     if (checkIn > checkOut) {
       setError("Check-in date must be before check-out date.");

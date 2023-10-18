@@ -1,14 +1,15 @@
-import { FaArrowRight } from "react-icons/fa";
-
-import heroImage from "@/assets/hero-image.png";
-import backgroundImage from "@/assets/background-image.png";
-import backgroundDotImage from "@/assets/Ornament-82.png";
-import reviewImage from "@/assets/review.png";
-import swirlArrow from "@/assets/swirl-arrow.png";
-import card from "@/assets/card.png";
-import { Link } from "react-router-dom";
+import { FaArrowRight } from 'react-icons/fa';
+import heroImage from '@/assets/hero-image.png';
+import backgroundImage from '@/assets/background-image.png';
+import backgroundDotImage from '@/assets/Ornament-82.png';
+import reviewImage from '@/assets/review.png';
+import swirlArrow from '@/assets/swirl-arrow.png';
+import card from '@/assets/card.png';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const Header = () => {
+  const [location, setLocation] = useState('');
   return (
     <div>
       <div className="header-container">

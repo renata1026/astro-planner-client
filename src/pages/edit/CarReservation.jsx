@@ -63,7 +63,7 @@ const Car = () => {
       return;
     }
 
-    //condition to check if checkin date is before checkout date
+    //condition to check if checkIn date is before checkout date
     if (pickupDate > dropoffDate) {
       setError("Pickup date must be before drop-off date.");
       return;

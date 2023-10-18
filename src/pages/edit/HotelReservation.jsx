@@ -27,7 +27,7 @@ const Hotel = () => {
   const selectedTrip = trips.find((trip) => trip.id === tripId);
 
   const selectedDestination = selectedTrip?.location
-    .replace(/_/g, " ") ///_/g stands for global, replaces all occurences of underscore
+    .replace(/_/g, " ") ///_/g stands for global, replaces all occurrences of underscore
     .toLowerCase();
 
   const filteredHotels = hotels.filter(
@@ -77,7 +77,7 @@ const Hotel = () => {
       return;
     }
 
-    //condition to check if checkin date is before checkout date
+    //condition to check if checkIn date is before checkout date
     if (checkIn > checkOut) {
       setError("Check-in date must be before check-out date.");
       return;
