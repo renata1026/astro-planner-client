@@ -1,16 +1,17 @@
-import React from "react";
-import ReservationIcon from "@/assets/hotelTwo.svg";
-import Map from "@/assets/travel-pic.jpg";
-import { useState } from "react";
-import { API } from "../lib/api-index";
-import { useOutletContext, useNavigate, useParams } from "react-router-dom";
-import { flights } from "../lib/data";
-import { FaCaretDown } from "react-icons/fa";
+import React from 'react';
+import ReservationIcon from '@/assets/hotelTwo.svg';
+import Map from '@/assets/travel-pic.jpg';
+import { useState } from 'react';
+import { API } from '../lib/api-index';
+import { useOutletContext, useNavigate, useParams } from 'react-router-dom';
+import { flights } from '../lib/data';
+import { FaCaretDown } from 'react-icons/fa';
+import CreateTrip from './CreateTrip';
 
-const Flight = () => {
+const Flight = ({ destination }) => {
   const navigate = useNavigate();
   const [airlineConNum, setAirlineConNum] = useState("");
-  const [airline, setAirline] = useState("");
+  const [airlineName, setAirlineName] = useState("");
   const [flightNumber, setFlightNumber] = useState("");
   const [departureAirport, setDepartureAirport] = useState("");
   const [arrivalAirport, setArrivalAirport] = useState("");
@@ -21,26 +22,7 @@ const Flight = () => {
   const { token, fetchReservations, setReservations, trips } =
     useOutletContext();
   const { tripId } = useParams();
-
-  const selectedTrip = trips.find((trip) => trip.id === tripId);
-
-  if (!selectedTrip) {
-    return;
-  }
-
-  const selectedDestination = selectedTrip.location
-    .replace(/_/g, " ") ///_/g stands for global, replaces all occurences of underscore
-    .toLowerCase();
-
-  const filteredFlights = flights.filter(
-    (flight) => flight.destination.toLowerCase() === selectedDestination,
-  );
-
-  //new Set used to store unique values, with no duplicates
-  const uniqueArrivalAirports = [
-    ...new Set(filteredFlights.map((flight) => flight.arrivalAirport)),
-  ];
-
+  console.log(destination);
   async function handleSubmit(e) {
     e.preventDefault();
     setError(""); // Clear any previous errors
@@ -75,7 +57,7 @@ const Flight = () => {
         arrivalAirport,
         departureDate: isoCheckIn,
         arrivalDate: isoCheckOut,
-        airlineName: airline,
+        airlineName,
         flightNumber,
         bookingConfirmation: airlineConNum,
         tripId,
@@ -138,8 +120,8 @@ const Flight = () => {
                   name="airlineName"
                   placeholder="Enter an airline"
                   className="select-box"
-                  value={airline}
-                  onChange={(e) => setAirline(e.target.value)}
+                  value={airlineName}
+                  onChange={(e) => setAirlineName(e.target.value)}
                 >
                   <option value="">Select a flight</option>
 

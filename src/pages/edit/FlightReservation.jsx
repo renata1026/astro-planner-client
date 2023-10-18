@@ -30,7 +30,7 @@ const FlightReservation = () => {
   const trip = trips.find((trip) => trip.id === tripId);
 
   const selectedDestination = trip?.location
-    .replace(/_/g, " ") ///_/g stands for global, replaces all occurences of underscore
+    .replace(/_/g, " ") ///_/g stands for global, replaces all occurrences of underscore
     .toLowerCase();
 
   const filteredFlights = flights.filter(
@@ -180,8 +180,8 @@ const FlightReservation = () => {
               <div className="select-container">
                 <select
                   type="text"
-                  id="airline"
-                  name="airline"
+                  id="airlineName"
+                  name="airlineName"
                   placeholder="Enter an airline"
                   className="select-box"
                   value={airlineName}

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import ProfilePic from "@/assets/profile-pic.png";
+import { API } from "../lib/api-index";
+import { useOutletContext } from "react-router-dom";
 
 const Profile = () => {
   const [firstName, setFirstName] = useState("");
@@ -9,11 +11,39 @@ const Profile = () => {
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
   const [profileImage, setProfileImage] = useState("");
-
-  const handleSubmit = (e) => {
+  const { token } = useOutletContext();
+  async function handleSubmitProfile(e) {
+    // Convert checkIn and checkOut dates to ISO-8601 format
+    const isoDOB = new Date(dateOfBirth).toISOString();
     e.preventDefault();
-    // You can add your form submission logic here
-  };
+    try {
+      const res = await fetch(`${API}/profile`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          picture: profileImage,
+          firstName,
+          lastName,
+          location,
+          dob: isoDOB,
+          email,
+          gender,
+        }),
+      });
+      const info = await res.json();
+      console.log(info);
+      //   if (res.ok) {
+      //     console.log("Image saved successfully.");
+      //   } else {
+      //     console.error("Image upload failed. Status:", res.status);
+      //   }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  }
 
   function handleImageUpload(e) {
     const image = e.target.files[0];
@@ -31,7 +61,7 @@ const Profile = () => {
 
   return (
     <div className="profile-page flex-col">
-      <form onSubmit={handleSubmit} className="profile-form ">
+      <form onSubmit={handleSubmitProfile} className="profile-form ">
         <div className="profile-title-container">
           <h2 className="profile-title">Account Setting</h2>
           <h3 className="profile-subheading">My profile</h3>
