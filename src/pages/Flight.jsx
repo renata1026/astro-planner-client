@@ -10,7 +10,7 @@ import { FaCaretDown } from "react-icons/fa";
 const Flight = () => {
   const navigate = useNavigate();
   const [airlineConNum, setAirlineConNum] = useState("");
-  const [airline, setAirline] = useState("");
+  const [airlineName, setAirlineName] = useState("");
   const [flightNumber, setFlightNumber] = useState("");
   const [departureAirport, setDepartureAirport] = useState("");
   const [arrivalAirport, setArrivalAirport] = useState("");
@@ -29,7 +29,7 @@ const Flight = () => {
   }
 
   const selectedDestination = selectedTrip.location
-    .replace(/_/g, " ") ///_/g stands for global, replaces all occurences of underscore
+    .replace(/_/g, " ") ///_/g stands for global, replaces all occurrences of underscore
     .toLowerCase();
 
   const filteredFlights = flights.filter(
@@ -75,7 +75,7 @@ const Flight = () => {
         arrivalAirport,
         departureDate: isoCheckIn,
         arrivalDate: isoCheckOut,
-        airlineName: airline,
+        airlineName,
         flightNumber,
         bookingConfirmation: airlineConNum,
         tripId,
@@ -135,15 +135,15 @@ const Flight = () => {
                   name="airline"
                   placeholder="Enter an airline"
                   className="select-box"
-                  value={airline}
-                  onChange={(e) => setAirline(e.target.value)}
+                  value={airlineName}
+                  onChange={(e) => setAirlineName(e.target.value)}
                 >
                   <option value="">Select a flight</option>
 
                   {filteredFlights.map((flight, index) => {
                     return (
-                      <option key={index} value={flight.airline}>
-                        {flight.airline}
+                      <option key={index} value={flight.airlineName}>
+                        {flight.airlineName}
                       </option>
                     );
                   })}

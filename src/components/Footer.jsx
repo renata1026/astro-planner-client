@@ -5,7 +5,7 @@ import {
 } from "react-icons/ai";
 import { FiTwitter } from "react-icons/fi";
 
-import logoIcon from "@/assets/moon-logo-v2.svg";
+import logoIcon from "@/assets/logo.svg";
 import { Link } from "react-router-dom";
 
 const navigation = {
