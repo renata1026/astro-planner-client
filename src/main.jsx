@@ -16,6 +16,7 @@ import Confirmation from "@/pages/Confirmation";
 import Profile from "@/pages/Profile";
 import FlightReservation from "@/pages/edit/FlightReservation";
 import HotelReservation from "@/pages/edit/HotelReservation";
+import CarReservation from "@/pages/edit/CarReservation";
 
 // Create a router configuration
 const router = createBrowserRouter([
@@ -39,10 +40,10 @@ const router = createBrowserRouter([
         path: "edit/flight/reservation/:reservationId",
         element: <FlightReservation />,
       },
-      // {
-      //   path: "edit/car/reservation/:reservationId",
-      //   element: <FlightReservation />,
-      // },
+      {
+        path: "edit/car/reservation/:reservationId",
+        element: <CarReservation />,
+      },
       { path: "profile", element: <Profile /> },
       { path: "*", element: <NotFound /> },
     ],

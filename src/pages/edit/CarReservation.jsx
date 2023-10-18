@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import ReservationIcon from "@/assets/hotelTwo.svg";
 import Map from "@/assets/travel-pic.jpg";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
-import { cars } from "../lib/data";
-import { API } from "../lib/api-index";
+import { cars } from "@/lib/data";
+import { API } from "@/lib/api-index";
 import { FaCaretDown } from "react-icons/fa";
 
 const Car = () => {
+  const { reservationId } = useParams();
+  const { reservations, trips, token, fetchReservations } = useOutletContext();
   const navigate = useNavigate();
   const [confirmationNum, setConfirmationNum] = useState("");
   const [agencyName, setAgencyName] = useState("");
@@ -17,17 +19,15 @@ const Car = () => {
   const [pickupDate, setPickupDate] = useState("");
   const [dropoffDate, setDropoffDate] = useState("");
   const [error, setError] = useState("");
-  const { token, fetchReservations, setReservations, trips } =
-    useOutletContext();
-  const { tripId } = useParams();
 
+  const reservation = reservations.find(
+    (reservation) => reservation.id === reservationId,
+  );
+
+  const tripId = reservation?.tripId;
   const selectedTrip = trips.find((trip) => trip.id === tripId);
 
-  if (!selectedTrip) {
-    return;
-  }
-
-  const selectedDestination = selectedTrip.location
+  const selectedDestination = selectedTrip?.location
     .replace(/_/g, " ") ///_/g for global, replaces all occurences of underscore
     .toLowerCase();
 
@@ -35,16 +35,22 @@ const Car = () => {
     (car) => car.city.toLowerCase() === selectedDestination,
   );
 
-  //creates array that contains pick-up/drop-off locations based on filtered cars
-  //Set: built-in JS data structure, stores unique vlaues and automatically removes duplicates
-  //... spreaed operator
-  const uniquePickupLocation = [
-    ...new Set(filteredCars.map((car) => car.pickupLocation)),
-  ];
+  useEffect(() => {
+    const foundReservation = reservations.find(
+      (reservation) => reservation.id === reservationId,
+    );
 
-  const uniqueDropoffLocation = [
-    ...new Set(filteredCars.map((car) => car.dropoffLocation)),
-  ];
+    const currentDate = new Date().toISOString().split("T")[0]; // Default to current date
+
+    const formattedCheckIn = foundReservation?.pickupDate?.split("T")[0];
+    const formattedCheckOut = foundReservation?.dropoffDate?.split("T")[0];
+
+    setAgencyName(foundReservation?.agencyName || "");
+    setPickUpLocation(foundReservation?.pickupLocation || "");
+    setDropOffLocation(foundReservation?.dropoffLocation || "");
+    setPickupDate(formattedCheckIn || currentDate);
+    setDropoffDate(formattedCheckOut || currentDate);
+  }, [reservations, reservationId]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -66,8 +72,8 @@ const Car = () => {
     const isoPickUp = new Date(pickupDate).toISOString();
     const isoDropOff = new Date(dropoffDate).toISOString();
 
-    const res = await fetch(`${API}/reservations`, {
-      method: "POST",
+    const res = await fetch(`${API}/reservations/${reservationId}`, {
+      method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -89,10 +95,6 @@ const Car = () => {
     if (!info.success) {
       setError(info.error);
     } else {
-      // setReservations((prevReservations) => ({
-      //   ...prevReservations,
-      //   cars: [...prevReservations.cars, info.data.reservation],
-      // }));
       fetchReservations();
       // Navigate to the confirmation page
       navigate(`/confirmation/${tripId}`);
@@ -190,10 +192,10 @@ const Car = () => {
             onChange={(e) => setPickUpLocation(e.target.value)}
           >
             <option value="">Select a Pick-up Location</option>
-            {uniquePickupLocation.map((car, index) => {
+            {filteredCars.map((car, index) => {
               return (
-                <option key={index} value={car}>
-                  {car}
+                <option key={index} value={car.pickupLocation}>
+                  {car.pickupLocation}
                 </option>
               );
             })}
@@ -209,10 +211,10 @@ const Car = () => {
             onChange={(e) => setDropOffLocation(e.target.value)}
           >
             <option value="">Select a drop-off Location</option>
-            {uniqueDropoffLocation.map((car, index) => {
+            {filteredCars.map((car, index) => {
               return (
-                <option key={index} value={car}>
-                  {car}
+                <option key={index} value={car.dropoffLocation}>
+                  {car.dropoffLocation}
                 </option>
               );
             })}

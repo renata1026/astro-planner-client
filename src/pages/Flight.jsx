@@ -81,9 +81,12 @@ const Flight = () => {
         tripId,
       }),
     });
+    // console.log(airline);
+
+    //console.log(setAirline);
 
     const info = await res.json();
-    // console.log(info);
+    console.log(info);
 
     if (!info.success) {
       setError(info.error);
@@ -131,8 +134,8 @@ const Flight = () => {
               <div className="select-container">
                 <select
                   type="text"
-                  id="airline"
-                  name="airline"
+                  id="airlineName"
+                  name="airlineName"
                   placeholder="Enter an airline"
                   className="select-box"
                   value={airline}
@@ -142,8 +145,8 @@ const Flight = () => {
 
                   {filteredFlights.map((flight, index) => {
                     return (
-                      <option key={index} value={flight.airline}>
-                        {flight.airline}
+                      <option key={index} value={flight.airlineName}>
+                        {flight.airlineName}
                       </option>
                     );
                   })}
