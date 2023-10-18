@@ -1,50 +1,79 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProfilePic from "@/assets/profile-pic.png";
 import { API } from "../lib/api-index";
 import { useOutletContext } from "react-router-dom";
 
 const Profile = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [location, setLocation] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const [email, setEmail] = useState("");
-  const [gender, setGender] = useState("");
-  const [profileImage, setProfileImage] = useState("");
-  const { token } = useOutletContext();
+  const { token, user } = useOutletContext();
+  if (!user.id) {
+    return <> </>;
+  }
+
+  const [firstName, setFirstName] = useState(user.firstName);
+  const [lastName, setLastName] = useState(user.lastName);
+  const [location, setLocation] = useState(user.location || "");
+  const [dateOfBirth, setDateOfBirth] = useState(user.dateOfBirth || "");
+  const [email, setEmail] = useState(user.email);
+  const [gender, setGender] = useState(user.gender || "");
+  const [profileImage, setProfileImage] = useState(user.profileImage || "");
+  console.log(user);
   async function handleSubmitProfile(e) {
-    // Convert checkIn and checkOut dates to ISO-8601 format
     const isoDOB = new Date(dateOfBirth).toISOString();
     e.preventDefault();
     try {
-      const res = await fetch(`${API}/profile`, {
-        method: "POST",
+      // Check if the user already has a profile
+      const profileExistsResponse = await fetch(`${API}/users/profile`, {
+        method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          picture: profileImage,
-          firstName,
-          lastName,
-          location,
-          dob: isoDOB,
-          email,
-          gender,
-        }),
       });
-      const info = await res.json();
-      console.log(info);
-      //   if (res.ok) {
-      //     console.log("Image saved successfully.");
-      //   } else {
-      //     console.error("Image upload failed. Status:", res.status);
-      //   }
+      const profileExistsInfo = await profileExistsResponse.json();
+
+      if (profileExistsInfo.success) {
+        // The user has a profile, update it
+        const res = await fetch(`${API}/users/profile`, {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            picture: profileImage,
+            location,
+            dob: isoDOB,
+            gender,
+          }),
+        });
+
+        const info = await res.json();
+        console.log(info);
+      } else {
+        // The user doesn't have a profile, create one
+        const createResponse = await fetch(`${API}/users/profile`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: token, // Use the user's ID as userId
+            picture: profileImage,
+            location,
+            dob: isoDOB,
+            gender,
+          }),
+        });
+        const createInfo = await createResponse.json();
+        console.log(createInfo);
+      }
     } catch (error) {
       console.error("An error occurred:", error);
     }
   }
 
+  console.log(typeof profileImage, "stringImage", profileImage);
   function handleImageUpload(e) {
     const image = e.target.files[0];
     console.log(image.size);
