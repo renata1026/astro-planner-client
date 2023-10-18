@@ -180,43 +180,53 @@ const Car = () => {
             </div>
           </div>
           <label htmlFor="pickupLocation">Pick-up Location</label>
-          <select
-            type="text"
-            id="pickupLocation"
-            name="pickupLocation"
-            className="input-field"
-            placeholder="Enter the pick-up location"
-            value={pickupLocation}
-            onChange={(e) => setPickUpLocation(e.target.value)}
-          >
-            <option value="">Select a Pick-up Location</option>
-            {uniquePickupLocation.map((car, index) => {
-              return (
-                <option key={index} value={car}>
-                  {car}
-                </option>
-              );
-            })}
-          </select>
+          <div className="select-container">
+            <select
+              type="text"
+              id="pickupLocation"
+              name="pickupLocation"
+              className="input-field"
+              placeholder="Enter the pick-up location"
+              value={pickupLocation}
+              onChange={(e) => setPickUpLocation(e.target.value)}
+            >
+              <option value="">Select a Pick-up Location</option>
+              {uniquePickupLocation.map((car, index) => {
+                return (
+                  <option key={index} value={car}>
+                    {car}
+                  </option>
+                );
+              })}
+            </select>
+            <div className="icon-container">
+              <FaCaretDown />
+            </div>
+          </div>
           <label htmlFor="dropoffLocation">Drop-off Location</label>
-          <select
-            type="text"
-            id="dropoffLocation"
-            name="dropoffLocation"
-            placeholder="Enter the drop-off location"
-            className="input-field"
-            value={dropoffLocation}
-            onChange={(e) => setDropOffLocation(e.target.value)}
-          >
-            <option value="">Select a drop-off Location</option>
-            {uniqueDropoffLocation.map((car, index) => {
-              return (
-                <option key={index} value={car}>
-                  {car}
-                </option>
-              );
-            })}
-          </select>
+          <div className="select-container">
+            <select
+              type="text"
+              id="dropoffLocation"
+              name="dropoffLocation"
+              placeholder="Enter the drop-off location"
+              className="input-field"
+              value={dropoffLocation}
+              onChange={(e) => setDropOffLocation(e.target.value)}
+            >
+              <option value="">Select a drop-off Location</option>
+              {uniqueDropoffLocation.map((car, index) => {
+                return (
+                  <option key={index} value={car}>
+                    {car}
+                  </option>
+                );
+              })}
+            </select>
+            <div className="icon-container">
+              <FaCaretDown />
+            </div>
+          </div>
           <div className="date-range">
             <div className="checkinDate-container flex-col-start">
               <label htmlFor="pickupDate">Pick-up Date</label>

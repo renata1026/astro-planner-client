@@ -1,5 +1,5 @@
-@use './variables' as v;
-@use './mixins' as m;
+@use "./variables" as v;
+@use "./mixins" as m;
 
 .reservation-text {
   display: flex;
@@ -114,5 +114,6 @@
   }
   .input-field {
     min-width: 600px;
+    border: none;
   }
 }
