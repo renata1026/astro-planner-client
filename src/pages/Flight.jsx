@@ -11,7 +11,7 @@ import {
 } from "react-router-dom";
 import { flights } from "@/lib/data";
 import { FaCaretDown } from "react-icons/fa";
-import { GrCaretNext } from "react-icons/gr";
+import { FaForward } from "react-icons/fa";
 import { format, addDays, isAfter } from "date-fns";
 
 const Flight = ({ destination }) => {

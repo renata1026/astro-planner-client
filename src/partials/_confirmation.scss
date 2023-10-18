@@ -1,3 +1,5 @@
+@use "./variables" as v;
+
 .confirmation-section {
   padding-inline: 24px;
   display: flex;
@@ -78,7 +80,7 @@
 
 .edit-button {
   padding: 8px 24px;
-  background-color: #6367f2;
+  background-color: v.$primary-blue;
   color: white;
   width: fit-content;
   transition-property: all;
@@ -99,7 +101,7 @@
 
 .delete-button {
   padding: 8px 24px;
-  background-color: #6367f2;
+  background-color: v.$primary-blue;
   border: none;
   color: white;
   width: fit-content;

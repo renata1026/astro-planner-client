@@ -11,7 +11,7 @@ import {
 import { hotels } from "../lib/data";
 import { API } from "../lib/api-index";
 import { FaCaretDown } from "react-icons/fa";
-import { GrCaretNext } from "react-icons/gr";
+import { FaForward } from "react-icons/fa";
 
 const Hotel = () => {
   const navigate = useNavigate();
