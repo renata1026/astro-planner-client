@@ -12,10 +12,10 @@ const FlightReservation = () => {
   const { reservations, trips, token, fetchReservations } = useOutletContext();
   const navigate = useNavigate();
   const [airlineConNum, setAirlineConNum] = useState("");
-  const [airline, setAirline] = useState();
+  const [airlineName, setAirlineName] = useState("");
   const [flightNumber, setFlightNumber] = useState("");
-  const [departureAirport, setDepartureAirport] = useState();
-  const [arrivalAirport, setArrivalAirport] = useState();
+  const [departureAirport, setDepartureAirport] = useState("");
+  const [arrivalAirport, setArrivalAirport] = useState("");
   const [departureDate, setDepartureDate] = useState("");
   const [arrivalDate, setArrivalDate] = useState("");
   const [error, setError] = useState("");
@@ -28,38 +28,6 @@ const FlightReservation = () => {
   //console.log({ reservations });
   const tripId = reservation?.tripId;
   const trip = trips.find((trip) => trip.id === tripId);
-
-  //console.log("reservation", reservation);
-  //console.log("trip", trip);
-  //console.log(airline);
-
-  useEffect(() => {
-    //console.log("reservation", reservation);
-    const initialAirline = reservations.find(
-      (reservation) => reservation.id === reservationId,
-    )?.airlineName;
-
-    const initialDepartureAirport = reservations.find(
-      (reservation) => reservation.id === reservationId,
-    )?.departureAirport;
-
-    const initialArrivalAirport = reservations.find(
-      (reservation) => reservation.id === reservationId,
-    )?.arrivalAirport;
-
-    // Set the initial value of 'airline' once the data is available
-    if (initialAirline) {
-      setAirline(initialAirline);
-    }
-
-    if (initialDepartureAirport) {
-      setDepartureAirport(initialDepartureAirport);
-    }
-
-    if (initialArrivalAirport) {
-      setArrivalAirport(initialArrivalAirport);
-    }
-  }, [reservations, reservationId]);
 
   const selectedDestination = trip?.location
     .replace(/_/g, " ") ///_/g stands for global, replaces all occurences of underscore
@@ -74,9 +42,57 @@ const FlightReservation = () => {
     ...new Set(filteredFlights.map((flight) => flight.arrivalAirport)),
   ];
 
+  useEffect(() => {
+    //console.log("reservation", reservation);
+
+    const foundReservation = reservations.find(
+      (reservation) => reservation.id === reservationId,
+    );
+
+    const currentDate = new Date().toISOString().split("T")[0]; // Default to current date
+
+    const formattedCheckIn = foundReservation?.arrivalDate?.split("T")[0];
+    const formattedCheckOut = foundReservation?.departureDate?.split("T")[0];
+
+    setAirlineName(foundReservation?.airlineName || "");
+    setDepartureAirport(foundReservation?.departureAirport || "");
+    setArrivalAirport(foundReservation?.arrivalAirport || "");
+    setArrivalDate(formattedCheckIn || currentDate);
+    setDepartureDate(formattedCheckOut || currentDate);
+
+    // const initialAirline = reservations.find(
+    //   (reservation) => reservation.id === reservationId,
+    // )?.airlineName;
+
+    // const initialDepartureAirport = reservations.find(
+    //   (reservation) => reservation.id === reservationId,
+    // )?.departureAirport;
+
+    // const initialArrivalAirport = reservations.find(
+    //   (reservation) => reservation.id === reservationId,
+    // )?.arrivalAirport;
+
+    // Set the initial value of 'airline' once the data is available
+    // if (initialAirline) {
+    //   setAirline(initialAirline);
+    // }
+
+    // if (initialDepartureAirport) {
+    //   setDepartureAirport(initialDepartureAirport);
+    // }
+
+    // if (initialArrivalAirport) {
+    //   setArrivalAirport(initialArrivalAirport);
+    // }
+  }, [reservations, reservationId]);
+
   async function handleEdit(e) {
     e.preventDefault();
     setError(""); // Clear any previous errors
+    console.log("departureAirport", departureAirport);
+    console.log("arrivalAirport", arrivalAirport);
+    console.log("departureDate", departureDate);
+    console.log("arrivalDate", arrivalDate);
 
     if (
       !departureAirport ||
@@ -108,7 +124,7 @@ const FlightReservation = () => {
         arrivalAirport,
         departureDate: isoCheckIn,
         arrivalDate: isoCheckOut,
-        airlineName: airline,
+        airlineName,
         flightNumber,
         bookingConfirmation: airlineConNum,
         tripId,
@@ -168,8 +184,8 @@ const FlightReservation = () => {
                   name="airline"
                   placeholder="Enter an airline"
                   className="select-box"
-                  value={airline}
-                  onChange={(e) => setAirline(e.target.value)}
+                  value={airlineName}
+                  onChange={(e) => setAirlineName(e.target.value)}
                 >
                   <option value="" disabled>
                     Select a flight
@@ -177,8 +193,8 @@ const FlightReservation = () => {
 
                   {filteredFlights.map((flight, index) => {
                     return (
-                      <option key={index} value={flight.airline}>
-                        {flight.airline}
+                      <option key={index} value={flight.airlineName}>
+                        {flight.airlineName}
                       </option>
                     );
                   })}
