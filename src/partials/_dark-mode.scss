@@ -46,8 +46,8 @@
 
   .signup-container {
     background: v.$color-gray-1;
-    width: 80%;
     margin: 0 auto;
+    padding: 50px 30px;
   }
 
   .question-toggle {
@@ -80,12 +80,15 @@
   }
 
   h2.discover-text,
-  .text-box {
+  .text-box,
+  .how-it-works-header {
     color: #fff;
   }
 
   .learn-more-text,
-  h3 {
+  h3,
+  .card-description,
+  .service-description {
     color: v.$primary-black;
   }
 

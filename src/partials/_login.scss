@@ -1,5 +1,5 @@
-@use './variables' as v;
-@use './mixins' as m;
+@use "./variables" as v;
+@use "./mixins" as m;
 
 .social-button {
   @include m.social-button;
@@ -21,21 +21,23 @@
   margin: 0 auto;
 }
 .signup-container {
+  margin: 0;
+  padding: 50px 30px;
+  width: 40%;
   border-radius: 20px;
   box-shadow: v.$box-shadow-small;
-  padding: 48px 30px;
-  width: 80%;
-  margin: 0 auto;
-}
-
-.dark signup-container {
-  border-radius: 20px;
-  box-shadow: 0px 20px 60px -6px rgba(40, 40, 40, 0.08);
-  max-width: 500px;
-  padding: 48px 10px;
 }
 
 .signin-button,
 .register-button {
   @include m.form-button;
+}
+.signup-container {
+  @include m.breakpoint("small") {
+    border-radius: 20px;
+    box-shadow: v.$box-shadow-small;
+    padding: 48px 30px;
+    width: 80%;
+    margin: 0 auto;
+  }
 }
