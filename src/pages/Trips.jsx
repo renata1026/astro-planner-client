@@ -1,13 +1,35 @@
 import React from "react";
 import { Link, useOutletContext } from "react-router-dom";
+import { FaTrash } from "react-icons/fa";
 import format from "date-fns/format";
+import { API } from "@/lib/api-index";
 
 const Trips = () => {
-  const { trips, reservations, user } = useOutletContext();
+  const { trips, reservations, user, token, fetchTrips } = useOutletContext();
   const myTrips = trips.filter((trip) => trip.userId === user.id);
   const myReservations = reservations.filter(
     (reservation) => reservation.userId === user.id,
   );
+
+  const handleDeleteTrip = async (e, tripId) => {
+    e.preventDefault();
+
+    const res = await fetch(`${API}/trips/${tripId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const info = await res.json();
+    console.log(info);
+
+    fetchTrips();
+    if (!info.success) {
+      setError(info.error);
+    }
+
+    // Now you can handle the response as needed
+  };
 
   return (
     <section className="trip-section">
@@ -50,6 +72,12 @@ const Trips = () => {
                     {trip.id}
                   </p>
                 </Link>
+                <button
+                  onClick={(e) => handleDeleteTrip(e, tripId)}
+                  className="delete-trip-btn"
+                >
+                  <FaTrash className="delete-icon" />
+                </button>
               </li>
             );
           })}
