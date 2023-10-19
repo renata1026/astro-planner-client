@@ -43,7 +43,8 @@
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  padding: 0 20px;
+  padding: 0 0 20px;
+  margin-left: 20px;
 }
 
 .icon-chevron {
@@ -54,4 +55,5 @@
 .answer-content {
   overflow: hidden;
   color: #374151;
+  margin-left: 20px;
 }

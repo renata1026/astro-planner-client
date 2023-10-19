@@ -13,7 +13,8 @@
   h2,
   h3,
   li,
-  span {
+  span,
+  p {
     color: #fff;
     text-decoration: none;
   }
@@ -49,6 +50,9 @@
     margin: 0 auto;
     .question-title {
       color: white !important;
+    }
+    .question-toggle:hover {
+      background-color: v.$color-gray-4;
     }
   }
   a.dropdown-link {
