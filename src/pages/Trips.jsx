@@ -26,8 +26,6 @@ const Trips = () => {
     if (!info.success) {
       setError(info.error);
     }
-
-    // Now you can handle the response as needed
   };
 
   return (

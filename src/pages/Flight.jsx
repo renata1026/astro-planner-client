@@ -24,7 +24,6 @@ const Flight = ({ destination }) => {
   const [departureDate, setDepartureDate] = useState("");
   const [arrivalDate, setArrivalDate] = useState("");
   const [error, setError] = useState("");
-  //const [selectedAirline, setSelectedAirline] = useState("");
   const [minArrivalDate, setMinArrivalDate] = useState("");
   const [maxArrivalDate, setMaxArrivalDate] = useState("");
   const { token, fetchReservations, setReservations, trips } =
