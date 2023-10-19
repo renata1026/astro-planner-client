@@ -6,6 +6,7 @@ import ReservationIcon from "@/assets/hotelTwo.svg";
 import Map from "@/assets/travel-pic.jpg";
 import { API } from "@/lib/api-index";
 import { flights } from "@/lib/data";
+import { format, addDays, isAfter } from "date-fns";
 
 const FlightReservation = () => {
   const { reservationId } = useParams();
@@ -19,7 +20,12 @@ const FlightReservation = () => {
   const [departureDate, setDepartureDate] = useState("");
   const [arrivalDate, setArrivalDate] = useState("");
   const [error, setError] = useState("");
+
+  const [minArrivalDate, setMinArrivalDate] = useState("");
+  const [maxArrivalDate, setMaxArrivalDate] = useState("");
   // const [selectedAirline, setSelectedAirline] = useState("");
+
+  const today = format(new Date(), "yyyy-MM-dd");
 
   const reservation = reservations.find(
     (reservation) => reservation.id === reservationId,
@@ -59,32 +65,17 @@ const FlightReservation = () => {
     setArrivalAirport(foundReservation?.arrivalAirport || "");
     setArrivalDate(formattedCheckIn || currentDate);
     setDepartureDate(formattedCheckOut || currentDate);
-
-    // const initialAirline = reservations.find(
-    //   (reservation) => reservation.id === reservationId,
-    // )?.airlineName;
-
-    // const initialDepartureAirport = reservations.find(
-    //   (reservation) => reservation.id === reservationId,
-    // )?.departureAirport;
-
-    // const initialArrivalAirport = reservations.find(
-    //   (reservation) => reservation.id === reservationId,
-    // )?.arrivalAirport;
-
-    // Set the initial value of 'airline' once the data is available
-    // if (initialAirline) {
-    //   setAirline(initialAirline);
-    // }
-
-    // if (initialDepartureAirport) {
-    //   setDepartureAirport(initialDepartureAirport);
-    // }
-
-    // if (initialArrivalAirport) {
-    //   setArrivalAirport(initialArrivalAirport);
-    // }
   }, [reservations, reservationId]);
+
+  const handleDepartureDateChange = (e) => {
+    setDepartureDate(e.target.value);
+
+    const selectedDate = addDays(new Date(e.target.value), 1);
+    const nextDay = selectedDate.toISOString().split("T")[0];
+
+    setMinArrivalDate(e.target.value);
+    setMaxArrivalDate(nextDay);
+  };
 
   async function handleEdit(e) {
     e.preventDefault();
@@ -137,10 +128,6 @@ const FlightReservation = () => {
     if (!info.success) {
       setError(info.error);
     } else {
-      // setReservations((prevReservations) => ({
-      //   ...prevReservations,
-      //   flights: [...prevReservations.flights, info.data.reservation],
-      // }));
       fetchReservations();
 
       // Navigate to the home page
@@ -279,7 +266,8 @@ const FlightReservation = () => {
                   name="departureDate"
                   className="date-time-field"
                   value={departureDate}
-                  onChange={(e) => setDepartureDate(e.target.value)}
+                  min={today}
+                  onChange={handleDepartureDateChange}
                 />
               </div>
             </div>
@@ -292,6 +280,8 @@ const FlightReservation = () => {
                   name="arrivalDate"
                   className="date-time-field"
                   value={arrivalDate}
+                  min={minArrivalDate}
+                  max={maxArrivalDate}
                   onChange={(e) => setArrivalDate(e.target.value)}
                 />
               </div>

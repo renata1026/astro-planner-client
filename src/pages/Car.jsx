@@ -12,7 +12,7 @@ import { cars } from "../lib/data";
 import { API } from "../lib/api-index";
 import { FaCaretDown } from "react-icons/fa";
 import { FaForward } from "react-icons/fa";
-import { format, addWeeks, isBefore } from "date-fns";
+import { format, addWeeks, isBefore, formatISO } from "date-fns";
 
 const Car = () => {
   const navigate = useNavigate();
@@ -85,8 +85,12 @@ const Car = () => {
     }
 
     // Convert checkIn and checkOut dates to ISO-8601 format
-    const isoPickup = new Date(pickupDate).toISOString();
-    const isoDropoff = new Date(dropoffDate).toISOString();
+    const isoPickUp = formatISO(new Date(pickupDate), {
+      representation: "date",
+    });
+    const isoDropOff = formatISO(new Date(dropoffDate), {
+      representation: "date",
+    });
 
     const res = await fetch(`${API}/reservations`, {
       method: "POST",
@@ -100,8 +104,8 @@ const Car = () => {
         carType,
         pickupLocation,
         dropoffLocation,
-        departureDate: isoPickup,
-        arrivalDate: isoDropoff,
+        departureDate: isoPickUp,
+        arrivalDate: isoDropOff,
         tripId,
       }),
     });

@@ -39,6 +39,8 @@ const Flight = ({ destination }) => {
     return;
   }
 
+  console.log("Departure:", departureDate);
+  console.log("Arrival:", arrivalDate);
   const selectedDestination = selectedTrip.location
     .replace(/_/g, " ") ///_/g stands for global, replaces all occurrences of underscore
     .toLowerCase();
@@ -82,8 +84,8 @@ const Flight = ({ destination }) => {
       return;
     }
     // Convert checkIn and checkOut dates to ISO-8601 format
-    const isoCheckIn = new Date(arrivalDate).toISOString();
-    const isoCheckOut = new Date(departureDate).toISOString();
+    const isoCheckIn = new Date(arrivalDate + "T00:00:00Z").toISOString();
+    const isoCheckOut = new Date(departureDate + "T00:00:00Z").toISOString();
 
     const res = await fetch(`${API}/reservations`, {
       method: "POST",
@@ -112,10 +114,6 @@ const Flight = ({ destination }) => {
     if (!info.success) {
       setError(info.error);
     } else {
-      // setReservations((prevReservations) => ({
-      //   ...prevReservations,
-      //   flights: [...prevReservations.flights, info.data.reservation],
-      // }));
       fetchReservations();
 
       // Navigate to the home page

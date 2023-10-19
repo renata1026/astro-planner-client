@@ -13,6 +13,8 @@ import car from "@/assets/car-reservation.jpg";
 import hotel from "@/assets/hotel-reservation.jpg";
 import { API } from "@/lib/api-index";
 
+import { format, parseISO } from "date-fns";
+
 import StaggeredDropDown from "@/components/StaggeredDropDown";
 
 const Confirmation = () => {
@@ -24,17 +26,12 @@ const Confirmation = () => {
 
   const navigate = useNavigate();
 
-  // console.log("reservations", reservations);
-  // fetchTrips();
   const trip = trips.find((trip) => trip.id === tripId);
 
   const filteredReservations = reservations.filter(
     (reservation) => reservation.tripId === tripId,
   );
 
-  // const reservationId = filteredReservations[0]?.id;
-  // console.log(filteredReservations[0]?.id);
-  //   console.log('filteredReservations', filteredReservations)
   const checkInStr = trip?.checkIn;
   const checkInDate = new Date(checkInStr);
   const checkOutStr = trip?.checkOut;
@@ -49,6 +46,11 @@ const Confirmation = () => {
   })} ${checkOutDate.getDate()}, ${checkOutDate.getFullYear()}`;
 
   // console.log("filteredList", filteredList);
+
+  function formatDate(dateStr) {
+    const date = parseISO(dateStr);
+    return format(date, "MMM dd, yyyy");
+  }
 
   async function handleDeleteReservation(e, reservationId) {
     console.log(reservationId);
@@ -126,7 +128,7 @@ const Confirmation = () => {
                         return (
                           <p key={j}>
                             <span className="reservation-label">{newKey}:</span>{" "}
-                            {new Date(reservation[key]).toLocaleDateString()}
+                            {formatDate(reservation[key])}
                           </p>
                         );
                       } else if (reservation[key]) {

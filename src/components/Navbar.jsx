@@ -58,7 +58,12 @@ const Navbar = ({ user, setUser, setToken, reservations, trips }) => {
             </li>
             {user.id ? (
               <>
-                <span>Welcome {user.firstName}</span>
+                <span>
+                  Welcome{" "}
+                  {`${user.firstName[0].toUpperCase()}${user.firstName.slice(
+                    1,
+                  )}`}
+                </span>
                 <span onClick={handleLogout}>Logout</span>
               </>
             ) : (
@@ -110,7 +115,7 @@ const Navbar = ({ user, setUser, setToken, reservations, trips }) => {
             {user.id && trip ? (
               <>
                 <li className="navbar-li notifications">
-                  <NavLink className="flex" to={`/confirmation/${trip.id}`}>
+                  <NavLink className="flex" to="/trips">
                     <FaMapPin className="map-icon" />
                     <span className="nav-text">Itinerary</span>
                   </NavLink>

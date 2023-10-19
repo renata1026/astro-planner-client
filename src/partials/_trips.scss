@@ -1,0 +1,49 @@
+.trip-section {
+  background-color: white;
+  color: #1a202c;
+}
+
+.trip-container {
+  max-width: 72rem; /* screen-xl */
+  padding: 4rem 1rem 8rem;
+  margin: 0 auto;
+}
+
+.trip-header {
+  max-width: 768px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.trip-title {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.trip-list {
+  display: flow-root;
+  margin-top: 48px;
+}
+
+.trip-list li:not(:first-child) {
+  border-top: 1px solid rgb(229, 231, 235);
+}
+
+.trip-item {
+  display: flex;
+}
+
+.trip-name {
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 18px;
+}
+
+.trip-link {
+  color: inherit;
+  transition: color 0.2s;
+}
+
+.trip-link:hover {
+  text-decoration: underline;
+}

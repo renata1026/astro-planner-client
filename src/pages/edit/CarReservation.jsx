@@ -7,7 +7,9 @@ import { cars } from "@/lib/data";
 import { API } from "@/lib/api-index";
 import { FaCaretDown } from "react-icons/fa";
 
-const Car = () => {
+import { format, addWeeks, isBefore, formatISO } from "date-fns";
+
+const CarReservation = () => {
   const { reservationId } = useParams();
   const { reservations, trips, token, fetchReservations } = useOutletContext();
   const navigate = useNavigate();
@@ -24,10 +26,27 @@ const Car = () => {
     (reservation) => reservation.id === reservationId,
   );
 
+  console.log(agencyName, "agencyName");
+  console.log(carType, "carType");
+  console.log(pickupLocation, "pickupLocation");
+  console.log(dropoffLocation, "dropoffLocation");
+
+  const today = format(new Date(), "yyyy-MM-dd");
+  let twoWeeksFromPickup = today;
+  if (pickupDate) {
+    twoWeeksFromPickup = format(
+      addWeeks(new Date(pickupDate), 2),
+      "yyyy-MM-dd",
+    );
+  }
   const tripId = reservation?.tripId;
   const selectedTrip = trips.find((trip) => trip.id === tripId);
 
-  const selectedDestination = selectedTrip.location
+  // if (!selectedTrip) {
+  //   return;
+  // }
+
+  const selectedDestination = selectedTrip?.location
     .replace(/_/g, " ") ///_/g for global, replaces all occurrences of underscore
     .toLowerCase();
 
@@ -40,7 +59,7 @@ const Car = () => {
       (reservation) => reservation.id === reservationId,
     );
 
-    const currentDate = new Date().toISOString().split("T")[0]; // Default to current date
+    const currentDate = format(new Date(), "yyyy-MM-dd"); // Default to current date
 
     const formattedCheckIn = foundReservation?.pickupDate?.split("T")[0];
     const formattedCheckOut = foundReservation?.dropoffDate?.split("T")[0];
@@ -51,8 +70,10 @@ const Car = () => {
     const uniquePickupLocation = [
       ...new Set(filteredCars.map((car) => car.pickupLocation)),
     ];
+    console.log("foundReservation", foundReservation);
 
-    setAgencyName(foundReservation?.agencyName || "");
+    setAgencyName(foundReservation?.carRentalAgency || "");
+    setCarType(foundReservation?.carType || "");
     setPickUpLocation(foundReservation?.pickupLocation || "");
     setDropOffLocation(foundReservation?.dropoffLocation || "");
     setPickupDate(formattedCheckIn || currentDate);
@@ -78,6 +99,9 @@ const Car = () => {
     // Convert checkIn and checkOut dates to ISO-8601 format
     const isoPickUp = new Date(pickupDate).toISOString();
     const isoDropOff = new Date(dropoffDate).toISOString();
+
+    console.log("isoPickUp", isoPickUp);
+    console.log("isoDropOff", isoDropOff);
 
     const res = await fetch(`${API}/reservations/${reservationId}`, {
       method: "PUT",
@@ -147,7 +171,9 @@ const Car = () => {
                   value={agencyName}
                   onChange={(e) => setAgencyName(e.target.value)}
                 >
-                  <option value="">Select a car agency</option>
+                  <option value="" disabled>
+                    Select a car agency
+                  </option>
                   {filteredCars.map((car, index) => {
                     return (
                       <option key={index} value={car.carRentalAgency}>
@@ -173,7 +199,9 @@ const Car = () => {
                   value={carType}
                   onChange={(e) => setCarType(e.target.value)}
                 >
-                  <option value="">Select car type</option>
+                  <option value="" disabled>
+                    Select car type
+                  </option>
                   {filteredCars.map((car, index) => {
                     return (
                       <option key={index} value={car.carType}>
@@ -198,7 +226,9 @@ const Car = () => {
             value={pickupLocation}
             onChange={(e) => setPickUpLocation(e.target.value)}
           >
-            <option value="">Select a Pick-up Location</option>
+            <option value="" disabled>
+              Select a Pick-up Location
+            </option>
             {filteredCars.map((car, index) => {
               return (
                 <option key={index} value={car.pickupLocation}>
@@ -217,7 +247,9 @@ const Car = () => {
             value={dropoffLocation}
             onChange={(e) => setDropOffLocation(e.target.value)}
           >
-            <option value="">Select a drop-off Location</option>
+            <option value="" disabled>
+              Select a drop-off Location
+            </option>
             {filteredCars.map((car, index) => {
               return (
                 <option key={index} value={car.dropoffLocation}>
@@ -236,6 +268,7 @@ const Car = () => {
                   name="pickupDate"
                   className="date-time-field"
                   value={pickupDate}
+                  min={today}
                   onChange={(e) => setPickupDate(e.target.value)}
                 />
               </div>
@@ -249,6 +282,8 @@ const Car = () => {
                   name="dropoffDate"
                   className="date-time-field"
                   value={dropoffDate}
+                  min={pickupDate}
+                  max={twoWeeksFromPickup}
                   onChange={(e) => setDropoffDate(e.target.value)}
                 />
               </div>
@@ -270,4 +305,4 @@ const Car = () => {
   );
 };
 
-export default Car;
+export default CarReservation;

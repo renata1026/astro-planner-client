@@ -5,9 +5,9 @@ import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { hotels } from "@/lib/data";
 import { API } from "@/lib/api-index";
 import { FaCaretDown } from "react-icons/fa";
-FaCaretDown;
+import { format, addDays } from "date-fns";
 
-const Hotel = () => {
+const HotelReservation = () => {
   const { reservationId } = useParams();
   const { reservations, trips, token, fetchReservations } = useOutletContext();
   const navigate = useNavigate();
@@ -22,6 +22,12 @@ const Hotel = () => {
   const reservation = reservations.find(
     (reservation) => reservation.id === reservationId,
   );
+
+  const today = format(new Date(), "yyyy-MM-dd");
+
+  const maxCheckOutDate = checkIn
+    ? format(addDays(new Date(checkIn), 14), "yyyy-MM-dd")
+    : today;
 
   const tripId = reservation?.tripId;
   const selectedTrip = trips.find((trip) => trip.id === tripId);
@@ -49,23 +55,6 @@ const Hotel = () => {
     setHotelLocation(foundReservation?.hotelLocation || "");
     setCheckIn(formattedCheckIn || currentDate);
     setCheckOut(formattedCheckOut || currentDate);
-
-    // Set the initial value of 'airline' once the data is available
-    // if (initialHotelName) {
-    //   setHotelName(initialHotelName);
-    // }
-
-    // if (initialHotelLocation) {
-    //   setHotelLocation(initialHotelLocation);
-    // }
-
-    // if (initialDepartureDate) {
-    //   setCheckOut(initialDepartureDate);
-    // }
-
-    // if (initialArrivalDate) {
-    //   setCheckIn(initialArrivalDate);
-    // }
   }, [reservations, reservationId]);
 
   async function handleSubmit(e) {
@@ -157,7 +146,9 @@ const Hotel = () => {
                   value={hotelName}
                   onChange={(e) => setHotelName(e.target.value)}
                 >
-                  <option value="">Select a hotel</option>
+                  <option value="" disabled>
+                    Select a hotel
+                  </option>
                   {filteredHotels.map((hotel, index) => {
                     return (
                       <option key={index} value={hotel.name}>
@@ -195,7 +186,9 @@ const Hotel = () => {
               value={hotelLocation}
               onChange={(e) => setHotelLocation(e.target.value)}
             >
-              <option value="">Select an hotel location</option>
+              <option value="" disabled>
+                Select an hotel location
+              </option>
               {filteredHotels.map((hotel, index) => {
                 return (
                   <option key={index} value={hotel.location}>
@@ -217,6 +210,7 @@ const Hotel = () => {
                   id="checkInDate"
                   name="checkInDate"
                   className="date-time-field"
+                  min={today}
                   value={checkIn}
                   onChange={(e) => setCheckIn(e.target.value)}
                 />
@@ -230,6 +224,8 @@ const Hotel = () => {
                   id="checkOutDate"
                   name="checkOutDate"
                   className="date-time-field"
+                  min={checkIn || today}
+                  max={maxCheckOutDate}
                   value={checkOut}
                   onChange={(e) => setCheckOut(e.target.value)}
                 />
@@ -252,4 +248,4 @@ const Hotel = () => {
   );
 };
 
-export default Hotel;
+export default HotelReservation;
