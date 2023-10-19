@@ -104,27 +104,23 @@ const Navbar = ({ user, setUser, setToken }) => {
                 <span className="nav-text">Notifications</span>
               </Link>
             </li> */}
-            {user.picture ? (
+            {user.id && user.profileImage ? (
               <Link to="/profile" className="navbar-li">
                 <img
-                  src={user.picture}
+                  src={user.profileImage}
                   alt="user profile photo"
                   style={{ maxHeight: "32px" }}
                 />
               </Link>
-            ) : (
+            ) : user.id && !user.profileImage ? (
               <Link to="/profile" className="navbar-li">
                 <img
                   src={userProfilePhoto}
                   alt="user profile photo"
-                  style={{
-                    width: "32px",
-                    borderRadius: "9999px",
-                    overflow: "hidden",
-                  }}
+                  style={{ maxHeight: "32px" }}
                 />
               </Link>
-            )}
+            ) : null}
           </div>
 
           <div className="theme-toggle">

@@ -2,33 +2,25 @@ import React, { useState, useEffect } from "react";
 import ProfilePic from "@/assets/default-avatar.svg";
 import { API } from "../lib/api-index";
 import { useOutletContext } from "react-router-dom";
-import { format } from "date-fns";
 
 const Profile = () => {
-  const { token, user } = useOutletContext();
+  const { token, user, setUser } = useOutletContext();
 
   const [profileData, setProfileData] = useState({
     firstName: "",
     lastName: "",
     location: "",
-    dateOfBirth: "",
     email: "",
-    gender: "",
     profileImage: "",
   });
-
-  // console.log("user", user);
-  // console.log(firstName, "firstName");
 
   useEffect(() => {
     setProfileData({
       firstName: user.firstName || "",
       lastName: user.lastName || "",
       location: user.location || "",
-      dateOfBirth: user.dateOfBirth || "",
       email: user.email || "",
-      gender: user.gender || "",
-      profileImage: user.picture || "",
+      profileImage: user.profileImage || "",
     });
   }, [user]);
 
@@ -43,9 +35,7 @@ const Profile = () => {
   async function handleSubmitProfile(e) {
     e.preventDefault();
     try {
-      // const isoDOB = new Date(profileData.dateOfBirth).toISOString();
-
-      const res = await fetch(`${API}/users/me`, {
+      const res = await fetch(`${API}/users/profile`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -55,68 +45,16 @@ const Profile = () => {
           firstName: profileData.firstName,
           lastName: profileData.lastName,
           email: profileData.email,
-          picture: profileData.profileImage,
-          // location: profileData.location,
-          // gender: profileData.gender,
-          // dob: isoDOB,
+          profileImage: profileData.profileImage,
+          location: profileData.location,
         }),
       });
       const info = await res.json();
       console.log(info);
+      setUser(info.user);
     } catch (error) {
       console.error("An error occurred:", error);
     }
-
-    // Check if the user already has a profile
-    // const profileExistsResponse = await fetch(`${API}/users/profile`, {
-    //   method: "GET",
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-    // const profileExistsInfo = await profileExistsResponse.json();
-
-    //   if (profileExistsInfo.success) {
-    //     // The user has a profile, update it
-    //     const res = await fetch(`${API}/users/profile`, {
-    //       method: "PUT",
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({
-    //         picture: profileImage,
-    //         location,
-    //         dob: isoDOB,
-    //         gender,
-    //       }),
-    //     });
-
-    //     const info = await res.json();
-    //     console.log(info);
-    //   } else {
-    //     // The user doesn't have a profile, create one
-    //     const createResponse = await fetch(`${API}/users/profile`, {
-    //       method: "POST",
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({
-    //         userId: token, // Use the user's ID as userId
-    //         picture: profileImage,
-    //         location,
-    //         dob: isoDOB,
-    //         gender,
-    //       }),
-    //     });
-    //     const createInfo = await createResponse.json();
-    //     console.log(createInfo);
-    //   }
-    // } catch (error) {
-    //   console.error("An error occurred:", error);
-    // }
   }
 
   function handleImageUpload(e) {
@@ -150,7 +88,7 @@ const Profile = () => {
         <div className="profile-container">
           <div className="profile-image-container">
             <div className="image-container flex">
-              {profileData.profileImage ? (
+              {profileData?.profileImage ? (
                 <img
                   src={profileData.profileImage}
                   alt="profile"
@@ -225,32 +163,6 @@ const Profile = () => {
             </div>
           </div>
 
-          {/* <div className="flex-col">
-              <label htmlFor="date-of-birth">Date Of Birth</label>
-              <input
-                type="date"
-                id="date-of-birth"
-                name="date-of-birth"
-                placeholder="07.12.1997"
-                value={profileData.dateOfBirth}
-                onChange={handleInputChange}
-                className="full-width-input"
-              />
-            </div> */}
-          {/* <div className="email">
-            <div className="flex-col">
-              <label htmlFor="gender">Gender</label>
-              <input
-                type="text"
-                id="gender"
-                name="gender"
-                placeholder="Gender"
-                value={profileData.gender}
-                onChange={handleInputChange}
-                className="full-width-input"
-              />
-            </div>
-          </div> */}
           <button type="submit" className="save-button">
             Save Changes
           </button>
