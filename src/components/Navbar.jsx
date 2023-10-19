@@ -12,7 +12,7 @@ import { AiOutlineLogin } from "react-icons/ai";
 import { AiOutlineMenu } from "react-icons/ai";
 import DarkModeToggle from "@/components/DarkModeToggle";
 import logoIcon from "@/assets/logo.svg";
-import userProfilePhoto from "@/assets/userPhoto.png";
+import userProfilePhoto from "@/assets/default-avatar.svg";
 
 const Navbar = ({ user, setUser, setToken }) => {
   const [showNavbar, setShowNavbar] = useState(false);
@@ -29,6 +29,10 @@ const Navbar = ({ user, setUser, setToken }) => {
     setUser({});
     localStorage.removeItem("token");
   };
+
+  // if (!user.id) {
+  //   return null;
+  // }
 
   return (
     <nav className="desktop-navigation">
@@ -94,15 +98,19 @@ const Navbar = ({ user, setUser, setToken }) => {
                 <span className="nav-text">FAQ</span>
               </Link>
             </li>
-            <li className="navbar-li notifications">
+            {/* <li className="navbar-li notifications">
               <Link to={"#notifications"} className="flex">
                 <FaRegBell className="icon" />
                 <span className="nav-text">Notifications</span>
               </Link>
-            </li>
-            <li className="navbar-li">
-              <img src={userProfilePhoto} alt="user profile photo" />
-            </li>
+            </li> */}
+            {user.picture ? (
+              <li className="navbar-li">
+                <img src={userProfilePhoto} alt="user profile photo" />
+              </li>
+            ) : (
+                <img src={userProfilePhoto} alt="user profile photo" style={{ width: '50px'}} />
+            )}
           </div>
 
           <div className="theme-toggle">

@@ -2,78 +2,123 @@ import React, { useState, useEffect } from "react";
 import ProfilePic from "@/assets/profile-pic.png";
 import { API } from "../lib/api-index";
 import { useOutletContext } from "react-router-dom";
+import { format } from "date-fns";
 
 const Profile = () => {
   const { token, user } = useOutletContext();
-  if (!user.id) {
-    return <> </>;
-  }
 
-  const [firstName, setFirstName] = useState(user.firstName);
-  const [lastName, setLastName] = useState(user.lastName);
-  const [location, setLocation] = useState(user.location || "");
-  const [dateOfBirth, setDateOfBirth] = useState(user.dateOfBirth || "");
-  const [email, setEmail] = useState(user.email);
-  const [gender, setGender] = useState(user.gender || "");
-  const [profileImage, setProfileImage] = useState(user.profileImage || "");
-  console.log(user);
+  const [profileData, setProfileData] = useState({
+    firstName: "",
+    lastName: "",
+    location: "",
+    dateOfBirth: "",
+    email: "",
+    gender: "",
+    profileImage: "",
+  });
+
+  // console.log("user", user);
+  // console.log(firstName, "firstName");
+
+  useEffect(() => {
+    setProfileData({
+      firstName: user.firstName || "",
+      lastName: user.lastName || "",
+      location: user.location || "",
+      dateOfBirth: user.dateOfBirth || "",
+      email: user.email || "",
+      gender: user.gender || "",
+      profileImage: user.picture || "",
+    });
+  }, [user]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProfileData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   async function handleSubmitProfile(e) {
-    const isoDOB = new Date(dateOfBirth).toISOString();
     e.preventDefault();
     try {
-      // Check if the user already has a profile
-      const profileExistsResponse = await fetch(`${API}/users/profile`, {
-        method: "GET",
+      // const isoDOB = new Date(profileData.dateOfBirth).toISOString();
+
+      const res = await fetch(`${API}/users/me`, {
+        method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          firstName: profileData.firstName,
+          lastName: profileData.lastName,
+          email: profileData.email,
+          picture: profileData.profileImage,
+          // location: profileData.location,
+          // gender: profileData.gender,
+          // dob: isoDOB,
+        }),
       });
-      const profileExistsInfo = await profileExistsResponse.json();
-
-      if (profileExistsInfo.success) {
-        // The user has a profile, update it
-        const res = await fetch(`${API}/users/profile`, {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            picture: profileImage,
-            location,
-            dob: isoDOB,
-            gender,
-          }),
-        });
-
-        const info = await res.json();
-        console.log(info);
-      } else {
-        // The user doesn't have a profile, create one
-        const createResponse = await fetch(`${API}/users/profile`, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: token, // Use the user's ID as userId
-            picture: profileImage,
-            location,
-            dob: isoDOB,
-            gender,
-          }),
-        });
-        const createInfo = await createResponse.json();
-        console.log(createInfo);
-      }
+      const info = await res.json();
+      console.log(info);
     } catch (error) {
       console.error("An error occurred:", error);
     }
+
+    // Check if the user already has a profile
+    // const profileExistsResponse = await fetch(`${API}/users/profile`, {
+    //   method: "GET",
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    // const profileExistsInfo = await profileExistsResponse.json();
+
+    //   if (profileExistsInfo.success) {
+    //     // The user has a profile, update it
+    //     const res = await fetch(`${API}/users/profile`, {
+    //       method: "PUT",
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         picture: profileImage,
+    //         location,
+    //         dob: isoDOB,
+    //         gender,
+    //       }),
+    //     });
+
+    //     const info = await res.json();
+    //     console.log(info);
+    //   } else {
+    //     // The user doesn't have a profile, create one
+    //     const createResponse = await fetch(`${API}/users/profile`, {
+    //       method: "POST",
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         userId: token, // Use the user's ID as userId
+    //         picture: profileImage,
+    //         location,
+    //         dob: isoDOB,
+    //         gender,
+    //       }),
+    //     });
+    //     const createInfo = await createResponse.json();
+    //     console.log(createInfo);
+    //   }
+    // } catch (error) {
+    //   console.error("An error occurred:", error);
+    // }
   }
 
-  console.log(typeof profileImage, "stringImage", profileImage);
   function handleImageUpload(e) {
     const image = e.target.files[0];
     console.log(image.size);
@@ -82,10 +127,17 @@ const Profile = () => {
     }
     const reader = new FileReader();
     reader.onloadend = () => {
-      setProfileImage(reader.result);
+      setProfileData((prevData) => ({
+        ...prevData,
+        profileImage: reader.result,
+      }));
       console.log(reader.result);
     };
     reader.readAsDataURL(image);
+  }
+
+  if (!user.id) {
+    return null;
   }
 
   return (
@@ -98,7 +150,19 @@ const Profile = () => {
         <div className="profile-container">
           <div className="profile-image-container">
             <div className="image-container flex">
-              <img src={profileImage} alt="profile" className="profile-image" />
+              {profileData.profileImage ? (
+                <img
+                  src={profileData.profileImage}
+                  alt="profile"
+                  className="profile-image"
+                />
+              ) : (
+                <div className="profile-image-fallback ">
+                  <span className="">
+                    {`${profileData.firstName[0]}${profileData.lastName[0]}`.toUpperCase()}
+                  </span>
+                </div>
+              )}
               <input
                 type="file"
                 id="file-upload"
@@ -118,10 +182,10 @@ const Profile = () => {
               <input
                 type="text"
                 id="first-name"
-                name="first-name"
+                name="firstName"
                 placeholder="Alex"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                value={profileData.firstName}
+                onChange={handleInputChange}
                 className="full-width-input"
               />
             </div>
@@ -130,10 +194,10 @@ const Profile = () => {
               <input
                 type="text"
                 id="last-name"
-                name="last-name"
-                placeholder="Mechael"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                name="lastName"
+                placeholder="Michael"
+                value={profileData.lastName}
+                onChange={handleInputChange}
                 className="full-width-input"
               />
             </div>
@@ -146,23 +210,23 @@ const Profile = () => {
                 id="location"
                 name="location"
                 placeholder="New York"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
+                value={profileData.location}
+                onChange={handleInputChange}
                 className="full-width-input"
               />
             </div>
-            <div className="flex-col">
+            {/* <div className="flex-col">
               <label htmlFor="date-of-birth">Date Of Birth</label>
               <input
                 type="date"
                 id="date-of-birth"
                 name="date-of-birth"
                 placeholder="07.12.1997"
-                value={dateOfBirth}
-                onChange={(e) => setDateOfBirth(e.target.value)}
+                value={profileData.dateOfBirth}
+                onChange={handleInputChange}
                 className="full-width-input"
               />
-            </div>
+            </div> */}
           </div>
           <div className="email ">
             <div className="flex-col">
@@ -170,10 +234,10 @@ const Profile = () => {
               <input
                 type="email"
                 id="email-address"
-                name="email-address"
-                placeholder="em@gmail.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                name="email"
+                placeholder="test@test.com"
+                value={profileData.email}
+                onChange={handleInputChange}
                 className="full-width-input"
               />
             </div>
@@ -184,8 +248,8 @@ const Profile = () => {
                 id="gender"
                 name="gender"
                 placeholder="Gender"
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
+                value={profileData.gender}
+                onChange={handleInputChange}
                 className="full-width-input"
               />
             </div>
