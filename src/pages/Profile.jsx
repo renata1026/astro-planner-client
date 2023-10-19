@@ -50,7 +50,7 @@ const Profile = () => {
         }),
       });
       const info = await res.json();
-      console.log(info);
+
       setUser(info.user);
     } catch (error) {
       console.error("An error occurred:", error);
@@ -59,7 +59,7 @@ const Profile = () => {
 
   function handleImageUpload(e) {
     const image = e.target.files[0];
-    console.log(image.size);
+
     if (image.size > 500_000) {
       return alert("Image size is too big");
     }
@@ -69,7 +69,6 @@ const Profile = () => {
         ...prevData,
         profileImage: reader.result,
       }));
-      console.log(reader.result);
     };
     reader.readAsDataURL(image);
   }

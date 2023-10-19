@@ -39,8 +39,6 @@ const Flight = ({ destination }) => {
     return;
   }
 
-  console.log("Departure:", departureDate);
-  console.log("Arrival:", arrivalDate);
   const selectedDestination = selectedTrip.location
     .replace(/_/g, " ") ///_/g stands for global, replaces all occurrences of underscore
     .toLowerCase();
@@ -104,12 +102,8 @@ const Flight = ({ destination }) => {
         tripId,
       }),
     });
-    // console.log(airline);
-
-    //console.log(setAirline);
 
     const info = await res.json();
-    console.log(info);
 
     if (!info.success) {
       setError(info.error);

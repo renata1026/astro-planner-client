@@ -45,15 +45,12 @@ const Confirmation = () => {
     month: "short",
   })} ${checkOutDate.getDate()}, ${checkOutDate.getFullYear()}`;
 
-  // console.log("filteredList", filteredList);
-
   function formatDate(dateStr) {
     const date = parseISO(dateStr);
     return format(date, "MMM dd, yyyy");
   }
 
   async function handleDeleteReservation(e, reservationId) {
-    console.log(reservationId);
     setError("");
     e.preventDefault();
 
@@ -64,17 +61,14 @@ const Confirmation = () => {
       },
     });
     const info = await res.json();
-    console.log(info);
 
     fetchReservations();
 
     if (!info.success) {
       setError(info.error);
     }
-
-    // Now you can handle the response as needed
   }
-  console.log(filteredReservations);
+
   return (
     <section className="confirmation-section">
       <div className="confirmation-container">
@@ -115,7 +109,6 @@ const Confirmation = () => {
                 </div>
 
                 <div className="reservation-body">
-                  {/* {console.log("reservation", reservation)} */}
                   {Object.keys(reservation)
                     .filter(
                       (key) =>

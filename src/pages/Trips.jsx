@@ -21,7 +21,6 @@ const Trips = () => {
       },
     });
     const info = await res.json();
-    console.log(info);
 
     fetchTrips();
     if (!info.success) {

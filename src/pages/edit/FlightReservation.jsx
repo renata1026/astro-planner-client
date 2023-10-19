@@ -31,7 +31,6 @@ const FlightReservation = () => {
     (reservation) => reservation.id === reservationId,
   );
 
-  //console.log({ reservations });
   const tripId = reservation?.tripId;
   const trip = trips.find((trip) => trip.id === tripId);
 
@@ -49,8 +48,6 @@ const FlightReservation = () => {
   ];
 
   useEffect(() => {
-    //console.log("reservation", reservation);
-
     const foundReservation = reservations.find(
       (reservation) => reservation.id === reservationId,
     );
@@ -80,10 +77,6 @@ const FlightReservation = () => {
   async function handleEdit(e) {
     e.preventDefault();
     setError(""); // Clear any previous errors
-    console.log("departureAirport", departureAirport);
-    console.log("arrivalAirport", arrivalAirport);
-    console.log("departureDate", departureDate);
-    console.log("arrivalDate", arrivalDate);
 
     if (
       !departureAirport ||
@@ -123,7 +116,6 @@ const FlightReservation = () => {
     });
 
     const info = await res.json();
-    //console.log(info);
 
     if (!info.success) {
       setError(info.error);

@@ -41,7 +41,6 @@ const HotelReservation = () => {
   );
 
   useEffect(() => {
-    //console.log("reservation", reservation);
     const foundReservation = reservations.find(
       (reservation) => reservation.id === reservationId,
     );

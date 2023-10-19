@@ -55,7 +55,6 @@ const StaggeredDropDown = ({ tripId }) => {
 };
 
 const Option = ({ text, Icon, setOpen, reservationType, tripId }) => {
-  console.log("tripId", tripId);
   return (
     <motion.li
       variants={itemVariants}
