@@ -1,68 +1,68 @@
-@use './variables' as v;
-@use './mixins' as m;
+@use "./variables" as v;
+@use "./mixins" as m;
 
 .airtrav-best-services {
   background-color: v.$primary-blue;
   color: #fff;
   text-align: center;
+
   .airtrav-best-services-container {
     padding: v.$spacing-large;
   }
+
   .airtrav-best-services-cards {
     display: flex;
     justify-content: center;
     gap: 24px;
+
+    .service-card {
+      @extend .service-icon;
+      background-color: #fff;
+      color: v.$primary-black;
+      max-width: 230px;
+      max-height: 200px;
+      border-radius: 12px;
+    }
   }
 }
 
 .service-icon {
   display: flex;
   padding: 9px 30px;
-}
-.service-icon img {
-  width: 24px;
-  height: 24px;
-  padding: 10px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  border-radius: 10px;
-}
-.service-card {
-  display: flex;
-  padding: 25px 28px 15px 28px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  background-color: #fff;
-  color: v.$primary-black;
-  max-width: 230px;
-  max-height: 200px;
-  border-radius: 12px;
+
+  img {
+    width: 24px;
+    height: 24px;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+  }
 }
 
-@include m.breakpoint('small') {
+@include m.breakpoint("small") {
   .airtrav-best-services .airtrav-best-services-container {
-    padding: 70px 0px;
+    padding: 70px 0;
   }
+
   .airtrav-best-services-cards {
-    display: flex;
     flex-direction: column;
     align-items: center;
     gap: 24px;
-  }
-  .service-card {
-    min-width: 270px;
-    min-height: 200px;
+
+    .service-card {
+      min-width: 270px;
+      min-height: 200px;
+    }
   }
 }
 
-@include m.breakpoint('medium') {
+@include m.breakpoint("medium") {
   .airtrav-best-services-cards {
     flex-wrap: wrap;
-    gap: 24px;
   }
+
   .service-card {
     width: 100%;
   }

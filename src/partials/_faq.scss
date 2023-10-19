@@ -1,59 +1,60 @@
 .basic-faq-container {
   padding: 16px 16px 48px;
-}
 
-.faq-content {
-  max-width: 768px;
-  margin: 0 auto;
-}
+  .faq-content {
+    max-width: 768px;
+    margin: 0 auto;
 
-.faq-header {
-  text-align: center;
-  font-size: 30px;
-  font-weight: 600;
-  margin-bottom: 16px;
-}
+    .faq-header {
+      text-align: center;
+      font-size: 30px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
 
-.question-container {
-  border-bottom: 1px solid #9ca3af;
-}
+    .question-container {
+      border-bottom: 1px solid #9ca3af;
 
-.question-toggle {
-  padding: 24px 0;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  background-color: white;
-  border: none;
-  cursor: pointer;
-  &:hover,
-  &:focus,
-  &:active {
-    background-color: transparent;
+      .question-toggle {
+        padding: 24px 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        background-color: white;
+        border: none;
+        cursor: pointer;
+
+        &:hover,
+        &:focus,
+        &:active {
+          background-color: transparent;
+        }
+
+        .question-title {
+          font-size: 18px;
+          font-weight: 500;
+          text-align: left;
+          background: linear-gradient(to right, #7c3aed, #3b82f6);
+          background-clip: text;
+          -webkit-background-clip: text;
+          color: transparent;
+          padding: 0 0 20px;
+          margin-left: 20px;
+        }
+
+        .icon-chevron {
+          font-size: 32px;
+          color: #030617;
+        }
+      }
+
+      .answer-content {
+        overflow: hidden;
+        color: #374151;
+        margin-left: 20px;
+      }
+    }
   }
-}
-
-.question-title {
-  font-size: 18px;
-  font-weight: 500;
-  text-align: left;
-  background: linear-gradient(to right, #7c3aed, #3b82f6);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  padding: 0 0 20px;
-  margin-left: 20px;
-}
-
-.icon-chevron {
-  font-size: 32px;
-  color: #030617;
-}
-
-.answer-content {
-  overflow: hidden;
-  color: #374151;
-  margin-left: 20px;
 }

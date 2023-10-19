@@ -7,46 +7,46 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
 
-.create-trip-form {
-  display: flex;
-  align-items: center;
-  box-shadow: v.$box-shadow-small;
-  padding: 20px;
-
-  .col-one {
+  .create-trip-form {
     display: flex;
-    flex-direction: column;
-    margin-right: 112px;
-    padding: 48px 30px;
+    align-items: center;
+    box-shadow: v.$box-shadow-small;
+    padding: 20px;
 
-    label {
-      margin-bottom: 8px;
-    }
-
-    .flex {
+    .col-one {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
+      margin-right: 112px;
+      padding: 48px 30px;
 
-      input {
-        flex: 1;
+      label {
         margin-bottom: 8px;
+      }
+
+      .flex {
+        display: flex;
+        flex-wrap: wrap;
+
+        input {
+          flex: 1;
+          margin-bottom: 8px;
+        }
       }
     }
   }
-}
 
-.create-trip-button {
-  @include m.form-button;
-  width: 100%;
-  height: 48px;
-  margin-top: v.$spacing-small;
-}
+  .create-trip-button {
+    @include m.form-button;
+    width: 100%;
+    height: 48px;
+    margin-top: v.$spacing-small;
+  }
 
-.trip-image {
-  max-width: 100%;
-  height: auto;
+  .trip-image {
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 @include m.breakpoint("small") {

@@ -1,13 +1,12 @@
 @use "./variables" as v;
 @use "./mixins" as m;
-/* Dark Mode Styles */
 
+/* Dark Mode Styles */
 .dark {
   background-color: v.$primary-black;
   color: #fff;
-  .text-gray {
-    color: #fff;
-  }
+
+  .text-gray,
   a,
   label,
   h2,
@@ -23,64 +22,77 @@
     background-color: #444;
     color: #fff;
   }
-  //navbar
+
+  // Navbar Styles
   .navbar-li a,
   .toggle-switch a,
   .logo-type {
     color: #fff !important;
+
     .icon {
       display: none;
       margin-right: 8px;
     }
   }
 
-  .signup-container {
+  .signup-container,
+  .question-toggle,
+  .create-trip-form,
+  .reservation-wrapper {
     border-radius: 20px;
     border: 0.5px solid v.$color-gray-2;
-    background: v.$color-gray-1;
     box-shadow: 0px 20px 60px -6px rgba(40, 40, 40, 0.08);
+  }
+
+  .signup-container {
+    background: v.$color-gray-1;
     width: 80%;
     margin: 0 auto;
   }
 
   .question-toggle {
     background: v.$color-gray-1;
-    box-shadow: 0px 20px 60px -6px rgba(40, 40, 40, 0.08);
     color: #fff;
     margin: 0 auto;
+
     .question-title {
       color: white !important;
     }
-    .question-toggle:hover {
+
+    &:hover {
       background-color: v.$color-gray-4;
     }
   }
+
+  .create-trip-form,
+  .reservation-wrapper {
+    background: v.$color-gray-1;
+  }
+
   a.dropdown-link {
     background-color: v.$primary-black;
   }
+
   footer,
   section,
   .discover-section {
     background-color: v.$primary-black;
   }
+
   h2.discover-text,
   .text-box {
     color: #fff;
   }
-  .create-trip-form,
-  .reservation-wrapper {
-    border-radius: 20px;
-    border: 0.5px solid v.$color-gray-2;
-    background: v.$color-gray-1;
-    box-shadow: 0px 20px 60px -6px rgba(40, 40, 40, 0.08);
-  }
+
   .learn-more-text,
   h3 {
     color: v.$primary-black;
   }
+
   .select-container {
     background-color: #fff;
   }
+
   @include m.breakpoint("small") {
     .navbar-li {
       border-bottom: solid 1px #fff !important;

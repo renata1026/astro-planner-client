@@ -10,80 +10,71 @@
   position: absolute;
   right: 24px;
   bottom: 0;
-}
 
-.dropdown {
-  position: relative;
-}
+  .dropdown {
+    position: relative;
 
-.dropdown-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  border-radius: 6px;
-  background-color: v.$primary-blue;
-  color: #a78bfa;
-  transition: background-color 0.2s;
-  border: none;
-}
+    .dropdown-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      background-color: v.$primary-blue;
+      color: #a78bfa;
+      transition: background-color 0.2s;
+      border: none;
 
-.dropdown-toggle:hover {
-  background-color: #5b60e6;
-}
+      &:hover {
+        background-color: #5b60e6;
+      }
 
-.toggle-text {
-  font-weight: 500;
-  font-size: 14px;
-}
+      .toggle-text {
+        font-weight: 500;
+        font-size: 14px;
+        color: white;
+      }
+    }
 
-.dropdown-menu {
-  position: absolute;
-  right: 0;
-  top: 100%;
-  width: 192px;
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  background-color: white;
-  border-radius: 4px;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
+    .dropdown-menu {
+      position: absolute;
+      right: 0;
+      top: 100%;
+      width: 192px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background-color: white;
+      border-radius: 4px;
+      box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
 
-.dropdown-link {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #4b5563;
-  border-radius: 4px;
-  cursor: pointer;
-  transition:
-    background-color 0.2s,
-    color 0.2s;
-}
+      .dropdown-link {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #4b5563;
+        border-radius: 4px;
+        cursor: pointer;
+        transition:
+          background-color 0.2s,
+          color 0.2s;
 
-.dropdown-item:hover {
-  background-color: #e5e7eb;
-  color: #6366f1;
-}
+        &:hover {
+          background-color: #e5e7eb;
+          color: #6366f1;
+        }
 
-.item-icon {
-  color: #4b5563;
-  transition: transform 0.2s;
-  height: 18px;
-}
-
-.toggle-icon {
-  transition: transform 0.2s;
-  height: 18px;
-  color: white;
-}
-
-.toggle-text {
-  color: white;
+        .item-icon {
+          color: #4b5563;
+          transition: transform 0.2s;
+          height: 18px;
+        }
+      }
+    }
+  }
 }
