@@ -104,11 +104,16 @@ const Navbar = ({ user, setUser, setToken, reservations, trips }) => {
                 />
               </Link>
             ) : user.id && !user.profileImage ? (
-              <Link to="/profile" className="navbar-li">
+              <Link
+                to="/profile"
+                className="navbar-li"
+                style={{ overflow: "hidden" }}
+              >
                 <img
+                  className="profile-photo"
                   src={userProfilePhoto}
                   alt="user profile photo"
-                  style={{ maxHeight: "32px" }}
+                  style={{ maxHeight: "32px", borderRadius: "50%!important" }}
                 />
               </Link>
             ) : null}
