@@ -21,14 +21,11 @@ const Trips = () => {
       },
     });
     const info = await res.json();
-    console.log(info);
 
     fetchTrips();
     if (!info.success) {
       setError(info.error);
     }
-
-    // Now you can handle the response as needed
   };
 
   return (

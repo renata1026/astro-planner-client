@@ -36,8 +36,6 @@ const CreateTrip = () => {
       return;
     }
 
-    console.log(destination);
-
     // condition to check if check-in date is before checkout date
     if (isBefore(parseISO(checkOut), parseISO(checkIn))) {
       setError("Check-in date must be before check-out date.");

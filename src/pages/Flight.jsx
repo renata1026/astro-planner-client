@@ -24,7 +24,6 @@ const Flight = ({ destination }) => {
   const [departureDate, setDepartureDate] = useState("");
   const [arrivalDate, setArrivalDate] = useState("");
   const [error, setError] = useState("");
-  //const [selectedAirline, setSelectedAirline] = useState("");
   const [minArrivalDate, setMinArrivalDate] = useState("");
   const [maxArrivalDate, setMaxArrivalDate] = useState("");
   const { token, fetchReservations, setReservations, trips } =
@@ -39,8 +38,6 @@ const Flight = ({ destination }) => {
     return;
   }
 
-  console.log("Departure:", departureDate);
-  console.log("Arrival:", arrivalDate);
   const selectedDestination = selectedTrip.location
     .replace(/_/g, " ") ///_/g stands for global, replaces all occurrences of underscore
     .toLowerCase();
@@ -104,12 +101,8 @@ const Flight = ({ destination }) => {
         tripId,
       }),
     });
-    // console.log(airline);
-
-    //console.log(setAirline);
 
     const info = await res.json();
-    console.log(info);
 
     if (!info.success) {
       setError(info.error);

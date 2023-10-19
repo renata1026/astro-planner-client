@@ -41,7 +41,6 @@ const HotelReservation = () => {
   );
 
   useEffect(() => {
-    //console.log("reservation", reservation);
     const foundReservation = reservations.find(
       (reservation) => reservation.id === reservationId,
     );
@@ -97,10 +96,6 @@ const HotelReservation = () => {
     if (!info.success) {
       setError(info.error);
     } else {
-      // setReservations((prevReservations) => ({
-      //   ...prevReservations,
-      //   hotels: [...prevReservations.hotels, info.data.reservation],
-      // }));
       fetchReservations();
       // Navigate to the home page
       navigate(`/confirmation/${tripId}`);

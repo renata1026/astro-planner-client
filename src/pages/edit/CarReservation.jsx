@@ -26,11 +26,6 @@ const CarReservation = () => {
     (reservation) => reservation.id === reservationId,
   );
 
-  console.log(agencyName, "agencyName");
-  console.log(carType, "carType");
-  console.log(pickupLocation, "pickupLocation");
-  console.log(dropoffLocation, "dropoffLocation");
-
   const today = format(new Date(), "yyyy-MM-dd");
   let twoWeeksFromPickup = today;
   if (pickupDate) {
@@ -41,10 +36,6 @@ const CarReservation = () => {
   }
   const tripId = reservation?.tripId;
   const selectedTrip = trips.find((trip) => trip.id === tripId);
-
-  // if (!selectedTrip) {
-  //   return;
-  // }
 
   const selectedDestination = selectedTrip?.location
     .replace(/_/g, " ") ///_/g for global, replaces all occurrences of underscore
@@ -70,7 +61,6 @@ const CarReservation = () => {
     const uniquePickupLocation = [
       ...new Set(filteredCars.map((car) => car.pickupLocation)),
     ];
-    console.log("foundReservation", foundReservation);
 
     setAgencyName(foundReservation?.carRentalAgency || "");
     setCarType(foundReservation?.carType || "");
@@ -99,9 +89,6 @@ const CarReservation = () => {
     // Convert checkIn and checkOut dates to ISO-8601 format
     const isoPickUp = new Date(pickupDate).toISOString();
     const isoDropOff = new Date(dropoffDate).toISOString();
-
-    console.log("isoPickUp", isoPickUp);
-    console.log("isoDropOff", isoDropOff);
 
     const res = await fetch(`${API}/reservations/${reservationId}`, {
       method: "PUT",

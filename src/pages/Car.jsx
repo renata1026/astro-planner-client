@@ -115,10 +115,6 @@ const Car = () => {
     if (!info.success) {
       setError(info.error);
     } else {
-      // setReservations((prevReservations) => ({
-      //   ...prevReservations,
-      //   cars: [...prevReservations.cars, info.data.reservation],
-      // }));
       fetchReservations();
       // Navigate to the confirmation page
       navigate(`/confirmation/${tripId}`);
