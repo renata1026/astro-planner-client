@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ProfilePic from "@/assets/profile-pic.png";
+import ProfilePic from "@/assets/default-avatar.svg";
 import { API } from "../lib/api-index";
 import { useOutletContext } from "react-router-dom";
 import { format } from "date-fns";
@@ -157,11 +157,7 @@ const Profile = () => {
                   className="profile-image"
                 />
               ) : (
-                <div className="profile-image-fallback ">
-                  <span className="">
-                    {`${profileData.firstName[0]}${profileData.lastName[0]}`.toUpperCase()}
-                  </span>
-                </div>
+                <img src={ProfilePic} alt="profile" className="profile-image" />
               )}
               <input
                 type="file"
@@ -215,20 +211,6 @@ const Profile = () => {
                 className="full-width-input"
               />
             </div>
-            {/* <div className="flex-col">
-              <label htmlFor="date-of-birth">Date Of Birth</label>
-              <input
-                type="date"
-                id="date-of-birth"
-                name="date-of-birth"
-                placeholder="07.12.1997"
-                value={profileData.dateOfBirth}
-                onChange={handleInputChange}
-                className="full-width-input"
-              />
-            </div> */}
-          </div>
-          <div className="email ">
             <div className="flex-col">
               <label htmlFor="email-address">Email Address</label>
               <input
@@ -241,6 +223,21 @@ const Profile = () => {
                 className="full-width-input"
               />
             </div>
+          </div>
+
+          {/* <div className="flex-col">
+              <label htmlFor="date-of-birth">Date Of Birth</label>
+              <input
+                type="date"
+                id="date-of-birth"
+                name="date-of-birth"
+                placeholder="07.12.1997"
+                value={profileData.dateOfBirth}
+                onChange={handleInputChange}
+                className="full-width-input"
+              />
+            </div> */}
+          {/* <div className="email">
             <div className="flex-col">
               <label htmlFor="gender">Gender</label>
               <input
@@ -253,7 +250,7 @@ const Profile = () => {
                 className="full-width-input"
               />
             </div>
-          </div>
+          </div> */}
           <button type="submit" className="save-button">
             Save Changes
           </button>

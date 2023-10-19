@@ -105,11 +105,25 @@ const Navbar = ({ user, setUser, setToken }) => {
               </Link>
             </li> */}
             {user.picture ? (
-              <li className="navbar-li">
-                <img src={userProfilePhoto} alt="user profile photo" />
-              </li>
+              <Link to="/profile" className="navbar-li">
+                <img
+                  src={user.picture}
+                  alt="user profile photo"
+                  style={{ maxHeight: "32px" }}
+                />
+              </Link>
             ) : (
-                <img src={userProfilePhoto} alt="user profile photo" style={{ width: '50px'}} />
+              <Link to="/profile" className="navbar-li">
+                <img
+                  src={userProfilePhoto}
+                  alt="user profile photo"
+                  style={{
+                    width: "32px",
+                    borderRadius: "9999px",
+                    overflow: "hidden",
+                  }}
+                />
+              </Link>
             )}
           </div>
 
