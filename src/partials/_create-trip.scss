@@ -50,13 +50,17 @@
 }
 
 @include m.breakpoint("small") {
-  .create-trip-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 90%;
-    .col-one {
+  .create-trip-container {
+    margin: 0;
+    .create-trip-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 90%;
       margin-right: 0;
+      .col-one {
+        margin-right: 0;
+      }
     }
   }
 }

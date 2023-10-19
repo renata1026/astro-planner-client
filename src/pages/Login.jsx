@@ -2,15 +2,15 @@ import {
   BiLogoFacebookCircle,
   BiLogoGooglePlusCircle,
   BiLogoTwitter,
-} from 'react-icons/bi';
-import { useState } from 'react';
-import { useOutletContext, useNavigate, Link } from 'react-router-dom';
-import { API } from '../lib/api-index';
+} from "react-icons/bi";
+import { useState } from "react";
+import { useOutletContext, useNavigate, Link } from "react-router-dom";
+import { API } from "../lib/api-index";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const { setToken } = useOutletContext();
   const navigate = useNavigate();
@@ -18,8 +18,8 @@ const Login = () => {
   async function handleLogin(e) {
     e.preventDefault();
     const res = await fetch(`${API}/users/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email,
         password,
@@ -30,16 +30,16 @@ const Login = () => {
       return setError(info.error);
     }
     setToken(info.token);
-    localStorage.setItem('token', info.token);
-    navigate('/');
+    localStorage.setItem("token", info.token);
+    navigate("/");
   }
 
   return (
-    <div className="form-wrapper">
+    <div className="form-wrapper flex-col">
       <div className="signup-container flex-col">
         <h2>Get started</h2>
         <p className="text-gray">
-          Don't have an account?{' '}
+          Don't have an account?{" "}
           <Link to="/register" className="signup-link">
             Sign up
           </Link>
@@ -88,7 +88,7 @@ const Login = () => {
               <input type="checkbox" />
               Remember me
               <span
-                style={{ fontSize: '14px' }}
+                style={{ fontSize: "14px" }}
                 className="forgot-password text"
               >
                 Forgot Password?

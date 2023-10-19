@@ -1,12 +1,6 @@
 import React, { useState } from "react";
-import { NavLink, Link } from "react-router-dom";
-import {
-  FaHome,
-  FaBriefcase,
-  FaDollarSign,
-  FaRegBell,
-  FaQuestion,
-} from "react-icons/fa";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { FaBriefcase, FaQuestion, FaMapPin } from "react-icons/fa";
 import { RiAccountCircleFill } from "react-icons/ri";
 import { AiOutlineLogin } from "react-icons/ai";
 import { AiOutlineMenu } from "react-icons/ai";
@@ -14,12 +8,14 @@ import DarkModeToggle from "@/components/DarkModeToggle";
 import logoIcon from "@/assets/logo.svg";
 import userProfilePhoto from "@/assets/default-avatar.svg";
 
-const Navbar = ({ user, setUser, setToken }) => {
+const Navbar = ({ user, setUser, setToken, reservations, trips }) => {
+  const navigate = useNavigate();
+  const trip = trips.find((trip) => trip.userId === user.id);
   const [showNavbar, setShowNavbar] = useState(false);
 
   const handleShowNavbar = () => {
     setShowNavbar(!showNavbar);
-    // using below class to disable scrolling & add overlay on Mobile after the menu is opened
+    // using the class below to disable scrolling & add overlay on Mobile after the menu is opened
     document.body.classList.toggle("navbar-open");
     console.log("it works");
   };
@@ -29,10 +25,6 @@ const Navbar = ({ user, setUser, setToken }) => {
     setUser({});
     localStorage.removeItem("token");
   };
-
-  // if (!user.id) {
-  //   return null;
-  // }
 
   return (
     <nav className="desktop-navigation">
@@ -98,12 +90,6 @@ const Navbar = ({ user, setUser, setToken }) => {
                 <span className="nav-text">FAQ</span>
               </Link>
             </li>
-            {/* <li className="navbar-li notifications">
-              <Link to={"#notifications"} className="flex">
-                <FaRegBell className="icon" />
-                <span className="nav-text">Notifications</span>
-              </Link>
-            </li> */}
             {user.id && user.profileImage ? (
               <Link to="/profile" className="navbar-li">
                 <img
@@ -121,8 +107,24 @@ const Navbar = ({ user, setUser, setToken }) => {
                 />
               </Link>
             ) : null}
+            {user.id && trip ? (
+              <>
+                <li className="navbar-li notifications">
+                  <NavLink className="flex" to={`/confirmation/${trip.id}`}>
+                    <FaMapPin className="map-icon" />
+                    <span className="nav-text">Itinerary</span>
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              // Handle the case when 'trip' is not found
+              <li className="navbar-li">
+                <span className="nav-text">
+                  <></>
+                </span>
+              </li>
+            )}
           </div>
-
           <div className="theme-toggle">
             <DarkModeToggle />
             <AiOutlineMenu
