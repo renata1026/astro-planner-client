@@ -59,3 +59,9 @@
   border: none;
   margin-bottom: 16px;
 }
+@media (min-width: 1000px) {
+  .trip-item {
+    flex-direction: column;
+    align-items: center;
+  }
+}
