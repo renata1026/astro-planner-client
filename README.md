@@ -75,10 +75,10 @@ By offering these features, the Astro Planner Travel App empowers users to effic
 
 <table>
   <tr>
-    <td><img src="./gitHubReadme/LandingPage.png" alt="Landing Page"></td>
-    <td><img src="./gitHubReadme/CreateTrips.png" alt="CreateTrips"></td>
-    <td><img src="./gitHubReadme/CreateTrips.png" alt="Register"></td>
-    <td><img src="./gitHubReadme/CreateTrips.png" alt="Itenerary"></td>
+    <td><img src="./githubReadme/LandingPage.png" alt="Landing Page"></td>
+    <td><img src="./githubReadme/CreateTrips.png" alt="CreateTrips"></td>
+    <td><img src="./githubReadme/CreateTrips.png" alt="Register"></td>
+    <td><img src="./githubReadme/CreateTrips.png" alt="Itenerary"></td>
   </tr>
 </table>
 
