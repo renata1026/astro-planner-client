@@ -1,6 +1,6 @@
 # Astro Planner Travel App: Create your perfect trip!    
 
-[Astro Planner Live Link]([https://astro-planner.netlify.app/])
+[Astro Planner Live Link](https://astro-planner.netlify.app/)
 
 ## About
 
@@ -15,8 +15,11 @@ To begin using the Astro Planner Travel App, users first need to create an accou
 After registration or login, users can create a travel itinerary. Here's how they do it:
 
 a. Choose Destination: Users can select their desired travel destination.
+
 b. Departure and Arrival Date: Users specify the dates when they plan to depart and return from their trip.
+
 c. Flight, Hotel, and Car Rental Forms: Users have the option to enter specific details about their travel, such as their flight details, hotel accommodations, and car rental information. These forms allow users to input the relevant data for each part of their trip.
+
 d. Skip Option: If users prefer to fill out these details later or if they don't have specific information at the moment, they can choose to skip this step and proceed to the next page.
 
 Itinerary Creation: Once the necessary travel details are provided, the app generates an itinerary for the user's trip. This itinerary includes all the information about flights, hotel stays, and car rentals, helping users to visualize and organize their travel plans.
@@ -27,10 +30,10 @@ Users have the option to manage their created trips. They can edit the details o
 
 Podcast Planner was built by these team members.
 
-* [Haley Tibbitts](https://github.com/haleytibbitts)
+* [Monica Benavides](https://github.com/monibena)
+* [Luis Rodrigo Bueno Martinez](https://github.com/renata1026)
 * [Renata Reinartz](https://github.com/renata1026)
-* [Richard Tillo](https://github.com/richardJET)
-* [Scott Cheung](https://github.com/luckyNoodles)
+* [Ronald Paek](https://github.com/ronaldpaek)
 
 Thank you for your interest in Travel Planner! We hope you find it useful and look forward to hearing from you.    
 
@@ -64,8 +67,10 @@ By offering these features, the Astro Planner Travel App empowers users to effic
 
 <table>
   <tr>
-    <td><img src="./gitHubReadme/WalkTime.png" alt="Enter Walking Time"></td>
-    <td><img src="./gitHubReadme/genres.png" alt="Select Genres"></td>
+    <td><img src="./gitHubReadme/LandingPage.png" alt="Landing Page"></td>
+    <td><img src="./gitHubReadme/CreateTrips.png" alt="CreateTrips"></td>
+    <td><img src="./gitHubReadme/CreateTrips.png" alt="Register"></td>
+    <td><img src="./gitHubReadme/CreateTrips.png" alt="Itenerary"></td>
   </tr>
 </table>
 
