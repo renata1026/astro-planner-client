@@ -42,13 +42,13 @@ Thank you for your interest in Travel Planner! We hope you find it useful and lo
 
 **The Astro Planner Travel App is built with a touch of stardust and also features:**
 
-*Stunning Landing Page: Captivating your imagination with the cosmic beauty of travel.
-*Secure Login & Register Forms: Hassle-free login and registration for a seamless experience.
-*Basic Mobile Responsiveness: Accessible from any device, whether it's your computer, tablet, or smartphone.
-*Prisma Schema: A robust database foundation for efficient data management.
-*Backend Development: Creation of endpoints for various functionalities and interactions.
-*Rigorous Testing: Quality assurance to ensure smooth and flawless app performance.
-*Full CRUD Application: Complete control over your travel plans with Create, Read, Update, Delete capabilities.
+* Stunning Landing Page: Captivating your imagination with the cosmic beauty of travel.
+* Secure Login & Register Forms: Hassle-free login and registration for a seamless experience.
+* Basic Mobile Responsiveness: Accessible from any device, whether it's your computer, tablet, or smartphone.
+* Prisma Schema: A robust database foundation for efficient data management.
+* Backend Development: Creation of endpoints for various functionalities and interactions.
+* Rigorous Testing: Quality assurance to ensure smooth and flawless app performance.
+* Full CRUD Application: Complete control over your travel plans with Create, Read, Update, Delete capabilities.
 
 
 
