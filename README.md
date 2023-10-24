@@ -38,17 +38,25 @@ Podcast Planner was built by these team members.
 Thank you for your interest in Travel Planner! We hope you find it useful and look forward to hearing from you.    
 
 
-## Advanced Web Development tools used in this project
+## Advanced Web Development Tools Used in This Project
 
-**The Astro Planner Travel App is built with a touch of stardust and also features:**
+The Astro Planner Travel App leverages several advanced web development tools to provide users with a seamless and feature-rich experience:
 
-* Stunning Landing Page: Captivating your imagination with the cosmic beauty of travel.
-* Secure Login & Register Forms: Hassle-free login and registration for a seamless experience.
-* Basic Mobile Responsiveness: Accessible from any device, whether it's your computer, tablet, or smartphone.
-* Prisma Schema: A robust database foundation for efficient data management.
-* Backend Development: Creation of endpoints for various functionalities and interactions.
-* Rigorous Testing: Quality assurance to ensure smooth and flawless app performance.
-* Full CRUD Application: Complete control over your travel plans with Create, Read, Update, Delete capabilities.
+* **Front-End Framework**: We've built the app's user interface using the React library, allowing for a dynamic and responsive user experience.
+
+* **Back-End Server**: The back-end is powered by an Express server, which handles various functionalities, such as user authentication, itinerary management, and more.
+
+* **Authentication**: To ensure user data is secure, we've implemented authentication using JSON Web Tokens (JWTokens) and Bcrypt for password hashing. This keeps user information protected and confidential.
+
+* **Database Schema**: The backbone of our application is powered by Prisma Schema, enabling efficient data management and storage.
+
+
+* **Full CRUD (Create, Read, Update, Delete)**: Our goal is to deliver a professional Full CRUD application, which means users have complete control over their travel plans, from creating and viewing itineraries to editing and deleting trips.
+
+* **Responsive Design**: We've implemented basic mobile responsiveness, ensuring users can access the Astro Planner from a variety of devices, such as computers, tablets, and smartphones.
+
+By employing these advanced web development tools, we've created an application that combines functionality, user-friendliness, and a visually engaging user interface, providing travel enthusiasts with a comprehensive planning experience.
+
 
 
 
