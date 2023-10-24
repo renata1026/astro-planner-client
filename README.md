@@ -63,7 +63,7 @@ By offering these features, the Astro Planner Travel App empowers users to effic
 
 ## Video WalkThrough
 
-[Watch Video Walkthrough]([https://your-video-link-here](https://www.loom.com/share/39bfc6f1064b4fe3956945451426e4d6?sid=750cfc77-dae1-4f11-a68d-df26e6bcb860))
+[Watch Video Walkthrough](https://www.loom.com/share/39bfc6f1064b4fe3956945451426e4d6?sid=750cfc77-dae1-4f11-a68d-df26e6bcb860)
 
 <table>
   <tr>
