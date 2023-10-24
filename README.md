@@ -2,6 +2,8 @@
 
 [Astro Planner Live Link](https://astro-planner.netlify.app/)
 
+[Astro Planner API Docs](https://github.com/renata1026/astro-planner-docs)
+
 ## About
 
 Welcome to the Astro Planner Travel App, a project dedicated to helping travel enthusiasts plan their journeys with celestial beauty. With this app, users can embark on a cosmic travel experience and explore destinations like never before.
